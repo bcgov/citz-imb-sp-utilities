@@ -1,0 +1,22 @@
+{
+  "name": "citz-imb-sp-utilities",
+  "version": "0.1.0",
+  "description": "SharePoint 2016 Methods",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bcgov/citz-imb-sp-utilities.git"
+  },
+  "keywords": [
+    "SharePoint"
+  ],
+  "author": "Scott Toews",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/bcgov/citz-imb-sp-utilities/issues"
+  },
+  "homepage": "https://github.com/bcgov/citz-imb-sp-utilities#readme"
+}
