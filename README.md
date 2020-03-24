@@ -9,7 +9,7 @@ utility methods/functions for use with SharePoint 2016
 then...
 
 ```
-import GetContextWebInformation, {GetFormDigestValue} from 'citz-imb-sp-utilities'
+import {GetContextWebInformation, GetFormDigestValue} from 'citz-imb-sp-utilities'
 
 GetContextWebInformation("https://[mydomain]/sites/[mysite]").then(data => {code...})
 GetFormDigestValue("https://[mydomain]/sites/[mysite]").then(data => {code...})
