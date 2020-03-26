@@ -1,10 +1,10 @@
 # SharePoint Utilities
 
-utility methods/functions for use with SharePoint 2016
+utility methods/functions for use with SharePoint 2016. Depends on [React](https://www.npmjs.com/package/react).
 
 # Installation
 
-`npm install --save-dev citz-imb-sp-utilities`
+`npm install citz-imb-sp-utilities`
 
 then...
 
