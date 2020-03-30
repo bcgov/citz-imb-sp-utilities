@@ -141,6 +141,7 @@ module.exports = {
   },
   plugins: [
     // ...
-  ],
+  ]
+}
   // list of additional plugins
   /* Advanced configuration (click to show) */
