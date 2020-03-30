@@ -1,29 +1,26 @@
 import React, { useEffect } from "react"
 
-const dev = window.dev
-
-const ppLibraries = [
-	{
-		type: "text/javascript",
-		src: "http://localhost:8081/_layouts/15/clienttemplates.js"
-	},
-	{
-		type: "text/javascript",
-		src: "http://localhost:8081/_layouts/15/clientforms.js"
-	},
-	{
-		type: "text/javascript",
-		src: "http://localhost:8081/_layouts/15/clientpeoplepicker.js"
-	},
-	{
-		type: "text/javascript",
-		src: "http://localhost:8081/_layouts/15/autofill.js"
-	}
-]
-
 export const PeoplePicker = ({ schema, elementName, getUserInfo }) => {
 	let loadDelay = 0
-	if (dev) loadDelay = 1000
+
+	const ppLibraries = [
+		{
+			type: "text/javascript",
+			src: "http://localhost:8081/_layouts/15/clienttemplates.js"
+		},
+		{
+			type: "text/javascript",
+			src: "http://localhost:8081/_layouts/15/clientforms.js"
+		},
+		{
+			type: "text/javascript",
+			src: "http://localhost:8081/_layouts/15/clientpeoplepicker.js"
+		},
+		{
+			type: "text/javascript",
+			src: "http://localhost:8081/_layouts/15/autofill.js"
+		}
+	]
 
 	useEffect(() => {
 		//append libraries needed for peoplepicker
