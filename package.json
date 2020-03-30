@@ -1,9 +1,10 @@
 {
   "name": "citz-imb-sp-utilities",
   "version": "0.2.4",
-  "description": "SharePoint React library for Ministry of Citizens' Services",
+  "description": "ALPHA VERSION: SharePoint React library for Ministry of Citizens' Services",
   "main": "index.js",
   "scripts": {
+    "start": "webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,7 +16,7 @@
     "React",
     "BCGOV"
   ],
-  "author": "Government of BC",
+  "author": "Government of BC, CITZ IMB",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/bcgov/citz-imb-sp-utilities/issues"
@@ -27,7 +28,8 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^8.1.0",
     "babel-preset-react": "^6.24.1",
-    "webpack": "^4.42.1"
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   },
   "dependencies": {
     "react": "^16.13.1",
