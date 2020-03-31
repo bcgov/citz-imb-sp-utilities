@@ -1,25 +1,25 @@
 import React, { useEffect } from "react"
-
+import "../css/PeoplePicker.css"
 
 export const PeoplePicker = ({ schema, elementName, getUserInfo }) => {
-	let loadDelay = 0
+	console.log('schema', schema)
 
 	const ppLibraries = [
 		{
 			type: "text/javascript",
-			src: "http://localhost:8081/_layouts/15/clienttemplates.js"
+			src: "_layouts/15/clienttemplates.js"
 		},
 		{
 			type: "text/javascript",
-			src: "http://localhost:8081/_layouts/15/clientforms.js"
+			src: "_layouts/15/clientforms.js"
 		},
 		{
 			type: "text/javascript",
-			src: "http://localhost:8081/_layouts/15/clientpeoplepicker.js"
+			src: "_layouts/15/clientpeoplepicker.js"
 		},
 		{
 			type: "text/javascript",
-			src: "http://localhost:8081/_layouts/15/autofill.js"
+			src: "_layouts/15/autofill.js"
 		}
 	]
 
@@ -49,14 +49,14 @@ export const PeoplePicker = ({ schema, elementName, getUserInfo }) => {
 		// Pass the ID of the DOM element that contains the picker, an array of initial
 		// PickerEntity objects to set the picker value, and a schema that defines
 		// picker properties.
-		setTimeout(function() {
-			ExecuteOrDelayUntilScriptLoaded(function() {
-				// eslint-disable-next-line
-				SPClientPeoplePicker_InitStandaloneControlWrapper(elementName, null, schema)
-				let el = document.querySelector(`#${elementName}_TopSpan_ResolvedList`)
-				observer.observe(el, { childList: true })
-			}, "sp.core.js")
-		}, loadDelay)
+
+		ExecuteOrDelayUntilScriptLoaded(function () {
+			// eslint-disable-next-line
+			SPClientPeoplePicker_InitStandaloneControlWrapper(elementName, null, schema)
+			let el = document.querySelector(`#${elementName}_TopSpan_ResolvedList`)
+			observer.observe(el, { childList: true })
+		}, "clienttemplates.js")
+
 
 		return () => {
 			observer.disconnect()
