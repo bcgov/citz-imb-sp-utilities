@@ -1,5 +1,39 @@
+export const GetGroup = ({ url ='', groupId, groupName })=>{
+    let endPoint
+
+    if(!groupId){
+        if(!groupName){
+            return new Promise((resolve,reject)=>{reject("GetGroup requires GroupId or GroupName")})
+        } else{
+            endPoint = `/_api/web/SiteGroups/getByName('${groupName}')`
+        }
+    }else{
+        endPoint = `/_api/web/SiteGroups(${groupId})`
+    }
+
+    return new Promise((resolve, reject) => {
+        fetch(`${url}${endPoint}`)
+            .then(results => {
+                if(results.ok) {
+                    return results.json()
+                } else {
+                    const msg = `error: ${results.status} ${results.statusText}`
+                    console.groupCollapsed('GetGroup results', msg)
+                    console.log(results)
+                    console.groupEnd()
+                    reject(new error(msg))
+                }
+            })
+            .then(data => {
+                resolve(data.d)
+            })
+            .catch(error => {
+                resolve(error)
+            })
+    })
+}
+
 export const GetGroupMembers = ({ url ='', groupId, groupName }) => {
-    console.log("GetGroupMembers", url, groupId, groupName)
     let endPoint
 
     if(!groupId){
@@ -34,7 +68,7 @@ export const GetGroupMembers = ({ url ='', groupId, groupName }) => {
     })
 }
 
-export const AddUserToGroup = ({ url, groupId, logonName }) => {
+export const AddUserToGroup = ({ url ='', groupId, groupName, user }) => {
     SP.SOD.executeFunc("SP.js", "SP.ClientContext", function () {
         var ctx = new SP.ClientContext();
         var groups = ctx.get_web().get_siteGroups();

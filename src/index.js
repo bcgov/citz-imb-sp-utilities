@@ -1,6 +1,7 @@
 import { GetContextWebInformation, GetFormDigestValue } from "./components/ContextInfo"
-import {GetGroupMembers,AddUserToGroup} from './components/Groups'
+import { GetGroup, GetGroupMembers, AddUserToGroup } from './components/Groups'
 import { PeoplePicker } from './components/PeoplePicker'
+import { GetUser, GetUserGroups } from './components/Users'
 
 
 export {
@@ -8,8 +9,12 @@ export {
     GetContextWebInformation,
     GetFormDigestValue,
     //Groups
+    GetGroup,
     GetGroupMembers,
     AddUserToGroup,
     //PeoplePicker
-    PeoplePicker
+    PeoplePicker,
+    //Users
+    GetUser,
+    GetUserGroups
 }

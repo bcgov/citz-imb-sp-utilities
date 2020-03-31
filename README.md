@@ -21,21 +21,32 @@ import { PeoplePicker } from 'citz-imb-sp-utilities'
 
 <PeoplePicker
         schema={{
-            PrincipalAccountType: "User",
+            PrincipalAccountType: "[User | DL | SecGroup | SPGroup]",
             SearchPrincipleSource: 15,
             ResolvePrincipalSource: 15,
-            AllowMultipleValues: false,
-            MaximumEntitySuggestions: 5,
-            Width: "250px",
-            SharePointGroupID: null
+            AllowMultipleValues: [true | false],
+            MaximumEntitySuggestions: [5],
+            Width: ["250px"],
+            SharePointGroupID: [null | groupNumber]
         }}
-        elementName="testElement"
-        getUserInfo={getUserInfo} />
+        elementName="[elementName]"
+        getUserInfo={[getUserInfo]} />
 ```
 
 ## Groups
+you must supply groupId or groupName
 ```
-import { GetGroupMembers } from 'citz-imb-sp-utilities'
+import {GetGroup, GetGroupMembers } from 'citz-imb-sp-utilities'
 
- GetGroupMembers({groupId: 9}).then(data =>{...code})
+GetGroup({url: "[baseurl]", groupId: [number], groupName: "[name]"}).then(data =>{code...})
+GetGroupMembers({url: "[baseurl]", groupId: [number], groupName: "[name]"}).then(data =>{code...})
+```
+
+## Users
+you must supply userId
+```
+import { GetUser, GetUserGroups } from 'citz-imb-sp-utilities'
+
+GetUser({url:"[baseurl]", userId: [number] }).then(data => {code...})
+GetUserGroups({url:"[baseurl]", userId: [number] }).then(data => {code...})
 ```
