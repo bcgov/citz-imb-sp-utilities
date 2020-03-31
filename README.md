@@ -36,10 +36,11 @@ import { PeoplePicker } from 'citz-imb-sp-utilities'
 ## Groups
 you must supply groupId or groupName
 ```
-import {GetGroup, GetGroupMembers } from 'citz-imb-sp-utilities'
+import {GetGroup, GetGroupMembers, AddUserToGroup } from 'citz-imb-sp-utilities'
 
 GetGroup({url: "[baseurl]", groupId: [number], groupName: "[name]"}).then(data =>{code...})
 GetGroupMembers({url: "[baseurl]", groupId: [number], groupName: "[name]"}).then(data =>{code...})
+AddUserToGroup({url: "[baseurl]", groupId: [number], groupName: "[name]", loginName: "i:0#.w|accountguid"}).then(data =>{code...})
 ```
 
 ## Users

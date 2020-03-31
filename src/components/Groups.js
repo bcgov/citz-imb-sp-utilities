@@ -1,20 +1,20 @@
-export const GetGroup = ({ url ='', groupId, groupName })=>{
+export const GetGroup = ({ url = '', groupId, groupName }) => {
     let endPoint
 
-    if(!groupId){
-        if(!groupName){
-            return new Promise((resolve,reject)=>{reject("GetGroup requires GroupId or GroupName")})
-        } else{
+    if (!groupId) {
+        if (!groupName) {
+            return new Promise((resolve, reject) => { reject("GetGroup requires GroupId or GroupName") })
+        } else {
             endPoint = `/_api/web/SiteGroups/getByName('${groupName}')`
         }
-    }else{
+    } else {
         endPoint = `/_api/web/SiteGroups(${groupId})`
     }
 
     return new Promise((resolve, reject) => {
         fetch(`${url}${endPoint}`)
             .then(results => {
-                if(results.ok) {
+                if (results.ok) {
                     return results.json()
                 } else {
                     const msg = `error: ${results.status} ${results.statusText}`
@@ -33,23 +33,23 @@ export const GetGroup = ({ url ='', groupId, groupName })=>{
     })
 }
 
-export const GetGroupMembers = ({ url ='', groupId, groupName }) => {
+export const GetGroupMembers = ({ url = '', groupId, groupName }) => {
     let endPoint
 
-    if(!groupId){
-        if(!groupName){
-            return new Promise((resolve,reject)=>{reject("GetGroupMembers requires GroupId or GroupName")})
-        } else{
+    if (!groupId) {
+        if (!groupName) {
+            return new Promise((resolve, reject) => { reject("GetGroupMembers requires GroupId or GroupName") })
+        } else {
             endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users`
         }
-    }else{
+    } else {
         endPoint = `/_api/web/SiteGroups(${groupId})/Users`
     }
 
     return new Promise((resolve, reject) => {
         fetch(`${url}${endPoint}`)
             .then(results => {
-                if(results.ok) {
+                if (results.ok) {
                     return results.json()
                 } else {
                     const msg = `error: ${results.status} ${results.statusText}`
@@ -68,22 +68,55 @@ export const GetGroupMembers = ({ url ='', groupId, groupName }) => {
     })
 }
 
-export const AddUserToGroup = ({ url ='', groupId, groupName, user }) => {
-    SP.SOD.executeFunc("SP.js", "SP.ClientContext", function () {
-        var ctx = new SP.ClientContext();
-        var groups = ctx.get_web().get_siteGroups();
-        var group = groups.getById(groupId);
-        var user = ctx.get_web().ensureUser(logonName);
-        var groupUsers = group.get_users();
-        groupUsers.addUser(user);
+export const AddUserToGroup = ({ url = '', groupId, groupName, loginName }) => {
+    console.log("AddUserToGroup", url, groupId, groupName, loginName)
+    let endPoint
 
-        ctx.load(user);
-        ctx.load(group);
-        ctx.executeQueryAsync(function (sender, args) {
-            return true;
-        }, function (sender, args) {
-            window.console && console.log("Error: " + args.get_message());
-            return false;
+    if (!loginName) {
+        return new Promise((resolve, reject) => { reject("AddUserToGroup requires loginName") })
+    }
+
+    if (!groupId) {
+        if (!groupName) {
+            return new Promise((resolve, reject) => { reject("AddUserToGroup requires GroupId or GroupName") })
+        } else {
+            endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users(${LoginName})`
+        }
+    } else {
+        endPoint = `/_api/web/SiteGroups(${groupId})/Users`
+    }
+
+    return new Promise((resolve, reject) => {
+        fetch(`${url}${endPoint}`, {
+            method: 'post',
+            body: JSON.stringify({
+                "__metadata": {
+                    "type": "SP.User"
+                },
+                "LoginName": loginName
+            }),
+            headers: {
+                "accept": "application/json; odata=verbose",
+                "content-type": "application/json; odata=verbose"
+            }
         })
-    });
+            .then(results => {
+                console.log('AddUserToGroup results', results.json())
+                if (results.ok) {
+                    return results.json()
+                } else {
+                    const msg = `error: ${results.status} ${results.statusText}`
+                    console.groupCollapsed('GetGroup results', msg)
+                    console.log(results)
+                    console.groupEnd()
+                    reject(new error(msg))
+                }
+            })
+            .then(data => {
+                resolve(data.d)
+            })
+            .catch(error => {
+                resolve(error)
+            })
+    })
 }
