@@ -34,14 +34,15 @@ import { PeoplePicker } from 'citz-imb-sp-utilities'
 ```
 
 ## Groups
-you must supply groupId or groupName
+you must supply groupId (as a number) or groupName (as text), and loginName (as text in the format 'i:0#.w|accountguid') or userId (as a number)
+loginName and userId can also be an array of items of their type.
 ```
 import {GetGroup, GetGroupMembers, AddUserToGroup, RemoveUserFromGroup } from 'citz-imb-sp-utilities'
 
-GetGroup({url: "[baseurl]", groupId: [number], groupName: "[name]"}).then(data =>{code...})
-GetGroupMembers({url: "[baseurl]", groupId: [number], groupName: "[name]"}).then(data =>{code...})
-AddUserToGroup({url: "[baseurl]", groupId: [number], groupName: "[name]", loginName: "i:0#.w|accountguid"}).then(data =>{code...})
-RemoveUserFromGroup({url: "[baseurl]", groupId: [number], groupName: "[name]", loginName: "i:0#.w|accountguid"}).then(data =>{code...})
+GetGroup({url:"baseurl", groupId: number, groupName: "name"}).then(data =>{code...})
+GetGroupMembers({url:"baseurl", groupId: number, groupName: "name"}).then(data =>{code...})
+AddUsersToGroup({url:"baseurl", groupId: number, groupName: "name", loginName: ""}).then(data =>{code...})
+RemoveUserFromGroup({url:"baseurl", groupId: number, groupName: "name", loginName: "i:0#.w|accountguid"}).then(data =>{code...})
 ```
 
 ## Users
@@ -49,6 +50,6 @@ you must supply userId
 ```
 import { GetUser, GetUserGroups } from 'citz-imb-sp-utilities'
 
-GetUser({url:"[baseurl]", userId: [number] }).then(data => {code...})
-GetUserGroups({url:"[baseurl]", userId: [number] }).then(data => {code...})
+GetUser({[url:"baseurl",] userId: <number> }).then(data => {code...})
+GetUserGroups({[url:"baseurl",] userId: <number> }).then(data => {code...})
 ```

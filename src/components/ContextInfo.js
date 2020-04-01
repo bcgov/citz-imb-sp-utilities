@@ -27,3 +27,18 @@ export const GetFormDigestValue = url => {
             })
     })
 }
+
+export const GetCurrentUser = url => {
+    return new Promise((resolve, reject) => {
+        fetch(`${url}/_api/web/CurrentUser`)
+            .then(results => {
+                return results.json()
+            })
+            .then(data => {
+                resolve(data.d)
+            })
+            .catch(error => {
+                resolve(error)
+            })
+    })
+}

@@ -70,17 +70,20 @@ export const GetGroupMembers = ({ url = '', groupId, groupName }) => {
     })
 }
 
-export const AddUserToGroup = ({ url = '', groupId, groupName, loginName }) => {
-    console.log("AddUserToGroup", url, groupId, groupName, loginName)
+export const AddUsersToGroup = ({ url = '', groupId, groupName, loginName }) => {
     let endPoint
 
     if (!loginName) {
-        return new Promise((resolve, reject) => { reject("AddUserToGroup requires loginName") })
+        return new Promise((resolve, reject) => { reject("AddUsersToGroup requires loginName") })
+    } else {
+        if (!Array.isArray(loginName)) {
+            loginName = [loginName]
+        }
     }
 
     if (!groupId) {
         if (!groupName) {
-            return new Promise((resolve, reject) => { reject("AddUserToGroup requires GroupId or GroupName") })
+            return new Promise((resolve, reject) => { reject("AddUsersToGroup requires GroupId or GroupName") })
         } else {
             endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users(${LoginName})`
         }
@@ -89,51 +92,42 @@ export const AddUserToGroup = ({ url = '', groupId, groupName, loginName }) => {
     }
 
     return new Promise((resolve, reject) => {
-        fetch(`${url}${endPoint}`, {
-            method: 'post',
-            body: JSON.stringify({
-                "__metadata": {
-                    "type": "SP.User"
-                },
-                "LoginName": loginName
-            }),
-            headers: {
-                "accept": "application/json; odata=verbose",
-                "content-type": "application/json; odata=verbose"
-            }
-        })
-            .then(results => {
-                console.log('AddUserToGroup results', results.json())
-                if (results.ok) {
-                    return results.json()
-                } else {
-                    const msg = `error: ${results.status} ${results.statusText}`
-                    console.groupCollapsed('GetGroup results', msg)
-                    console.log(results)
-                    console.groupEnd()
-                    reject(new error(msg))
-                }
-            })
+        let fetches = []
+
+        for (let i = 0; i < loginName.length; i++) {
+            fetches.push(
+                fetch(`${url}${endPoint}`, {
+                    method: 'post',
+                    body: JSON.stringify({
+                        "__metadata": {
+                            "type": "SP.User"
+                        },
+                        "LoginName": loginName[i]
+                    }),
+                    headers: {
+                        "accept": "application/json; odata=verbose",
+                        "content-type": "application/json; odata=verbose"
+                    }
+                }))
+        }
+        Promise
+            .all(fetches)
             .then(data => {
-                resolve(data.d)
+                resolve(data)
             })
             .catch(error => {
-                resolve(error)
+                reject(error)
             })
     })
 }
 
-export const RemoveUserFromGroup = ({ url='', groupId, groupName, loginName, userId }) => {
-    console.log("RemoveUserFromGroup", url, groupId, groupName, loginName)
+export const RemoveUsersFromGroup = ({ url = '', groupId, groupName, loginName, userId }) => {
+    console.log("RemoveUsersFromGroup", url, groupId, groupName, loginName, userId)
     let endPoint
-
-    if (!loginName) {
-        return new Promise((resolve, reject) => { reject("RemoveUserFromGroup requires loginName") })
-    }
 
     if (!groupId) {
         if (!groupName) {
-            return new Promise((resolve, reject) => { reject("RemoveUserFromGroup requires GroupId or GroupName") })
+            return new Promise((resolve, reject) => { reject("RemoveUsersFromGroup requires GroupId or GroupName") })
         } else {
             endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users`
         }
@@ -144,43 +138,53 @@ export const RemoveUserFromGroup = ({ url='', groupId, groupName, loginName, use
     if (!loginName) {
         if (!userId) {
             return new Promise((resolve, reject) => { reject("RemoveUserFromGroup requires userId or logonName") })
-        } else {
-            endPoint += `/removeByID(${userId})`
         }
-    } else {
-        endPoint += `/removeByLoginName('${loginName}')`
     }
-
-    console.log("endPoint", endPoint)
 
     return new Promise((resolve, reject) => {
         GetFormDigestValue(url).then(digestValue => {
-            fetch(`${url}${endPoint}`, {
-                method: 'post',
-                headers: {
-                    "x-requestdigest": digestValue,
-                    "accept": "application/json; odata=verbose",
-                    "content-type": "application/json; odata=verbose"
+
+            let fetches = []
+
+            if (loginName) {
+                for (let i = 0; i < loginName.length; i++) {
+                    fetches.push(
+                        fetch(`${url}${endPoint}/removeByLoginName('${loginName[i]}')`, {
+                            method: 'post',
+                            headers: {
+                                "x-requestdigest": digestValue,
+                                "accept": "application/json; odata=verbose",
+                                "content-type": "application/json; odata=verbose"
+                            }
+                        })
+                    )
                 }
-            })
-                .then(results => {
-                    console.log('RemoveUserFromGroup results', results.json())
-                    if (results.ok) {
-                        return results.json()
-                    } else {
-                        const msg = `error: ${results.status} ${results.statusText}`
-                        console.groupCollapsed('GetGroup results', msg)
-                        console.log(results)
-                        console.groupEnd()
-                        reject(new error(msg))
-                    }
-                })
-                .then(data => {
-                    resolve(data.d)
-                })
-                .catch(error => {
-                    resolve(error)
-                })
+            } else {
+                for (let i = 0; i < userId.length; i++) {
+                    fetches.push(
+                        fetch(`${url}${endPoint}/removeByID(${userId[i]})`, {
+                            method: 'post',
+                            headers: {
+                                "x-requestdigest": digestValue,
+                                "accept": "application/json; odata=verbose",
+                                "content-type": "application/json; odata=verbose"
+                            }
+                        })
+                    )
+                }
+            }
+
+
+
+
+    Promise
+        .all(fetches)
+        .then(data => {
+            resolve(data)
         })
+        .catch(error => {
+            reject(error)
+        })
+})
     })
 }

@@ -2,8 +2,6 @@ import React, { useEffect } from "react"
 import "../css/PeoplePicker.css"
 
 export const PeoplePicker = ({ schema, elementName, getUserInfo }) => {
-	console.log('schema', schema)
-
 	const ppLibraries = [
 		{
 			type: "text/javascript",
@@ -51,12 +49,13 @@ export const PeoplePicker = ({ schema, elementName, getUserInfo }) => {
 		// picker properties.
 
 		ExecuteOrDelayUntilScriptLoaded(function () {
-			// eslint-disable-next-line
-			SPClientPeoplePicker_InitStandaloneControlWrapper(elementName, null, schema)
-			let el = document.querySelector(`#${elementName}_TopSpan_ResolvedList`)
-			observer.observe(el, { childList: true })
+			setTimeout(() => {
+				// eslint-disable-next-line
+				SPClientPeoplePicker_InitStandaloneControlWrapper(elementName, null, schema)
+				let el = document.querySelector(`#${elementName}_TopSpan_ResolvedList`)
+				observer.observe(el, { childList: true })
+			}, 1000);
 		}, "clienttemplates.js")
-
 
 		return () => {
 			observer.disconnect()
