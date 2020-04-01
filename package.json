@@ -1,7 +1,7 @@
 {
 	"name": "citz-imb-sp-utilities",
 	"version": "0.5.0",
-	"description": "ALPHA VERSION: SharePoint React library for Ministry of Citizens' Services",
+	"description": "SharePoint React library for Ministry of Citizens' Services",
 	"main": "dist/main.js",
 	"scripts": {
 		"start": "webpack --config webpack.config.js",
