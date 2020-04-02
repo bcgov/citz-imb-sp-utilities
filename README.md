@@ -9,10 +9,11 @@ utility methods/functions for use with SharePoint 2016. Depends on [React](https
 ## ContextInfo
 
 ```
-import {GetContextWebInformation, GetFormDigestValue} from 'citz-imb-sp-utilities'
+import {GetContextWebInformation, GetFormDigestValue, GetCurrentUser} from 'citz-imb-sp-utilities'
 
-GetContextWebInformation("https://[mydomain]/sites/[mysite]").then(data => {code...})
-GetFormDigestValue("https://[mydomain]/sites/[mysite]").then(data => {code...})
+GetContextWebInformation("https://[mydomain]/sites/[mysite]").then(response => {code...})
+GetFormDigestValue("https://[mydomain]/sites/[mysite]").then(response => {code...})
+GetCurrentUser("https://[mydomain]/sites/[mysite]").then(response => {code...})
 ```
 
 ## PeoplePicker
@@ -35,14 +36,26 @@ import { PeoplePicker } from 'citz-imb-sp-utilities'
 
 ## Groups
 you must supply groupId (as a number) or groupName (as text), and loginName (as text in the format 'i:0#.w|accountguid') or userId (as a number)
-loginName and userId can also be an array of items of their type.
+loginName and userId can also be an array of their type.
 ```
-import {GetGroup, GetGroupMembers, AddUserToGroup, RemoveUserFromGroup } from 'citz-imb-sp-utilities'
+import {GetGroup, GetGroupMembers, AddUsersToGroup, RemoveUsersFromGroup } from 'citz-imb-sp-utilities'
 
-GetGroup({url:"baseurl", groupId: number, groupName: "name"}).then(data =>{code...})
-GetGroupMembers({url:"baseurl", groupId: number, groupName: "name"}).then(data =>{code...})
-AddUsersToGroup({url:"baseurl", groupId: number, groupName: "name", loginName: ""}).then(data =>{code...})
-RemoveUserFromGroup({url:"baseurl", groupId: number, groupName: "name", loginName: "i:0#.w|accountguid"}).then(data =>{code...})
+GetGroup({url:"baseurl", groupId: number, groupName: "name"}).then(response =>{code...})
+GetGroupMembers({url:"baseurl", groupId: number, groupName: "name"}).then(response =>{code...})
+AddUsersToGroup({url:"baseurl", groupId: number, groupName: "name", loginName: ""}).then(response =>{code...})
+RemoveUsersFromGroup({url:"baseurl", groupId: number, groupName: "name", loginName: "i:0#.w|accountguid"}).then(data =>{response...})
+```
+
+## Lists
+you must supply listGUID (as text) or listName (as text)
+items and itemIds can also be an array of their type.
+```
+import {GetList, GetListItems, AddItemsToList, RemoveItemsFromList } from 'citz-imb-sp-utilities'
+
+GetList({ url:"baseurl", listName: "name", listGUID: "guid" }).then(response =>{code...})
+GetListItems({ url:"baseurl", listName: "name", listGUID: "guid" }).then(response =>{code...})
+AddItemsToList({ url:"baseurl", listName: "name", listGUID: "guid", items: {object} }).then(response =>{code...})
+RemoveItemsFromList({ url:"baseurl", listName: "name", listGUID: "guid", itemIds: number }).then(data =>{response...})
 ```
 
 ## Users
@@ -50,6 +63,6 @@ you must supply userId
 ```
 import { GetUser, GetUserGroups } from 'citz-imb-sp-utilities'
 
-GetUser({[url:"baseurl",] userId: <number> }).then(data => {code...})
-GetUserGroups({[url:"baseurl",] userId: <number> }).then(data => {code...})
+GetUser({[url:"baseurl",] userId: <number> }).then(response => {code...})
+GetUserGroups({[url:"baseurl",] userId: <number> }).then(response => {code...})
 ```
