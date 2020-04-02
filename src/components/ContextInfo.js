@@ -1,44 +1,31 @@
-export const GetContextWebInformation = url => {
+import { RestCall } from '../utilities/Common'
+
+export const GetContextWebInformation = (url = '') => {
+    console.log('--GetContextWebInformation')
     return new Promise((resolve, reject) => {
-        fetch(`${url}/_api/contextinfo`, {method: 'POST'})
-            .then(results => {
-                return results.json()
-            })
-            .then(data => {
-                resolve(data.d.GetContextWebInformation)
-            })
-            .catch(error => {
-                resolve(error)
+        RestCall({ url: url, endPoint: '/_api/contextinfo', method: 'post' })
+            .then(response => {
+                resolve(response.d.GetContextWebInformation)
             })
     })
 }
 
 export const GetFormDigestValue = url => {
+    console.log('--GetFormDigestValue')
     return new Promise((resolve, reject) => {
-        fetch(`${url}/_api/contextinfo`, {method: 'POST'})
-            .then(results => {
-                return results.json()
-            })
-            .then(data => {
-                resolve(data.d.GetContextWebInformation.FormDigestValue)
-            })
-            .catch(error => {
-                reject(error)
+        GetContextWebInformation(url)
+            .then(response => {
+                resolve(response.FormDigestValue)
             })
     })
 }
 
-export const GetCurrentUser = url => {
+export const GetCurrentUser = (url = '') => {
+    console.log('--GetCurrentUser')
     return new Promise((resolve, reject) => {
-        fetch(`${url}/_api/web/CurrentUser`)
-            .then(results => {
-                return results.json()
-            })
-            .then(data => {
-                resolve(data.d)
-            })
-            .catch(error => {
-                resolve(error)
+        RestCall({ url: url, endPoint: '/_api/web/CurrentUser'})
+            .then(response => {
+                resolve(response.d)
             })
     })
 }

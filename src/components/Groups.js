@@ -1,6 +1,8 @@
 import { GetFormDigestValue } from './ContextInfo'
+import { RestCall } from '../utilities/Common'
 
 export const GetGroup = ({ url = '', groupId, groupName }) => {
+    console.log('--GetFormDigestValue')
     let endPoint
 
     if (!groupId) {
@@ -14,23 +16,9 @@ export const GetGroup = ({ url = '', groupId, groupName }) => {
     }
 
     return new Promise((resolve, reject) => {
-        fetch(`${url}${endPoint}`)
-            .then(results => {
-                if (results.ok) {
-                    return results.json()
-                } else {
-                    const msg = `error: ${results.status} ${results.statusText}`
-                    console.groupCollapsed('GetGroup results', msg)
-                    console.log(results)
-                    console.groupEnd()
-                    reject(new error(msg))
-                }
-            })
-            .then(data => {
-                resolve(data.d)
-            })
-            .catch(error => {
-                resolve(error)
+        RestCall({ url: url, endPoint: endPoint })
+            .then(response => {
+                resolve(response.d)
             })
     })
 }
@@ -49,23 +37,9 @@ export const GetGroupMembers = ({ url = '', groupId, groupName }) => {
     }
 
     return new Promise((resolve, reject) => {
-        fetch(`${url}${endPoint}`)
-            .then(results => {
-                if (results.ok) {
-                    return results.json()
-                } else {
-                    const msg = `error: ${results.status} ${results.statusText}`
-                    console.groupCollapsed('GetGroupMembers results', msg)
-                    console.log(results)
-                    console.groupEnd()
-                    reject(new error(msg))
-                }
-            })
-            .then(data => {
-                resolve(data.d.results)
-            })
-            .catch(error => {
-                resolve(error)
+        RestCall({ url: url, endPoint: endPoint })
+            .then(response => {
+                resolve(response.d.results)
             })
     })
 }
@@ -96,24 +70,30 @@ export const AddUsersToGroup = ({ url = '', groupId, groupName, loginName }) => 
 
         for (let i = 0; i < loginName.length; i++) {
             fetches.push(
-                fetch(`${url}${endPoint}`, {
+                RestCall({
+                    url: url,
+                    endPoint: endPoint,
                     method: 'post',
-                    body: JSON.stringify({
+                    body: {
                         "__metadata": {
                             "type": "SP.User"
                         },
                         "LoginName": loginName[i]
-                    }),
+                    },
                     headers: {
                         "accept": "application/json; odata=verbose",
                         "content-type": "application/json; odata=verbose"
                     }
-                }))
+                })
+            )
         }
+
         Promise
             .all(fetches)
             .then(data => {
-                resolve(data)
+                resolve(data.map(user => {
+                    return user.d
+                }))
             })
             .catch(error => {
                 reject(error)
@@ -149,7 +129,9 @@ export const RemoveUsersFromGroup = ({ url = '', groupId, groupName, loginName, 
             if (loginName) {
                 for (let i = 0; i < loginName.length; i++) {
                     fetches.push(
-                        fetch(`${url}${endPoint}/removeByLoginName('${loginName[i]}')`, {
+                        RestCall({
+                            url: url,
+                            endPoint: `${endPoint}/removeByLoginName('${loginName[i]}')`,
                             method: 'post',
                             headers: {
                                 "x-requestdigest": digestValue,
@@ -162,7 +144,9 @@ export const RemoveUsersFromGroup = ({ url = '', groupId, groupName, loginName, 
             } else {
                 for (let i = 0; i < userId.length; i++) {
                     fetches.push(
-                        fetch(`${url}${endPoint}/removeByID(${userId[i]})`, {
+                        RestCall({
+                            url: url,
+                            endPoint: `${endPoint}/removeByID(${userId[i]})`,
                             method: 'post',
                             headers: {
                                 "x-requestdigest": digestValue,
@@ -174,17 +158,16 @@ export const RemoveUsersFromGroup = ({ url = '', groupId, groupName, loginName, 
                 }
             }
 
-
-
-
-    Promise
-        .all(fetches)
-        .then(data => {
-            resolve(data)
+            Promise
+                .all(fetches)
+                .then(data => {
+                    resolve(data.map(user => {
+                        return user.d
+                    }))
+                })
+                .catch(error => {
+                    reject(error)
+                })
         })
-        .catch(error => {
-            reject(error)
-        })
-})
     })
 }
