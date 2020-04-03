@@ -2,7 +2,7 @@ import { GetContextWebInformation, GetFormDigestValue, GetCurrentUser } from "./
 import { GetGroup, GetGroupMembers, AddUsersToGroup, RemoveUsersFromGroup } from './components/Groups'
 import { PeoplePicker } from './components/PeoplePicker'
 import { GetUser, GetUserGroups } from './components/Users'
-import {GetList, GetListItems, AddItemsToList, RemoveItemsFromList} from './components/Lists'
+import { GetList, GetListItems, AddItemsToList, RemoveItemsFromList, GetListViews } from './components/Lists'
 
 
 export {
@@ -20,6 +20,7 @@ export {
     GetListItems,
     AddItemsToList,
     RemoveItemsFromList,
+    GetListViews,
     //PeoplePicker
     PeoplePicker,
     //Users

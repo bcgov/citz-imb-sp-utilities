@@ -22,8 +22,9 @@ export const GetList = ({ url = '', listName, listGUID }) => {
     })
 }
 
-export const GetListItems = ({ url = '', listName, listGUID }) => {
+export const GetListItems = ({ url = '', listName, listGUID, filter }) => {
     let endPoint
+    let parameters = "?"
 
     if (!listGUID) {
         if (!listName) {
@@ -33,6 +34,14 @@ export const GetListItems = ({ url = '', listName, listGUID }) => {
         }
     } else {
         endPoint = `/_api/web/Lists('${listGUID}')/items`
+    }
+
+    if (filter) {
+        parameters += `$filter=${filter}`
+    }
+
+    if (parameters !== "?") {
+        endPoint += parameters
     }
 
     return new Promise((resolve, reject) => {
@@ -152,6 +161,27 @@ export const RemoveItemsFromList = ({ url = '', listName, listGUID, itemIds }) =
             })
             .catch(error => {
                 reject(error)
+            })
+    })
+}
+
+export const GetListViews = ({ url = '', listName, listGUID }) => {
+    let endPoint
+
+    if (!listGUID) {
+        if (!listName) {
+            return new Promise((resolve, reject) => { reject("GetListViews requires listGUID or listName") })
+        } else {
+            endPoint = `/_api/web/Lists/getByTitle('${listName}')/Views?$expand=ViewFields`
+        }
+    } else {
+        endPoint = `/_api/web/Lists('${listGUID}')/Views?$expand=ViewFields`
+    }
+
+    return new Promise((resolve, reject) => {
+        RestCall({ url: url, endPoint: endPoint })
+            .then(response => {
+                resolve(response.d)
             })
     })
 }
