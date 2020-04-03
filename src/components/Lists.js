@@ -185,3 +185,45 @@ export const GetListViews = ({ url = '', listName, listGUID }) => {
             })
     })
 }
+
+export const GetListDefaultView = ({ url = '', listName, listGUID }) => {
+    let endPoint
+
+    if (!listGUID) {
+        if (!listName) {
+            return new Promise((resolve, reject) => { reject("GetListViews requires listGUID or listName") })
+        } else {
+            endPoint = `/_api/web/Lists/getByTitle('${listName}')/DefaultView?$expand=ViewFields`
+        }
+    } else {
+        endPoint = `/_api/web/Lists('${listGUID}')/DefaultView?$expand=ViewFields`
+    }
+
+    return new Promise((resolve, reject) => {
+        RestCall({ url: url, endPoint: endPoint })
+            .then(response => {
+                resolve(response.d)
+            })
+    })
+}
+
+export const GetListFields = ({ url = '', listName, listGUID }) => {
+    let endPoint
+
+    if (!listGUID) {
+        if (!listName) {
+            return new Promise((resolve, reject) => { reject("GetListFields requires listGUID or listName") })
+        } else {
+            endPoint = `/_api/web/Lists/getByTitle('${listName}')/DefaultView?$expand=ViewFields`
+        }
+    } else {
+        endPoint = `/_api/web/Lists('${listGUID}')/DefaultView?$expand=ViewFields`
+    }
+
+    return new Promise((resolve, reject) => {
+        RestCall({ url: url, endPoint: endPoint })
+            .then(response => {
+                resolve(response.d)
+            })
+    })
+}
