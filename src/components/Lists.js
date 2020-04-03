@@ -214,16 +214,16 @@ export const GetListFields = ({ url = '', listName, listGUID }) => {
         if (!listName) {
             return new Promise((resolve, reject) => { reject("GetListFields requires listGUID or listName") })
         } else {
-            endPoint = `/_api/web/Lists/getByTitle('${listName}')/DefaultView?$expand=ViewFields`
+            endPoint = `/_api/web/Lists/getByTitle('${listName}')/Fields`
         }
     } else {
-        endPoint = `/_api/web/Lists('${listGUID}')/DefaultView?$expand=ViewFields`
+        endPoint = `/_api/web/Lists('${listGUID}')/Fields`
     }
 
     return new Promise((resolve, reject) => {
         RestCall({ url: url, endPoint: endPoint })
             .then(response => {
-                resolve(response.d)
+                resolve(response.d.results)
             })
     })
 }
