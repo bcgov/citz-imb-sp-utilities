@@ -22,7 +22,7 @@ export const GetList = ({ url = '', listName, listGUID }) => {
     })
 }
 
-export const GetListItems = ({ url = '', listName, listGUID, filter }) => {
+export const GetListItems = ({ url = '', listName, listGUID, filter, expand }) => {
     let endPoint
     let parameters = "?"
 
@@ -38,6 +38,10 @@ export const GetListItems = ({ url = '', listName, listGUID, filter }) => {
 
     if (filter) {
         parameters += `$filter=${filter}`
+    }
+
+    if (expand){
+        parameters += `$expand=${expand}`
     }
 
     if (parameters !== "?") {

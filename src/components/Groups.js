@@ -102,7 +102,6 @@ export const AddUsersToGroup = ({ url = '', groupId, groupName, loginName }) => 
 }
 
 export const RemoveUsersFromGroup = ({ url = '', groupId, groupName, loginName, userId }) => {
-    console.log("RemoveUsersFromGroup", url, groupId, groupName, loginName, userId)
     let endPoint
 
     if (!groupId) {
@@ -118,6 +117,14 @@ export const RemoveUsersFromGroup = ({ url = '', groupId, groupName, loginName, 
     if (!loginName) {
         if (!userId) {
             return new Promise((resolve, reject) => { reject("RemoveUserFromGroup requires userId or logonName") })
+        } else {
+            if (!Array.isArray(userId)) {
+                userId = [userId]
+            }
+        }
+    } else {
+        if (!Array.isArray(loginName)) {
+            userId = [loginName]
         }
     }
 
