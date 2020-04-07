@@ -1,5 +1,5 @@
 import { GetContextWebInformation, GetFormDigestValue, GetCurrentUser } from "./components/ContextInfo"
-import { GetGroup, GetGroupMembers, AddUsersToGroup, RemoveUsersFromGroup } from './components/Groups'
+import { GetGroup, CreateGroup, GetGroupMembers, AddUsersToGroup, RemoveUsersFromGroup } from './components/Groups'
 import { PeoplePicker } from './components/PeoplePicker'
 import { GetUser, GetUserGroups } from './components/Users'
 import { GetList, GetListItems, AddItemsToList, RemoveItemsFromList, GetListDefaultView, GetListViews, GetListFields } from './components/Lists'
@@ -12,6 +12,7 @@ export {
     GetCurrentUser,
     //Groups
     GetGroup,
+    CreateGroup,
     GetGroupMembers,
     AddUsersToGroup,
     RemoveUsersFromGroup,

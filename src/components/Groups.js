@@ -2,7 +2,6 @@ import { GetFormDigestValue } from './ContextInfo'
 import { RestCall } from '../utilities/Common'
 
 export const GetGroup = ({ url = '', groupId, groupName }) => {
-    console.log('--GetFormDigestValue')
     let endPoint
 
     if (!groupId) {
@@ -177,4 +176,36 @@ export const RemoveUsersFromGroup = ({ url = '', groupId, groupName, loginName, 
                 })
         })
     })
+}
+
+export const CreateGroup = ({ url = '', groupName, groupDescription = '' }) => {
+    let endPoint
+    const method = 'post'
+    const body = {
+        "__metadata": { "type": "SP.Group" },
+        "Description": groupDescription,
+        "Title": groupName
+    }
+
+    if (!groupName) {
+        return new Promise((resolve, reject) => { reject("CreateGroup requires GroupName") })
+    } else {
+        endPoint = `/_api/web/SiteGroups`
+    }
+
+    return new Promise((resolve, reject) => {
+        GetFormDigestValue(url)
+            .then(response => {
+                const headers = {
+                    'accept': 'application/json; odata=verbose',
+                    'content-type': 'application/json; odata=verbose',
+                    'x-requestdigest': response
+                }
+                RestCall({ url: url, endPoint: endPoint, method: method, body: body, headers: headers })
+                    .then(response => {
+                        resolve(response.d)
+                    })
+            })
+    })
+
 }

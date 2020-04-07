@@ -2,7 +2,7 @@ export const RestCall = ({ url, endPoint, method, body, headers }) => {
     console.groupCollapsed('--RestCall')
     console.log(`url: '${url}'`)
     console.log(`endPoint: '${endPoint}'`)
-    console.log(`method:`, method)
+    console.log(`method: '${method}'`)
     console.log(`body:`, body)
     console.log(`headers:`, headers)
     console.groupEnd()
@@ -16,7 +16,9 @@ export const RestCall = ({ url, endPoint, method, body, headers }) => {
         options.method = 'get'
     }
 
-    if(body) options.body = JSON.stringify(body)
+    if(body) {
+        if(typeof body !== "string") options.body = JSON.stringify(body)
+    }
     if(headers) options.headers = headers
 
     return new Promise((resolve, reject) => {
