@@ -24,6 +24,7 @@ import {
 	GetListFields,
 } from './components/Lists'
 import {SendEmail} from './components/Email'
+import {BreakInheritanceOnList} from './components/Permissions'
 
 export {
 	//ContextInfo
@@ -54,7 +55,7 @@ export {
 	//Permissions
 	// SetPermissionsOnSite,
 	// SetPermissionsOnList,
-	// BreakInheritanceOnList,
+	BreakInheritanceOnList,
 	// RemovePermissionsOnList,
 	//Users
 	GetUser,
