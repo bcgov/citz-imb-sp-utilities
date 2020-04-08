@@ -22,12 +22,15 @@ import {
 	GetListViews,
 	GetListFields,
 } from './components/Lists'
+import {SendEmail} from './components/Email'
 
 export {
 	//ContextInfo
 	GetContextWebInformation,
 	GetFormDigestValue,
 	GetCurrentUser,
+	//Email
+	SendEmail,
 	//Groups
 	GetGroup,
 	CreateGroup,
