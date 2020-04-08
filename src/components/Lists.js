@@ -23,6 +23,28 @@ export const GetList = ({ url = '', listName, listGUID }) => {
 	})
 }
 
+export const DeleteList = ({ url = '', listName, listGUID }) => {
+	let endPoint
+
+	if (!listGUID) {
+		if (!listName) {
+			return new Promise((resolve, reject) => {
+				reject('DeleteList requires listGUID or listName')
+			})
+		} else {
+			endPoint = `/_api/web/Lists/getByTitle('${listName}')/recycle`
+		}
+	} else {
+		endPoint = `/_api/web/Lists('${listGUID}')/recycle`
+	}
+
+	return new Promise((resolve, reject) => {
+		RestCall({ url: url, endPoint: endPoint, method: 'post' }).then((response) => {
+			resolve(response.d)
+		})
+	})
+}
+
 export const CreateList = ({
 	url = '',
 	listName,

@@ -16,6 +16,7 @@ import { GetUser, GetUserGroups } from './components/Users'
 import {
 	GetList,
 	CreateList,
+	DeleteList,
 	GetListItems,
 	AddItemsToList,
 	RemoveItemsFromList,
@@ -50,6 +51,7 @@ export {
 	GetListViews,
 	GetListFields,
 	CreateList,
+	DeleteList,
 	//PeoplePicker
 	PeoplePicker,
 	//Permissions
