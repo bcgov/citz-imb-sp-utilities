@@ -3,15 +3,16 @@ import { GetFormDigestValue } from './ContextInfo'
 
 export const GetList = ({ url = '', listName, listGUID }) => {
 	let endPoint
+	const endPointParameters = `?$expand=FirstUniqueAncestorSecurableObject`
 
 	if (!listGUID) {
 		if (!listName) {
 			return Promise.reject('GetList requires listGUID or listName')
 		} else {
-			endPoint = `/_api/web/Lists/getByTitle('${listName}')`
+			endPoint = `/_api/web/Lists/getByTitle('${listName}')${endPointParameters}`
 		}
 	} else {
-		endPoint = `/_api/web/Lists('${listGUID}')`
+		endPoint = `/_api/web/Lists('${listGUID}')${endPointParameters}`
 	}
 
 	return new Promise((resolve, reject) => {

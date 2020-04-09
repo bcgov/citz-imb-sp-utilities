@@ -1,12 +1,14 @@
 import { RestCall } from '../utilities/Common'
 import { GetFormDigestValue } from './ContextInfo'
 
-export const GetListPermissions=({ url = '', listName, listGUID }) => {
+export const GetListPermissions = ({ url = '', listName, listGUID }) => {
 	let endPoint
 
 	if (!listGUID) {
 		if (!listName) {
-			return Promise.reject('GetListPermissions requires listGUID or listName')
+			return Promise.reject(
+				'GetListPermissions requires listGUID or listName'
+			)
 		} else {
 			endPoint = `/_api/web/Lists/getByTitle('${listName}')/RoleAssignments`
 		}
@@ -15,37 +17,15 @@ export const GetListPermissions=({ url = '', listName, listGUID }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint })
-			.then((response) => {
-				resolve(response.d)
-			})
-			.catch((response) => {
-				reject(response)
-			})
-	})
-}
-
-export const GetListPermissionsInheritance=({ url = '', listName, listGUID }) => {
-	let endPoint
-
-	if (!listGUID) {
-		if (!listName) {
-			return Promise.reject('GetListPermissions requires listGUID or listName')
-		} else {
-			endPoint = `/_api/web/Lists/getByTitle('${listName}')/RoleAssignments`
-		}
-	} else {
-		endPoint = `/_api/web/Lists('${listGUID}')/RoleAssignments`
-	}
-
-	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint })
-			.then((response) => {
-				resolve(response.d)
-			})
-			.catch((response) => {
-				reject(response)
-			})
+		RestCall({ url: url, endPoint: endPoint }).then((response) => {
+			console.log(`first response`, response.d.results)
+			// RestCall({
+			// 	url: url,
+			// 	endPoint: `${endPoint}/GetByPrincipalId(${role.PrincipalId})/RoleDefinitionBindings`,
+			// })
+		})
+	}).catch((response) => {
+		reject(response)
 	})
 }
 
