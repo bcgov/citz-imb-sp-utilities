@@ -1,7 +1,55 @@
 import { RestCall } from '../utilities/Common'
 import { GetFormDigestValue } from './ContextInfo'
 
-export const BreakInheritanceOnList = ({
+export const GetListPermissions=({ url = '', listName, listGUID }) => {
+	let endPoint
+
+	if (!listGUID) {
+		if (!listName) {
+			return Promise.reject('GetListPermissions requires listGUID or listName')
+		} else {
+			endPoint = `/_api/web/Lists/getByTitle('${listName}')/RoleAssignments`
+		}
+	} else {
+		endPoint = `/_api/web/Lists('${listGUID}')/RoleAssignments`
+	}
+
+	return new Promise((resolve, reject) => {
+		RestCall({ url: url, endPoint: endPoint })
+			.then((response) => {
+				resolve(response.d)
+			})
+			.catch((response) => {
+				reject(response)
+			})
+	})
+}
+
+export const GetListPermissionsInheritance=({ url = '', listName, listGUID }) => {
+	let endPoint
+
+	if (!listGUID) {
+		if (!listName) {
+			return Promise.reject('GetListPermissions requires listGUID or listName')
+		} else {
+			endPoint = `/_api/web/Lists/getByTitle('${listName}')/RoleAssignments`
+		}
+	} else {
+		endPoint = `/_api/web/Lists('${listGUID}')/RoleAssignments`
+	}
+
+	return new Promise((resolve, reject) => {
+		RestCall({ url: url, endPoint: endPoint })
+			.then((response) => {
+				resolve(response.d)
+			})
+			.catch((response) => {
+				reject(response)
+			})
+	})
+}
+
+export const BreakListPermissionsInheritance = ({
 	url = '',
 	listName,
 	listGUID,

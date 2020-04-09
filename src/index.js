@@ -24,8 +24,11 @@ import {
 	GetListViews,
 	GetListFields,
 } from './components/Lists'
-import {SendEmail} from './components/Email'
-import {BreakInheritanceOnList} from './components/Permissions'
+import { SendEmail } from './components/Email'
+import {
+	BreakListPermissionsInheritance,
+	GetListPermissions,
+} from './components/Permissions'
 
 export {
 	//ContextInfo
@@ -55,9 +58,10 @@ export {
 	//PeoplePicker
 	PeoplePicker,
 	//Permissions
+	GetListPermissions,
 	// SetPermissionsOnSite,
 	// SetPermissionsOnList,
-	BreakInheritanceOnList,
+	BreakListPermissionsInheritance,
 	// RemovePermissionsOnList,
 	//Users
 	GetUser,
