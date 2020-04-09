@@ -1,12 +1,4 @@
 export const RestCall = ({ url, endPoint, method = 'get', body = '', headers }) => {
-    console.groupCollapsed('--RestCall')
-    console.log(`url: '${url}'`)
-    console.log(`endPoint: '${endPoint}'`)
-    console.log(`method: '${method}'`)
-    console.log(`body:`, body)
-    console.log(`headers:`, headers)
-    console.groupEnd()
-
     let options = { method: method }
 
 
@@ -20,13 +12,16 @@ export const RestCall = ({ url, endPoint, method = 'get', body = '', headers }) 
                 if (response.ok) {
                     resolve(response.json())
                 } else {
-                    let error = new Error(response.statusText)
-                    error.response = response
-                    throw error
+                    console.groupCollapsed('--RestCall Details')
+                    console.warn(`url: '${url}'`)
+                    console.warn(`endPoint: '${endPoint}'`)
+                    console.warn(`method: '${method}'`)
+                    console.warn(`body:`, body)
+                    console.warn(`headers:`, headers)
+                    console.warn(`results: ${response.status} ${response.statusText}`)
+                    console.groupEnd()
+                    reject(`${response.status} ${response.statusText}`)
                 }
-            })
-            .catch(error => {
-                reject(error)
             })
     })
 }

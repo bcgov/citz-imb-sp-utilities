@@ -2,228 +2,274 @@ import { GetFormDigestValue } from './ContextInfo'
 import { RestCall } from '../utilities/Common'
 
 export const GetGroup = ({ url = '', groupId, groupName }) => {
-    let endPoint
+	let endPoint
 
-    if (!groupId) {
-        if (!groupName) {
-            return new Promise((resolve, reject) => { reject("GetGroup requires GroupId or GroupName") })
-        } else {
-            endPoint = `/_api/web/SiteGroups/getByName('${groupName}')`
-        }
-    } else {
-        endPoint = `/_api/web/SiteGroups(${groupId})`
-    }
+	if (!groupId) {
+		if (!groupName) {
+			return new Promise((resolve, reject) => {
+				reject('GetGroup requires GroupId or GroupName')
+			})
+		} else {
+			endPoint = `/_api/web/SiteGroups/getByName('${groupName}')`
+		}
+	} else {
+		endPoint = `/_api/web/SiteGroups(${groupId})`
+	}
 
-    return new Promise((resolve, reject) => {
-        RestCall({ url: url, endPoint: endPoint })
-            .then(response => {
-                resolve(response.d)
-            })
-    })
+	return new Promise((resolve, reject) => {
+		RestCall({ url: url, endPoint: endPoint })
+			.then((response) => {
+				resolve(response.d)
+			})
+			.catch((response) => {
+				reject(response)
+			})
+	})
 }
 
 export const GetGroupMembers = ({ url = '', groupId, groupName }) => {
-    let endPoint
+	let endPoint
 
-    if (!groupId) {
-        if (!groupName) {
-            return new Promise((resolve, reject) => { reject("GetGroupMembers requires GroupId or GroupName") })
-        } else {
-            endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users`
-        }
-    } else {
-        endPoint = `/_api/web/SiteGroups(${groupId})/Users`
-    }
+	if (!groupId) {
+		if (!groupName) {
+			return new Promise((resolve, reject) => {
+				reject('GetGroupMembers requires GroupId or GroupName')
+			})
+		} else {
+			endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users`
+		}
+	} else {
+		endPoint = `/_api/web/SiteGroups(${groupId})/Users`
+	}
 
-    return new Promise((resolve, reject) => {
-        RestCall({ url: url, endPoint: endPoint })
-            .then(response => {
-                resolve(response.d.results)
-            })
-    })
+	return new Promise((resolve, reject) => {
+		RestCall({ url: url, endPoint: endPoint })
+			.then((response) => {
+				resolve(response.d.results)
+			})
+			.catch((response) => {
+				reject(response)
+			})
+	})
 }
 
-export const AddUsersToGroup = ({ url = '', groupId, groupName, loginName }) => {
-    let endPoint
+export const AddUsersToGroup = ({
+	url = '',
+	groupId,
+	groupName,
+	loginName,
+}) => {
+	let endPoint
 
-    if (!loginName) {
-        return new Promise((resolve, reject) => { reject("AddUsersToGroup requires loginName") })
-    } else {
-        if (!Array.isArray(loginName)) {
-            loginName = [loginName]
-        }
-    }
+	if (!loginName) {
+		return new Promise((resolve, reject) => {
+			reject('AddUsersToGroup requires loginName')
+		})
+	} else {
+		if (!Array.isArray(loginName)) {
+			loginName = [loginName]
+		}
+	}
 
-    if (!groupId) {
-        if (!groupName) {
-            return new Promise((resolve, reject) => { reject("AddUsersToGroup requires GroupId or GroupName") })
-        } else {
-            endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users(${LoginName})`
-        }
-    } else {
-        endPoint = `/_api/web/SiteGroups(${groupId})/Users`
-    }
+	if (!groupId) {
+		if (!groupName) {
+			return new Promise((resolve, reject) => {
+				reject('AddUsersToGroup requires GroupId or GroupName')
+			})
+		} else {
+			endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users(${LoginName})`
+		}
+	} else {
+		endPoint = `/_api/web/SiteGroups(${groupId})/Users`
+	}
 
-    return new Promise((resolve, reject) => {
-        let fetches = []
+	return new Promise((resolve, reject) => {
+		let fetches = []
 
-        for (let i = 0; i < loginName.length; i++) {
-            fetches.push(
-                RestCall({
-                    url: url,
-                    endPoint: endPoint,
-                    method: 'post',
-                    body: {
-                        "__metadata": {
-                            "type": "SP.User"
-                        },
-                        "LoginName": loginName[i]
-                    },
-                    headers: {
-                        "accept": "application/json; odata=verbose",
-                        "content-type": "application/json; odata=verbose"
-                    }
-                })
-            )
-        }
+		for (let i = 0; i < loginName.length; i++) {
+			fetches.push(
+				RestCall({
+					url: url,
+					endPoint: endPoint,
+					method: 'post',
+					body: {
+						__metadata: {
+							type: 'SP.User',
+						},
+						LoginName: loginName[i],
+					},
+					headers: {
+						accept: 'application/json; odata=verbose',
+						'content-type': 'application/json; odata=verbose',
+					},
+				})
+			)
+		}
 
-        Promise
-            .all(fetches)
-            .then(data => {
-                resolve(data.map(user => {
-                    return user.d
-                }))
-            })
-            .catch(error => {
-                reject(error)
-            })
-    })
+		Promise.all(fetches)
+			.then((data) => {
+				resolve(
+					data.map((user) => {
+						return user.d
+					})
+				)
+			})
+			.catch((response) => {
+				reject(response)
+			})
+	})
 }
 
-export const RemoveUsersFromGroup = ({ url = '', groupId, groupName, loginName, userId }) => {
-    let endPoint
+export const RemoveUsersFromGroup = ({
+	url = '',
+	groupId,
+	groupName,
+	loginName,
+	userId,
+}) => {
+	let endPoint
 
-    if (!groupId) {
-        if (!groupName) {
-            return new Promise((resolve, reject) => { reject("RemoveUsersFromGroup requires GroupId or GroupName") })
-        } else {
-            endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users`
-        }
-    } else {
-        endPoint = `/_api/web/SiteGroups(${groupId})/Users`
-    }
+	if (!groupId) {
+		if (!groupName) {
+			return new Promise((resolve, reject) => {
+				reject('RemoveUsersFromGroup requires GroupId or GroupName')
+			})
+		} else {
+			endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users`
+		}
+	} else {
+		endPoint = `/_api/web/SiteGroups(${groupId})/Users`
+	}
 
-    if (!loginName) {
-        if (!userId) {
-            return new Promise((resolve, reject) => { reject("RemoveUserFromGroup requires userId or logonName") })
-        } else {
-            if (!Array.isArray(userId)) {
-                userId = [userId]
-            }
-        }
-    } else {
-        if (!Array.isArray(loginName)) {
-            userId = [loginName]
-        }
-    }
+	if (!loginName) {
+		if (!userId) {
+			return new Promise((resolve, reject) => {
+				reject('RemoveUserFromGroup requires userId or logonName')
+			})
+		} else {
+			if (!Array.isArray(userId)) {
+				userId = [userId]
+			}
+		}
+	} else {
+		if (!Array.isArray(loginName)) {
+			userId = [loginName]
+		}
+	}
 
-    return new Promise((resolve, reject) => {
-        GetFormDigestValue(url).then(digestValue => {
+	return new Promise((resolve, reject) => {
+		GetFormDigestValue(url).then((digestValue) => {
+			let fetches = []
 
-            let fetches = []
+			if (loginName) {
+				for (let i = 0; i < loginName.length; i++) {
+					fetches.push(
+						RestCall({
+							url: url,
+							endPoint: `${endPoint}/removeByLoginName('${loginName[i]}')`,
+							method: 'post',
+							headers: {
+								'x-requestdigest': digestValue,
+								accept: 'application/json; odata=verbose',
+								'content-type':
+									'application/json; odata=verbose',
+							},
+						})
+					)
+				}
+			} else {
+				for (let i = 0; i < userId.length; i++) {
+					fetches.push(
+						RestCall({
+							url: url,
+							endPoint: `${endPoint}/removeByID(${userId[i]})`,
+							method: 'post',
+							headers: {
+								'x-requestdigest': digestValue,
+								accept: 'application/json; odata=verbose',
+								'content-type':
+									'application/json; odata=verbose',
+							},
+						})
+					)
+				}
+			}
 
-            if (loginName) {
-                for (let i = 0; i < loginName.length; i++) {
-                    fetches.push(
-                        RestCall({
-                            url: url,
-                            endPoint: `${endPoint}/removeByLoginName('${loginName[i]}')`,
-                            method: 'post',
-                            headers: {
-                                "x-requestdigest": digestValue,
-                                "accept": "application/json; odata=verbose",
-                                "content-type": "application/json; odata=verbose"
-                            }
-                        })
-                    )
-                }
-            } else {
-                for (let i = 0; i < userId.length; i++) {
-                    fetches.push(
-                        RestCall({
-                            url: url,
-                            endPoint: `${endPoint}/removeByID(${userId[i]})`,
-                            method: 'post',
-                            headers: {
-                                "x-requestdigest": digestValue,
-                                "accept": "application/json; odata=verbose",
-                                "content-type": "application/json; odata=verbose"
-                            }
-                        })
-                    )
-                }
-            }
-
-            Promise
-                .all(fetches)
-                .then(data => {
-                    resolve(data.map(user => {
-                        return user.d
-                    }))
-                })
-                .catch(error => {
-                    reject(error)
-                })
-        })
-    })
+			Promise.all(fetches)
+				.then((data) => {
+					resolve(
+						data.map((user) => {
+							return user.d
+						})
+					)
+				})
+				.catch((response) => {
+					reject(response)
+				})
+		})
+	})
 }
 
 export const CreateGroup = ({ url = '', groupName, groupDescription = '' }) => {
-    let endPoint
-    const method = 'post'
-    const body = {
-        "__metadata": { "type": "SP.Group" },
-        "Description": groupDescription,
-        "Title": groupName
-    }
+	let endPoint
+	const method = 'post'
+	const body = {
+		__metadata: { type: 'SP.Group' },
+		Description: groupDescription,
+		Title: groupName,
+	}
 
-    if (!groupName) {
-        return new Promise((resolve, reject) => { reject("CreateGroup requires GroupName") })
-    } else {
-        endPoint = `/_api/web/SiteGroups`
-    }
+	if (!groupName) {
+		return new Promise((resolve, reject) => {
+			reject('CreateGroup requires GroupName')
+		})
+	} else {
+		endPoint = `/_api/web/SiteGroups`
+	}
 
-    return new Promise((resolve, reject) => {
-        GetFormDigestValue(url)
-            .then(response => {
-                const headers = {
-                    'accept': 'application/json; odata=verbose',
-                    'content-type': 'application/json; odata=verbose',
-                    'x-requestdigest': response
-                }
-                RestCall({ url: url, endPoint: endPoint, method: method, body: body, headers: headers })
-                    .then(response => {
-                        resolve(response.d)
-                    })
-            })
-    })
-
+	return new Promise((resolve, reject) => {
+		GetFormDigestValue(url).then((response) => {
+			const headers = {
+				accept: 'application/json; odata=verbose',
+				'content-type': 'application/json; odata=verbose',
+				'x-requestdigest': response,
+			}
+			RestCall({
+				url: url,
+				endPoint: endPoint,
+				method: method,
+				body: body,
+				headers: headers,
+			})
+				.then((response) => {
+					resolve(response.d)
+				})
+				.catch((response) => {
+					reject(response)
+				})
+		})
+	})
 }
 
 export const GetAssociatedGroups = (url = '') => {
-    return new Promise((resolve, reject) => {
-        Promise.all([
-            RestCall({ url: url, endPoint: `/_api/Web/AssociatedOwnerGroup` }),
-            RestCall({ url: url, endPoint: `/_api/Web/AssociatedMemberGroup` }),
-            RestCall({ url: url, endPoint: `/_api/Web/AssociatedVisitorGroup` })
-        ])
-            .then(response => {
-                resolve({
-                    AssociatedOwnerGroup: response[0].d,
-                    AssociatedMemberGroup: response[1].d,
-                    AssociatedVisitorGroup: response[2].d
-                })
-            })
-    })
-
+	return new Promise((resolve, reject) => {
+		Promise.all([
+			RestCall({ url: url, endPoint: `/_api/Web/AssociatedOwnerGroup` }),
+			RestCall({ url: url, endPoint: `/_api/Web/AssociatedMemberGroup` }),
+			RestCall({
+				url: url,
+				endPoint: `/_api/Web/AssociatedVisitorGroup`,
+			}),
+		])
+			.then((response) => {
+				resolve({
+					AssociatedOwnerGroup: response[0].d,
+					AssociatedMemberGroup: response[1].d,
+					AssociatedVisitorGroup: response[2].d,
+				})
+			})
+			.catch((response) => {
+				reject(response)
+			})
+	})
 }

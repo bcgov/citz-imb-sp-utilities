@@ -6,9 +6,7 @@ export const GetList = ({ url = '', listName, listGUID }) => {
 
 	if (!listGUID) {
 		if (!listName) {
-			return new Promise((resolve, reject) => {
-				reject('GetList requires listGUID or listName')
-			})
+			return Promise.reject('GetList requires listGUID or listName')
 		} else {
 			endPoint = `/_api/web/Lists/getByTitle('${listName}')`
 		}
@@ -17,9 +15,13 @@ export const GetList = ({ url = '', listName, listGUID }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint }).then((response) => {
-			resolve(response.d)
-		})
+		RestCall({ url: url, endPoint: endPoint })
+			.then((response) => {
+				resolve(response.d)
+			})
+			.catch((response) => {
+				reject(response)
+			})
 	})
 }
 
@@ -39,9 +41,13 @@ export const DeleteList = ({ url = '', listName, listGUID }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint, method: 'post' }).then((response) => {
-			resolve(response.d)
-		})
+		RestCall({ url: url, endPoint: endPoint, method: 'post' })
+			.then((response) => {
+				resolve(response.d)
+			})
+			.catch((response) => {
+				reject(response)
+			})
 	})
 }
 
@@ -58,8 +64,8 @@ export const CreateList = ({
 	let body = {
 		__metadata: {
 			type: 'SP.List',
-        },
-        Title: listName,
+		},
+		Title: listName,
 		AllowContentTypes: allowContentTypes,
 		BaseTemplate: baseTemplate,
 		ContentTypesEnabled: contentTypesEnabled,
@@ -88,9 +94,13 @@ export const CreateList = ({
 				method: method,
 				body: body,
 				headers: headers,
-			}).then((response) => {
-				resolve(response.d)
 			})
+				.then((response) => {
+					resolve(response.d)
+				})
+				.catch((response) => {
+					reject(response)
+				})
 		})
 	})
 }
@@ -130,9 +140,13 @@ export const GetListItems = ({
 	}
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint }).then((response) => {
-			resolve(response.d.results)
-		})
+		RestCall({ url: url, endPoint: endPoint })
+			.then((response) => {
+				resolve(response.d.results)
+			})
+			.catch((response) => {
+				reject(response)
+			})
 	})
 }
 
@@ -195,8 +209,8 @@ export const AddItemsToList = ({ url = '', listName, listGUID, items }) => {
 						})
 					)
 				})
-				.catch((error) => {
-					reject(error)
+				.catch((response) => {
+					reject(response)
 				})
 		})
 	})
@@ -257,8 +271,8 @@ export const RemoveItemsFromList = ({
 					})
 				)
 			})
-			.catch((error) => {
-				reject(error)
+			.catch((response) => {
+				reject(response)
 			})
 	})
 }
@@ -279,9 +293,13 @@ export const GetListViews = ({ url = '', listName, listGUID }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint }).then((response) => {
-			resolve(response.d)
-		})
+		RestCall({ url: url, endPoint: endPoint })
+			.then((response) => {
+				resolve(response.d)
+			})
+			.catch((response) => {
+				reject(response)
+			})
 	})
 }
 
@@ -301,9 +319,13 @@ export const GetListDefaultView = ({ url = '', listName, listGUID }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint }).then((response) => {
-			resolve(response.d)
-		})
+		RestCall({ url: url, endPoint: endPoint })
+			.then((response) => {
+				resolve(response.d)
+			})
+			.catch((response) => {
+				reject(response)
+			})
 	})
 }
 
@@ -323,8 +345,12 @@ export const GetListFields = ({ url = '', listName, listGUID }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint }).then((response) => {
-			resolve(response.d.results)
-		})
+		RestCall({ url: url, endPoint: endPoint })
+			.then((response) => {
+				resolve(response.d.results)
+			})
+			.catch((response) => {
+				reject(response)
+			})
 	})
 }
