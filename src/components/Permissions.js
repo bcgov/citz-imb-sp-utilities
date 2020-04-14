@@ -3,6 +3,7 @@ import { GetFormDigestValue } from './ContextInfo'
 
 export const GetListPermissions = ({ url = '', listName, listGUID }) => {
 	let endPoint
+	let endPointParameters = `?$expand=RoleDefinitionBindings,Member`
 
 	if (!listGUID) {
 		if (!listName) {
@@ -10,19 +11,15 @@ export const GetListPermissions = ({ url = '', listName, listGUID }) => {
 				'GetListPermissions requires listGUID or listName'
 			)
 		} else {
-			endPoint = `/_api/web/Lists/getByTitle('${listName}')/RoleAssignments`
+			endPoint = `/_api/web/Lists/getByTitle('${listName}')/RoleAssignments${endPointParameters}`
 		}
 	} else {
-		endPoint = `/_api/web/Lists('${listGUID}')/RoleAssignments`
+		endPoint = `/_api/web/Lists('${listGUID}')/RoleAssignments${endPointParameters}`
 	}
 
 	return new Promise((resolve, reject) => {
 		RestCall({ url: url, endPoint: endPoint }).then((response) => {
-			console.log(`first response`, response.d.results)
-			// RestCall({
-			// 	url: url,
-			// 	endPoint: `${endPoint}/GetByPrincipalId(${role.PrincipalId})/RoleDefinitionBindings`,
-			// })
+			resolve(response.d.results)
 		})
 	}).catch((response) => {
 		reject(response)
