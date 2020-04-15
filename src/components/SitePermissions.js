@@ -105,13 +105,7 @@ export const RemovePermissionsFromSite = ({
 	})
 }
 
-export const AddPermissionsToList = ({
-	url = '',
-	listName,
-	listGUID,
-	principalId,
-	roleDefId,
-}) => {
+export const AddPermissionsToSite = ({ url = '', principalId, roleDefId }) => {
 	let endPoint
 	let method = 'post'
 
@@ -121,17 +115,7 @@ export const AddPermissionsToList = ({
 		if (!roleDefId) {
 			return Promise.reject('AddPermissionsToList requires roleDefId')
 		} else {
-			if (!listGUID) {
-				if (!listName) {
-					return Promise.reject(
-						'AddPermissionsToList requires listGUID or listName'
-					)
-				} else {
-					endPoint = `/_api/web/Lists/getByTitle('${listName}')/RoleAssignments/addRoleAssignment(principalid=${principalId},roledefid=${roleDefId})`
-				}
-			} else {
-				endPoint = `/_api/web/Lists('${listGUID}')/RoleAssignments/addRoleAssignment(principalid=${principalId},roledefid=${roleDefId})`
-			}
+			endPoint = `/_api/web/RoleAssignments/addRoleAssignment(principalid=${principalId},roledefid=${roleDefId})`
 		}
 	}
 
