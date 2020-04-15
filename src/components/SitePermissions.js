@@ -70,10 +70,8 @@ export const ResetSitePermissionsInheritance = ({ url = '' }) => {
 	})
 }
 
-export const RemovePermissionsFromList = ({
+export const RemovePermissionsFromSite = ({
 	url = '',
-	listName,
-	listGUID,
 	principalId,
 	roleDefId,
 }) => {
@@ -88,17 +86,7 @@ export const RemovePermissionsFromList = ({
 				'RemovePermissionsFromList requires roleDefId'
 			)
 		} else {
-			if (!listGUID) {
-				if (!listName) {
-					return Promise.reject(
-						'RemovePermissionsFromList requires listGUID or listName'
-					)
-				} else {
-					endPoint = `/_api/web/Lists/getByTitle('${listName}')/RoleAssignments/removeRoleAssignment(principalid=${principalId},roledefid=${roleDefId})`
-				}
-			} else {
-				endPoint = `/_api/web/Lists('${listGUID}')/RoleAssignments/removeRoleAssignment(principalid=${principalId},roledefid=${roleDefId})`
-			}
+			endPoint = `/_api/web/RoleAssignments/removeRoleAssignment(principalid=${principalId},roledefid=${roleDefId})`
 		}
 	}
 
