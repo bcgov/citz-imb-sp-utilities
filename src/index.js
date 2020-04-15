@@ -10,6 +10,7 @@ import {
 	AddUsersToGroup,
 	RemoveUsersFromGroup,
 	GetAssociatedGroups,
+	ChangeGroupOwner,
 } from './components/Groups'
 import { PeoplePicker } from './components/PeoplePicker'
 import { GetUser, GetUserGroups } from './components/Users'
@@ -60,7 +61,7 @@ export {
 	AddUsersToGroup,
 	RemoveUsersFromGroup,
 	GetAssociatedGroups,
-	// ChangeGroupOwner,
+	ChangeGroupOwner,
 	/* ==============
 	Lists
 	*/

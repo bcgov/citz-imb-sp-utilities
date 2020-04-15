@@ -6,7 +6,7 @@ export const RestCall = ({
 	headers,
 }) => {
 	let options = { method: method }
-
+console.log('typeof body', typeof body, body)
 	if (typeof body !== 'string') {
 		options.body = JSON.stringify(body)
 	} else {

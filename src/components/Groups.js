@@ -1,4 +1,4 @@
-import { GetFormDigestValue } from './ContextInfo'
+import { GetFormDigestValue,GetContextWebInformation } from './ContextInfo'
 import { RestCall } from '../utilities/Common'
 
 export const GetGroup = ({ url = '', groupId, groupName }) => {
@@ -6,9 +6,7 @@ export const GetGroup = ({ url = '', groupId, groupName }) => {
 
 	if (!groupId) {
 		if (!groupName) {
-			return new Promise((resolve, reject) => {
-				reject('GetGroup requires GroupId or GroupName')
-			})
+			return Promise.reject('GetGroup requires GroupId or GroupName')
 		} else {
 			endPoint = `/_api/web/SiteGroups/getByName('${groupName}')`
 		}
@@ -32,9 +30,9 @@ export const GetGroupMembers = ({ url = '', groupId, groupName }) => {
 
 	if (!groupId) {
 		if (!groupName) {
-			return new Promise((resolve, reject) => {
-				reject('GetGroupMembers requires GroupId or GroupName')
-			})
+			return Promise.reject(
+				'GetGroupMembers requires GroupId or GroupName'
+			)
 		} else {
 			endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users`
 		}
@@ -62,9 +60,7 @@ export const AddUsersToGroup = ({
 	let endPoint
 
 	if (!loginName) {
-		return new Promise((resolve, reject) => {
-			reject('AddUsersToGroup requires loginName')
-		})
+		return Promise.reject('AddUsersToGroup requires loginName')
 	} else {
 		if (!Array.isArray(loginName)) {
 			loginName = [loginName]
@@ -73,9 +69,9 @@ export const AddUsersToGroup = ({
 
 	if (!groupId) {
 		if (!groupName) {
-			return new Promise((resolve, reject) => {
-				reject('AddUsersToGroup requires GroupId or GroupName')
-			})
+			return Promise.reject(
+				'AddUsersToGroup requires GroupId or GroupName'
+			)
 		} else {
 			endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users(${LoginName})`
 		}
@@ -131,9 +127,9 @@ export const RemoveUsersFromGroup = ({
 
 	if (!groupId) {
 		if (!groupName) {
-			return new Promise((resolve, reject) => {
-				reject('RemoveUsersFromGroup requires GroupId or GroupName')
-			})
+			return Promise.reject(
+				'RemoveUsersFromGroup requires GroupId or GroupName'
+			)
 		} else {
 			endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users`
 		}
@@ -143,9 +139,9 @@ export const RemoveUsersFromGroup = ({
 
 	if (!loginName) {
 		if (!userId) {
-			return new Promise((resolve, reject) => {
-				reject('RemoveUserFromGroup requires userId or logonName')
-			})
+			return Promise.reject(
+				'RemoveUserFromGroup requires userId or logonName'
+			)
 		} else {
 			if (!Array.isArray(userId)) {
 				userId = [userId]
@@ -220,9 +216,7 @@ export const CreateGroup = ({ url = '', groupName, groupDescription = '' }) => {
 	}
 
 	if (!groupName) {
-		return new Promise((resolve, reject) => {
-			reject('CreateGroup requires GroupName')
-		})
+		return Promise.reject('CreateGroup requires GroupName')
 	} else {
 		endPoint = `/_api/web/SiteGroups`
 	}
@@ -271,5 +265,80 @@ export const GetAssociatedGroups = (url = '') => {
 			.catch((response) => {
 				reject(response)
 			})
+	})
+}
+
+export const ChangeGroupOwner = ({
+	url = '',
+	groupId,
+	groupName,
+	ownerGroupId,
+}) => {
+	let siteId = "43a95d9c-69fd-48bd-a03e-01512dbed271"
+	let endPoint
+	let method = 'post'
+	let body = `<Request AddExpandoFieldTypeSuffix="true" SchemaVersion="15.0.0.0" LibraryVersion="15.0.0.0" ApplicationName=".NET Library" xmlns="http://schemas.microsoft.com/sharepoint/clientquery/2009">
+	<Actions>
+	  <SetProperty Id="1" ObjectPathId="2" Name="Owner">
+		<Parameter ObjectPathId="3" />
+	  </SetProperty>
+	  <Method Name="Update" Id="4" ObjectPathId="2" />
+	</Actions>
+	<ObjectPaths>
+	  <Identity Id="2" Name="740c6a0b-85e2-48a0-a494-e0f1759d4aa7:site:${siteId}:g:${groupId}" />
+	  <Identity Id="3" Name="740c6a0b-85e2-48a0-a494-e0f1759d4aa7:site:${siteId}:g:${ownerGroupId}" />
+	</ObjectPaths>
+  </Request>`
+
+	// {
+	// 	__metadata: {
+	// 		type: 'SP.Group',
+	// 	},
+	// 	Owner: {
+	// 		Id: ownerGroupId,
+	// 		PrincipalType: 1,
+	// 	},
+	// }
+
+	if (!ownerGroupId) {
+		return Promise.reject('ChangeGroupOwner requires newOwnerGroupId')
+	} else {
+		if (!groupId) {
+			if (!groupName) {
+				return Promise.reject(
+					'ChangeGroupOwner requires groupId or groupName'
+				)
+			} else {
+				endPoint = `/_api/web/SiteGroups/getByName('${groupName}')`
+			}
+		} else {
+			// endPoint = `/_api/web/SiteGroups(${groupId})/owner`
+			endPoint = `/_vti_bin/client.svc/ProcessQuery`
+		}
+	}
+
+	return new Promise((resolve, reject) => {
+		GetContextWebInformation(url).then((response) => {
+			console.log('GetContextWebInformation', response)
+
+			const headers = {
+				accept: 'application/json; odata=verbose',
+				'content-type': 'text/xml',
+				'x-requestdigest': response.FormDigestValue,
+			}
+			RestCall({
+				url: "https://citz.sp.gov.bc.ca/sites/DEV",
+				endPoint: endPoint,
+				method: method,
+				body: body,
+				headers: headers,
+			})
+				.then((response) => {
+					resolve(response)
+				})
+				.catch((response) => {
+					reject(response)
+				})
+		})
 	})
 }
