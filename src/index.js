@@ -29,6 +29,7 @@ import {
 	BreakListPermissionsInheritance,
 	GetListPermissions,
 	RemovePermissionsFromList,
+	AddPermissionsToList,
 } from './components/Permissions'
 
 export {
@@ -64,6 +65,7 @@ export {
 	// SetPermissionsOnList,
 	BreakListPermissionsInheritance,
 	RemovePermissionsFromList,
+	AddPermissionsToList,
 	//Users
 	GetUser,
 	GetUserGroups,

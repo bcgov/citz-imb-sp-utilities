@@ -107,7 +107,6 @@ export const RemovePermissionsFromList = ({
 			url: url,
 			endPoint: endPoint,
 			method: method,
-			headers: headers,
 		})
 			.then((response) => {
 				resolve(response.d)
@@ -129,23 +128,23 @@ export const AddPermissionsToList = ({
 	let method = 'post'
 
 	if (!principalId) {
-		return Promise.reject('RemovePermissionsFromList requires principalId')
+		return Promise.reject('AddPermissionsToList requires principalId')
 	} else {
 		if (!roleDefId) {
 			return Promise.reject(
-				'RemovePermissionsFromList requires roleDefId'
+				'AddPermissionsToList requires roleDefId'
 			)
 		} else {
 			if (!listGUID) {
 				if (!listName) {
 					return Promise.reject(
-						'RemovePermissionsFromList requires listGUID or listName'
+						'AddPermissionsToList requires listGUID or listName'
 					)
 				} else {
-					endPoint = `/_api/web/Lists/getByTitle('${listName}')/RoleAssignments/removeRoleAssignment(principalid=${principalId},roledefid=${roleDefId})`
+					endPoint = `/_api/web/Lists/getByTitle('${listName}')/RoleAssignments/addRoleAssignment(principalid=${principalId},roledefid=${roleDefId})`
 				}
 			} else {
-				endPoint = `/_api/web/Lists('${listGUID}')/RoleAssignments/removeRoleAssignment(principalid=${principalId},roledefid=${roleDefId})`
+				endPoint = `/_api/web/Lists('${listGUID}')/RoleAssignments/addRoleAssignment(principalid=${principalId},roledefid=${roleDefId})`
 			}
 		}
 	}
@@ -155,7 +154,6 @@ export const AddPermissionsToList = ({
 			url: url,
 			endPoint: endPoint,
 			method: method,
-			headers: headers,
 		})
 			.then((response) => {
 				resolve(response.d)
