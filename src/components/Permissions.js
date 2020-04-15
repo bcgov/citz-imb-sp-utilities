@@ -69,3 +69,7 @@ export const BreakListPermissionsInheritance = ({
 		})
 	})
 }
+
+export const AddPermissionsToSite = ({url = ''}) => {
+
+}

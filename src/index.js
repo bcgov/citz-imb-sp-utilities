@@ -28,6 +28,7 @@ import { SendEmail } from './components/Email'
 import {
 	BreakListPermissionsInheritance,
 	GetListPermissions,
+	AddPermissionsToSite,
 } from './components/Permissions'
 
 export {
@@ -59,7 +60,7 @@ export {
 	PeoplePicker,
 	//Permissions
 	GetListPermissions,
-	// SetPermissionsOnSite,
+	AddPermissionsToSite,
 	// SetPermissionsOnList,
 	BreakListPermissionsInheritance,
 	// RemovePermissionsOnList,
