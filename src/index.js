@@ -34,6 +34,7 @@ import {
 import {
 	GetSitePermissions,
 	ResetSitePermissionsInheritance,
+	BreakSitePermissionsInheritance,
 } from './components/SitePermissions'
 import { GetSite } from './components/Sites'
 
@@ -85,7 +86,7 @@ export {
 	Permissions - Site
 	*/
 	GetSitePermissions,
-	// BreakSitePermissionsInheritance,
+	BreakSitePermissionsInheritance,
 	ResetSitePermissionsInheritance,
 	// AddPermissionsToSite,
 	// SetPermissionsOnList,
