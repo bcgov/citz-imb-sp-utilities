@@ -70,6 +70,98 @@ export const BreakListPermissionsInheritance = ({
 	})
 }
 
-export const AddPermissionsToSite = ({url = ''}) => {
+export const RemovePermissionsFromList = ({
+	url = '',
+	listName,
+	listGUID,
+	principalId,
+	roleDefId,
+}) => {
+	let endPoint
+	let method = 'post'
 
+	if (!principalId) {
+		return Promise.reject('RemovePermissionsFromList requires principalId')
+	} else {
+		if (!roleDefId) {
+			return Promise.reject(
+				'RemovePermissionsFromList requires roleDefId'
+			)
+		} else {
+			if (!listGUID) {
+				if (!listName) {
+					return Promise.reject(
+						'RemovePermissionsFromList requires listGUID or listName'
+					)
+				} else {
+					endPoint = `/_api/web/Lists/getByTitle('${listName}')/RoleAssignments/removeRoleAssignment(principalid=${principalId},roledefid=${roleDefId})`
+				}
+			} else {
+				endPoint = `/_api/web/Lists('${listGUID}')/RoleAssignments/removeRoleAssignment(principalid=${principalId},roledefid=${roleDefId})`
+			}
+		}
+	}
+
+	return new Promise((resolve, reject) => {
+		RestCall({
+			url: url,
+			endPoint: endPoint,
+			method: method,
+			headers: headers,
+		})
+			.then((response) => {
+				resolve(response.d)
+			})
+			.catch((response) => {
+				reject(response)
+			})
+	})
+}
+
+export const AddPermissionsToList = ({
+	url = '',
+	listName,
+	listGUID,
+	principalId,
+	roleDefId,
+}) => {
+	let endPoint
+	let method = 'post'
+
+	if (!principalId) {
+		return Promise.reject('RemovePermissionsFromList requires principalId')
+	} else {
+		if (!roleDefId) {
+			return Promise.reject(
+				'RemovePermissionsFromList requires roleDefId'
+			)
+		} else {
+			if (!listGUID) {
+				if (!listName) {
+					return Promise.reject(
+						'RemovePermissionsFromList requires listGUID or listName'
+					)
+				} else {
+					endPoint = `/_api/web/Lists/getByTitle('${listName}')/RoleAssignments/removeRoleAssignment(principalid=${principalId},roledefid=${roleDefId})`
+				}
+			} else {
+				endPoint = `/_api/web/Lists('${listGUID}')/RoleAssignments/removeRoleAssignment(principalid=${principalId},roledefid=${roleDefId})`
+			}
+		}
+	}
+
+	return new Promise((resolve, reject) => {
+		RestCall({
+			url: url,
+			endPoint: endPoint,
+			method: method,
+			headers: headers,
+		})
+			.then((response) => {
+				resolve(response.d)
+			})
+			.catch((response) => {
+				reject(response)
+			})
+	})
 }
