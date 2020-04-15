@@ -26,20 +26,28 @@ import {
 } from './components/Lists'
 import { SendEmail } from './components/Email'
 import {
-	BreakListPermissionsInheritance,
 	GetListPermissions,
+	BreakListPermissionsInheritance,
 	RemovePermissionsFromList,
 	AddPermissionsToList,
-} from './components/Permissions'
+} from './components/ListPermissions'
+import { GetSitePermissions } from './components/SitePermissions'
+import { GetSite } from './components/Sites'
 
 export {
-	//ContextInfo
+	/* ==============
+	ContextInfo
+	*/
 	GetContextWebInformation,
 	GetFormDigestValue,
 	GetCurrentUser,
-	//Email
+	/* ==============
+	Email
+	*/
 	SendEmail,
-	//Groups
+	/* ==============
+	Groups
+	*/
 	GetGroup,
 	CreateGroup,
 	GetGroupMembers,
@@ -47,7 +55,9 @@ export {
 	RemoveUsersFromGroup,
 	GetAssociatedGroups,
 	// ChangeGroupOwner,
-	//Lists
+	/* ==============
+	Lists
+	*/
 	GetList,
 	GetListItems,
 	AddItemsToList,
@@ -57,16 +67,31 @@ export {
 	GetListFields,
 	CreateList,
 	DeleteList,
-	//PeoplePicker
+	/* ==============
+	PeoplePicker
+	*/
 	PeoplePicker,
-	//Permissions
+	/* ==============
+	Permissions - List
+	*/
 	GetListPermissions,
-	// AddPermissionsToSite,
-	// SetPermissionsOnList,
 	BreakListPermissionsInheritance,
 	RemovePermissionsFromList,
 	AddPermissionsToList,
-	//Users
+	/* ==============
+	Permissions - Site
+	*/
+	GetSitePermissions,
+	// BreakSitePermissionsInheritance,
+	// AddPermissionsToSite,
+	// SetPermissionsOnList,
+	/* ==============
+	Sites
+	*/
+	GetSite,
+	/* ==============
+	Users
+	*/
 	GetUser,
 	GetUserGroups,
 }
