@@ -1,7 +1,7 @@
 import { RestCall } from '../utilities/Common'
 import { GetFormDigestValue } from './ContextInfo'
 
-export const GetSitePermissions = ({ url = ''}) => {
+export const GetSitePermissions = ({ url = '' }) => {
 	let endPointParameters = `?$expand=RoleDefinitionBindings,Member`
 	let endPoint = `/_api/web/RoleAssignments${endPointParameters}`
 
@@ -14,27 +14,39 @@ export const GetSitePermissions = ({ url = ''}) => {
 	})
 }
 
-export const BreakListPermissionsInheritance = ({
+export const BreakSitePermissionsInheritance = ({
 	url = '',
-	listName,
-	listGUID,
 	copy = true,
 	clear = false,
 }) => {
-	let endPoint
+	let endPoint = `/_api/web/breakroleinheritance(copyRoleAssignments=${copy},clearSubscopes=${clear})`
 	let method = 'post'
 
-	if (!listGUID) {
-		if (!listName) {
-			return new Promise((resolve, reject) => {
-				reject('BreakInheritanceOnList requires listGUID or listName')
+	return new Promise((resolve, reject) => {
+		GetFormDigestValue(url).then((formDigestValue) => {
+			let headers = {
+				'x-requestdigest': formDigestValue,
+			}
+
+			RestCall({
+				url: url,
+				endPoint: endPoint,
+				method: method,
+				headers: headers,
 			})
-		} else {
-			endPoint = `/_api/web/Lists/getByTitle('${listName}')/breakroleinheritance(copyRoleAssignments=${copy},clearSubscopes=${clear})`
-		}
-	} else {
-		endPoint = `/_api/web/Lists('${listGUID}')/breakroleinheritance(copyRoleAssignments=${copy},clearSubscopes=${clear})`
-	}
+				.then((response) => {
+					resolve(response.d)
+				})
+				.catch((response) => {
+					reject(response)
+				})
+		})
+	})
+}
+
+export const ResetSitePermissionsInheritance = ({ url = '' }) => {
+	let endPoint = `/_api/web/resetroleinheritance`
+	let method = 'post'
 
 	return new Promise((resolve, reject) => {
 		GetFormDigestValue(url).then((formDigestValue) => {
@@ -119,9 +131,7 @@ export const AddPermissionsToList = ({
 		return Promise.reject('AddPermissionsToList requires principalId')
 	} else {
 		if (!roleDefId) {
-			return Promise.reject(
-				'AddPermissionsToList requires roleDefId'
-			)
+			return Promise.reject('AddPermissionsToList requires roleDefId')
 		} else {
 			if (!listGUID) {
 				if (!listName) {
