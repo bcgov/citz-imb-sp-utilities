@@ -319,15 +319,13 @@ export const ChangeGroupOwner = ({
 
 	return new Promise((resolve, reject) => {
 		GetContextWebInformation(url).then((response) => {
-			console.log('GetContextWebInformation', response)
-
 			const headers = {
 				accept: 'application/json; odata=verbose',
 				'content-type': 'text/xml',
 				'x-requestdigest': response.FormDigestValue,
 			}
 			RestCall({
-				url: "https://citz.sp.gov.bc.ca/sites/DEV",
+				url: url,
 				endPoint: endPoint,
 				method: method,
 				body: body,
