@@ -1,4 +1,4 @@
-export const GetUser = ({ url = '', userId }) => {
+export const GetUser = ({ baseurl = '', userId }) => {
 	let endPoint
 
 	if (!userId) {
@@ -10,7 +10,7 @@ export const GetUser = ({ url = '', userId }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		fetch(`${url}${endPoint}`)
+		fetch(`${baseurl}${endPoint}`)
 			.then((results) => {
 				if (results.ok) {
 					return results.json()
@@ -31,7 +31,7 @@ export const GetUser = ({ url = '', userId }) => {
 	})
 }
 
-export const GetUserGroups = ({ url = '', userId }) => {
+export const GetUserGroups = ({ baseurl = '', userId }) => {
 	console.log('GetUserGroups', userId)
 	let endPoint
 
@@ -44,7 +44,7 @@ export const GetUserGroups = ({ url = '', userId }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		fetch(`${url}${endPoint}`)
+		fetch(`${baseurl}${endPoint}`)
 			.then((results) => {
 				console.log(results)
 				if (results.ok) {

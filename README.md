@@ -6,78 +6,108 @@ utility methods/functions for use with SharePoint 2016. Depends on [React](https
 
 `npm install citz-imb-sp-utilities`
 
-## ContextInfo
+## PeoplePicker Usage
 
-baseurl will be in the form of "https://\<mydomain\>/sites/\<mysite\>"
 
-```
-import {GetContextWebInformation, GetFormDigestValue, GetCurrentUser} from 'citz-imb-sp-utilities'
+**import { PeoplePicker } from 'citz-imb-sp-utilities'**
 
-GetContextWebInformation("baseurl").then(response => {code...})
-GetFormDigestValue("baseurl").then(response => {code...})
-GetCurrentUser().then(response => {code...})
-```
-
-## PeoplePicker
-
-```
-import { PeoplePicker } from 'citz-imb-sp-utilities'
+**const getUserInfo = () => {_code..._}**
 
 <PeoplePicker
         schema={{
-            PrincipalAccountType: "[User | DL | SecGroup | SPGroup]",
-            SearchPrincipleSource: 15,
-            ResolvePrincipalSource: 15,
-            AllowMultipleValues: [true | false],
+            PrincipalAccountType: "_User | DL | SecGroup | SPGroup_",
+            SearchPrincipleSource: _15_,
+            ResolvePrincipalSource: _15_,
+            AllowMultipleValues: _true | false_,
             MaximumEntitySuggestions: [5],
-            Width: ["250px"],
+            Width: _"250px"_,
             SharePointGroupID: [null | groupNumber]
-        }}
-        elementName="[elementName]"
-        getUserInfo={[getUserInfo]} />
-```
+        }_}
+        elementName="_elementName_"
+        getUserInfo={_getUserInfo_} />
 
-## Groups
+## Method Usage
 
-baseurl will be in the form of "https://\<mydomain\>/sites/\<mysite\>"
-you must supply groupId (as a number) or groupName (as text), and loginName (as text in the format 'i:0#.w|accountguid') or userId (as a number)
-loginName and userId can also be an array of their type.
+**import { _MethodName_  } from 'citz-imb-sp-utilities'**
 
-```
-import {GetGroup, GetGroupMembers, AddUsersToGroup, RemoveUsersFromGroup } from 'citz-imb-sp-utilities'
+**_MethodName_(_parameters_).then(response => {_code..._})**
 
-GetGroup({url:"baseurl", groupId: number, groupName: "name"}).then(response =>{code...})
-GetGroupMembers({url:"baseurl", groupId: number, groupName: "name"}).then(response =>{code...})
-AddUsersToGroup({url:"baseurl", groupId: number, groupName: "name", loginName: ""}).then(response =>{code...})
-RemoveUsersFromGroup({url:"baseurl", groupId: number, groupName: "name", loginName: "i:0#.w|accountguid"}).then(data =>{response...})
-```
+## Parameters
 
-## Lists
+Parameters in **bold** are required.  Where an _Id_ and a _Name_ parameter are specified, usually only one is required, with _Id_ being used if both are supplied.
 
-baseurl will be in the form of "https://\<mydomain\>/sites/\<mysite\>"
-you must supply listGUID (as text) or listName (as text)
-items and itemIds can also be an array of their type.
+- **baseurl:** a string the form of _https://\<mydomain\>/sites/\<mysite\>_.  Default is the value of *_spPageContextInfo.webAbsoluteUrl*.
+- **bcc:** an array of userAccounts in form of _i:0ǵ.t|bcgovidp|- - **body:** a string.  May contain html tags.
+**cc:** an array of userAccounts in form of _i:0ǵ.t|bcgovidp|a32d6f859c66450ca4995b0b2bf0a###_.
+a32d6f859c66450ca4995b0b2bf0a###_.
+- **clear:** a boolean value.
+- **copy:** a boolean value.
+- **groupDescription:** a string.
+- **groupId:** an integer.
+- **groupName:** a string.
+- **itemIds:** an array of integers.  May also be a single integer.
+- **items:** a json object.
+- **listGUID:** a string in the form of a _529b7384-98bd-40c6-81e6-54a797###ec5_.
+- **listName:** a string.
+- **loginName:** an array of userAccounts in form of _i:0ǵ.t|bcgovidp|a32d6f859c66450ca4995b0b2bf0a###_.  May also be a string with a single userAccount
+- **ownerGroupId:** an integer.
+- **ownerGroupName:** a string.
+- **principalId:** an integer.
+- **roleDefId:** an integer
+- **subject:** a string.
+- **to:** an array of userAccounts in form of _i:0ǵ.t|bcgovidp|
+a32d6f859c66450ca4995b0b2bf0a###_.
+- **userId:** an integer.
 
-```
-import {GetList, GetListItems, AddItemsToList, RemoveItemsFromList, GetListDefaultView, GetListViews, GetListFields } from 'citz-imb-sp-utilities'
+## Methods
 
-GetList({ url:"baseurl", listName: "name", listGUID: "guid" }).then(response =>{code...})
-GetListItems({ url:"baseurl", listName: "name", listGUID: "guid" }).then(response =>{code...})
-AddItemsToList({ url:"baseurl", listName: "name", listGUID: "guid", items: {object} }).then(response =>{code...})
-RemoveItemsFromList({ url:"baseurl", listName: "name", listGUID: "guid", itemIds: number }).then(data =>{response...})
-GetListDefaultView({ url:"baseurl", listName: "name", listGUID: "guid" }).then(response =>{code...})
-GetListViews({ url:"baseurl", listName: "name", listGUID: "guid" }).then(response =>{code...})
-GetListFields({ url:"baseurl", listName: "name", listGUID: "guid" }).then(response =>{code...})
-```
+### ContextInfo
 
-## Users
+- GetContextWebInformation(_baseurl_)
+- GetFormDigestValue(_baseurl_)
+- GetCurrentUser(_baseurl_)
 
-baseurl will be in the form of "https://\<mydomain\>/sites/\<mysite\>"
-you must supply userId
+### Email
 
-```
-import { GetUser, GetUserGroups } from 'citz-imb-sp-utilities'
+- SendEmail({_baseurl_, **_to_**, _cc_, _bcc_, **_subject_**, **_body_**})
 
-GetUser({url:"baseurl", userId: number }).then(response => {code...})
-GetUserGroups({url:"baseurl", userId: number }).then(response => {code...})
-```
+### Groups
+
+- AddUsersToGroup({_baseurl_, **_groupId_**, **_groupName_**, **_loginName_**})
+- ChangeGroupOwner({_baseurl_, **_groupId_**, **_groupName_**, **_ownerGroupId_**, **_ownerGroupName_**})
+- CreateGroup({_baseurl_, **_groupName_**, _groupDescription_})
+- GetAssociatedGroups(_baseurl_)
+- GetGroup({_baseurl_, **_groupId_**, **_groupName_**})
+- GetGroupMembers({_baseurl_, **_groupId_**, **_groupName_**})
+- RemoveUsersFromGroup({_baseurl_, **_groupId_**, **_groupName_**, **_loginName_**, **_userId_**})
+
+### Lists
+- AddItemsToList({_baseurl_, **_listName_**, **_listGUID_**, **_items_**})
+- CreateList({_baseurl_, **_listName_**, _allowContentTypes_, _baseTemplate_, _contentTypesEnabled_, _description_})
+- DeleteList({_baseurl_, **_listName_**, **_listGUID_**})
+- GetList({_baseurl_, **_listName_**, **_listGUID_**})
+- GetListDefaultView({_baseurl_, **_listName_**, **_listGUID_**})
+- GetListFields({_baseurl_, **_listName_**, **_listGUID_**})
+- GetListItems({_baseurl_, **_listName_**, **_listGUID_**, _filter_, _expand_})
+- GetListViews({_baseurl_, **_listName_**, **_listGUID_**})
+- RemoveItemsFromList({_baseurl_, **_listName_**, **_listGUID_**, **_itemIds_**})
+
+### Permissions
+- List
+  - AddPermissionsToList({_baseurl_, **_listName_**, **_listGUID_**, _principalId_, _roleDefId_})
+  - BreakListPermissionsInheritance({_baseurl_, **_listName_**, **_listGUID_**, _copy_, _clear_})
+  - GetListPermissions({_baseurl_, **_listName_**, **_listGUID_**})
+  - RemovePermissionsFromList({_baseurl_, **_listName_**, **_listGUID_**, _principalId_, _roleDefId_})
+- Site
+  - AddPermissionsToSite({_baseurl_, _principalId_, _roleDefId_})
+  - BreakSitePermissionsInheritance({_baseurl_, _copy_, _clear_})
+  - GetSitePermissions(_baseurl_)
+  - RemovePermissionsFromSite({_baseurl_, _principalId_, _roleDefId_})
+  - ResetSitePermissionsInheritance(_baseurl_)
+
+### Sites
+- GetSite(_baseurl_)
+
+### Users
+- GetUser({_baseurl_, **_userId_** })
+- GetUserGroups({_baseurl_, **_userId_** })

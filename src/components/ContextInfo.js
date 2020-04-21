@@ -1,8 +1,8 @@
 import { RestCall } from '../utilities/Common'
 
-export const GetContextWebInformation = (url = '') => {
+export const GetContextWebInformation = (baseurl = '') => {
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: '/_api/contextinfo', method: 'post' })
+		RestCall({ url: baseurl, endPoint: '/_api/contextinfo', method: 'post' })
 			.then((response) => {
 				resolve(response.d.GetContextWebInformation)
 			})
@@ -12,9 +12,9 @@ export const GetContextWebInformation = (url = '') => {
 	})
 }
 
-export const GetFormDigestValue = (url) => {
+export const GetFormDigestValue = (baseurl = '') => {
 	return new Promise((resolve, reject) => {
-		GetContextWebInformation(url)
+		GetContextWebInformation(baseurl)
 			.then((response) => {
 				resolve(response.FormDigestValue)
 			})
@@ -24,9 +24,9 @@ export const GetFormDigestValue = (url) => {
 	})
 }
 
-export const GetCurrentUser = (url = '') => {
+export const GetCurrentUser = (baseurl = '') => {
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: '/_api/web/CurrentUser' })
+		RestCall({ url: baseurl, endPoint: '/_api/web/CurrentUser' })
 			.then((response) => {
 				resolve(response.d)
 			})

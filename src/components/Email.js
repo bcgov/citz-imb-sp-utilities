@@ -2,7 +2,7 @@ import { RestCall } from '../utilities/Common'
 import { GetFormDigestValue } from './ContextInfo'
 
 export const SendEmail = ({
-	url = '',
+	baseurl = '',
 	to,
 	cc = [],
 	bcc = [],
@@ -30,14 +30,14 @@ export const SendEmail = ({
 	const endPoint = '/_api/SP.Utilities.Utility.SendEmail'
 
 	return new Promise((resolve, reject) => {
-		GetFormDigestValue(url).then((formDigestValue) => {
+		GetFormDigestValue(baseurl).then((formDigestValue) => {
 			const headers = {
 				Accept: 'application/json;odata=verbose',
 				'content-type': 'application/json;odata=verbose',
 				'X-RequestDigest': formDigestValue,
 			}
 			RestCall({
-				url: url,
+				url: baseurl,
 				endPoint: endPoint,
 				method: 'post',
 				body: restbody,

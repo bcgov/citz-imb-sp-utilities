@@ -1,7 +1,7 @@
 import { RestCall } from '../utilities/Common'
 import { GetFormDigestValue } from './ContextInfo'
 
-export const GetList = ({ url = '', listName, listGUID }) => {
+export const GetList = ({ baseurl = '', listName, listGUID }) => {
 	let endPoint
 	const endPointParameters = `?$expand=FirstUniqueAncestorSecurableObject`
 
@@ -16,7 +16,7 @@ export const GetList = ({ url = '', listName, listGUID }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint })
+		RestCall({ url: baseurl, endPoint: endPoint })
 			.then((response) => {
 				resolve(response.d)
 			})
@@ -26,7 +26,7 @@ export const GetList = ({ url = '', listName, listGUID }) => {
 	})
 }
 
-export const DeleteList = ({ url = '', listName, listGUID }) => {
+export const DeleteList = ({ baseurl = '', listName, listGUID }) => {
 	let endPoint
 
 	if (!listGUID) {
@@ -42,7 +42,7 @@ export const DeleteList = ({ url = '', listName, listGUID }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint, method: 'post' })
+		RestCall({ url: baseurl, endPoint: endPoint, method: 'post' })
 			.then((response) => {
 				resolve(response.d)
 			})
@@ -53,7 +53,7 @@ export const DeleteList = ({ url = '', listName, listGUID }) => {
 }
 
 export const CreateList = ({
-	url = '',
+	baseurl = '',
 	listName,
 	allowContentTypes = false,
 	baseTemplate = 100,
@@ -82,7 +82,7 @@ export const CreateList = ({
 	}
 
 	return new Promise((resolve, reject) => {
-		GetFormDigestValue(url).then((formDigestValue) => {
+		GetFormDigestValue(baseurl).then((formDigestValue) => {
 			let headers = {
 				'x-requestdigest': formDigestValue,
 				accept: 'application/json; odata=verbose',
@@ -90,7 +90,7 @@ export const CreateList = ({
 			}
 
 			RestCall({
-				url: url,
+				url: baseurl,
 				endPoint: endPoint,
 				method: method,
 				body: body,
@@ -107,7 +107,7 @@ export const CreateList = ({
 }
 
 export const GetListItems = ({
-	url = '',
+	baseurl = '',
 	listName,
 	listGUID,
 	filter,
@@ -141,7 +141,7 @@ export const GetListItems = ({
 	}
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint })
+		RestCall({ url: baseurl, endPoint: endPoint })
 			.then((response) => {
 				resolve(response.d.results)
 			})
@@ -151,7 +151,7 @@ export const GetListItems = ({
 	})
 }
 
-export const AddItemsToList = ({ url = '', listName, listGUID, items }) => {
+export const AddItemsToList = ({ baseurl = '', listName, listGUID, items }) => {
 	let endPoint
 
 	if (!items) {
@@ -180,7 +180,7 @@ export const AddItemsToList = ({ url = '', listName, listGUID, items }) => {
 		let fetches = []
 
 		Promise.all([
-			GetList({ url, listName, listGUID }),
+			GetList({ url: baseurl, listName, listGUID }),
 			GetFormDigestValue(),
 		]).then((response) => {
 			for (let i = 0; i < items.length; i++) {
@@ -189,7 +189,7 @@ export const AddItemsToList = ({ url = '', listName, listGUID, items }) => {
 				}
 				fetches.push(
 					RestCall({
-						url: url,
+						url: baseurl,
 						endPoint: endPoint,
 						method: 'post',
 						body: items[i],
@@ -218,7 +218,7 @@ export const AddItemsToList = ({ url = '', listName, listGUID, items }) => {
 }
 
 export const RemoveItemsFromList = ({
-	url = '',
+	baseurl = '',
 	listName,
 	listGUID,
 	itemIds,
@@ -253,7 +253,7 @@ export const RemoveItemsFromList = ({
 		for (let i = 0; i < itemIds.length; i++) {
 			fetches.push(
 				RestCall({
-					url: url,
+					url: baseurl,
 					endPoint: `${endPoint}(${itemIds[i]})/recycle`,
 					method: 'post',
 					headers: {
@@ -278,7 +278,7 @@ export const RemoveItemsFromList = ({
 	})
 }
 
-export const GetListViews = ({ url = '', listName, listGUID }) => {
+export const GetListViews = ({ baseurl = '', listName, listGUID }) => {
 	let endPoint
 
 	if (!listGUID) {
@@ -294,7 +294,7 @@ export const GetListViews = ({ url = '', listName, listGUID }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint })
+		RestCall({ url: baseurl, endPoint: endPoint })
 			.then((response) => {
 				resolve(response.d)
 			})
@@ -304,7 +304,7 @@ export const GetListViews = ({ url = '', listName, listGUID }) => {
 	})
 }
 
-export const GetListDefaultView = ({ url = '', listName, listGUID }) => {
+export const GetListDefaultView = ({ baseurl = '', listName, listGUID }) => {
 	let endPoint
 
 	if (!listGUID) {
@@ -320,7 +320,7 @@ export const GetListDefaultView = ({ url = '', listName, listGUID }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint })
+		RestCall({ url: baseurl, endPoint: endPoint })
 			.then((response) => {
 				resolve(response.d)
 			})
@@ -330,7 +330,7 @@ export const GetListDefaultView = ({ url = '', listName, listGUID }) => {
 	})
 }
 
-export const GetListFields = ({ url = '', listName, listGUID }) => {
+export const GetListFields = ({ baseurl = '', listName, listGUID }) => {
 	let endPoint
 
 	if (!listGUID) {
@@ -346,7 +346,7 @@ export const GetListFields = ({ url = '', listName, listGUID }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint })
+		RestCall({ url: baseurl, endPoint: endPoint })
 			.then((response) => {
 				resolve(response.d.results)
 			})

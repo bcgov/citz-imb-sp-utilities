@@ -1,12 +1,12 @@
 import { RestCall } from '../utilities/Common'
 import { GetFormDigestValue } from './ContextInfo'
 
-export const GetSitePermissions = ({ url = '' }) => {
+export const GetSitePermissions = (baseurl = '') => {
 	let endPointParameters = `?$expand=RoleDefinitionBindings,Member`
 	let endPoint = `/_api/web/RoleAssignments${endPointParameters}`
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint }).then((response) => {
+		RestCall({ url: baseurl, endPoint: endPoint }).then((response) => {
 			resolve(response.d.results)
 		})
 	}).catch((response) => {
@@ -15,7 +15,7 @@ export const GetSitePermissions = ({ url = '' }) => {
 }
 
 export const BreakSitePermissionsInheritance = ({
-	url = '',
+	baseurl = '',
 	copy = true,
 	clear = false,
 }) => {
@@ -23,13 +23,13 @@ export const BreakSitePermissionsInheritance = ({
 	let method = 'post'
 
 	return new Promise((resolve, reject) => {
-		GetFormDigestValue(url).then((formDigestValue) => {
+		GetFormDigestValue(baseurl).then((formDigestValue) => {
 			let headers = {
 				'x-requestdigest': formDigestValue,
 			}
 
 			RestCall({
-				url: url,
+				url: baseurl,
 				endPoint: endPoint,
 				method: method,
 				headers: headers,
@@ -44,18 +44,18 @@ export const BreakSitePermissionsInheritance = ({
 	})
 }
 
-export const ResetSitePermissionsInheritance = ({ url = '' }) => {
+export const ResetSitePermissionsInheritance = (baseurl = '') => {
 	let endPoint = `/_api/web/resetroleinheritance`
 	let method = 'post'
 
 	return new Promise((resolve, reject) => {
-		GetFormDigestValue(url).then((formDigestValue) => {
+		GetFormDigestValue(baseurl).then((formDigestValue) => {
 			let headers = {
 				'x-requestdigest': formDigestValue,
 			}
 
 			RestCall({
-				url: url,
+				url: baseurl,
 				endPoint: endPoint,
 				method: method,
 				headers: headers,
@@ -71,7 +71,7 @@ export const ResetSitePermissionsInheritance = ({ url = '' }) => {
 }
 
 export const RemovePermissionsFromSite = ({
-	url = '',
+	baseurl = '',
 	principalId,
 	roleDefId,
 }) => {
@@ -92,7 +92,7 @@ export const RemovePermissionsFromSite = ({
 
 	return new Promise((resolve, reject) => {
 		RestCall({
-			url: url,
+			url: baseurl,
 			endPoint: endPoint,
 			method: method,
 		})
@@ -105,7 +105,7 @@ export const RemovePermissionsFromSite = ({
 	})
 }
 
-export const AddPermissionsToSite = ({ url = '', principalId, roleDefId }) => {
+export const AddPermissionsToSite = ({ baseurl = '', principalId, roleDefId }) => {
 	let endPoint
 	let method = 'post'
 
@@ -121,7 +121,7 @@ export const AddPermissionsToSite = ({ url = '', principalId, roleDefId }) => {
 
 	return new Promise((resolve, reject) => {
 		RestCall({
-			url: url,
+			url: baseurl,
 			endPoint: endPoint,
 			method: method,
 		})

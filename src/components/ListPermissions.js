@@ -1,7 +1,7 @@
 import { RestCall } from '../utilities/Common'
 import { GetFormDigestValue } from './ContextInfo'
 
-export const GetListPermissions = ({ url = '', listName, listGUID }) => {
+export const GetListPermissions = ({ baseurl = '', listName, listGUID }) => {
 	let endPoint
 	let endPointParameters = `?$expand=RoleDefinitionBindings,Member`
 
@@ -18,7 +18,7 @@ export const GetListPermissions = ({ url = '', listName, listGUID }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint }).then((response) => {
+		RestCall({ url: baseurl, endPoint: endPoint }).then((response) => {
 			resolve(response.d.results)
 		})
 	}).catch((response) => {
@@ -27,7 +27,7 @@ export const GetListPermissions = ({ url = '', listName, listGUID }) => {
 }
 
 export const BreakListPermissionsInheritance = ({
-	url = '',
+	baseurl = '',
 	listName,
 	listGUID,
 	copy = true,
@@ -49,13 +49,13 @@ export const BreakListPermissionsInheritance = ({
 	}
 
 	return new Promise((resolve, reject) => {
-		GetFormDigestValue(url).then((formDigestValue) => {
+		GetFormDigestValue(baseurl).then((formDigestValue) => {
 			let headers = {
 				'x-requestdigest': formDigestValue,
 			}
 
 			RestCall({
-				url: url,
+				url: baseurl,
 				endPoint: endPoint,
 				method: method,
 				headers: headers,
@@ -71,7 +71,7 @@ export const BreakListPermissionsInheritance = ({
 }
 
 export const RemovePermissionsFromList = ({
-	url = '',
+	baseurl = '',
 	listName,
 	listGUID,
 	principalId,
@@ -104,7 +104,7 @@ export const RemovePermissionsFromList = ({
 
 	return new Promise((resolve, reject) => {
 		RestCall({
-			url: url,
+			url: baseurl,
 			endPoint: endPoint,
 			method: method,
 		})
@@ -118,7 +118,7 @@ export const RemovePermissionsFromList = ({
 }
 
 export const AddPermissionsToList = ({
-	url = '',
+	baseurl = '',
 	listName,
 	listGUID,
 	principalId,
@@ -151,7 +151,7 @@ export const AddPermissionsToList = ({
 
 	return new Promise((resolve, reject) => {
 		RestCall({
-			url: url,
+			url: baseurl,
 			endPoint: endPoint,
 			method: method,
 		})

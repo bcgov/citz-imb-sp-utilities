@@ -1,7 +1,7 @@
 import { GetFormDigestValue, GetContextWebInformation } from './ContextInfo'
 import { RestCall } from '../utilities/Common'
 
-export const GetGroup = ({ url = '', groupId, groupName }) => {
+export const GetGroup = ({ baseurl = '', groupId, groupName }) => {
 	let endPoint
 
 	if (!groupId) {
@@ -15,7 +15,7 @@ export const GetGroup = ({ url = '', groupId, groupName }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint })
+		RestCall({ url: baseurl, endPoint: endPoint })
 			.then((response) => {
 				resolve(response.d)
 			})
@@ -25,7 +25,7 @@ export const GetGroup = ({ url = '', groupId, groupName }) => {
 	})
 }
 
-export const GetGroupMembers = ({ url = '', groupId, groupName }) => {
+export const GetGroupMembers = ({ baseurl = '', groupId, groupName }) => {
 	let endPoint
 
 	if (!groupId) {
@@ -41,7 +41,7 @@ export const GetGroupMembers = ({ url = '', groupId, groupName }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		RestCall({ url: url, endPoint: endPoint })
+		RestCall({ url: baseurl, endPoint: endPoint })
 			.then((response) => {
 				resolve(response.d.results)
 			})
@@ -52,7 +52,7 @@ export const GetGroupMembers = ({ url = '', groupId, groupName }) => {
 }
 
 export const AddUsersToGroup = ({
-	url = '',
+	baseurl = '',
 	groupId,
 	groupName,
 	loginName,
@@ -85,7 +85,7 @@ export const AddUsersToGroup = ({
 		for (let i = 0; i < loginName.length; i++) {
 			fetches.push(
 				RestCall({
-					url: url,
+					url: baseurl,
 					endPoint: endPoint,
 					method: 'post',
 					body: {
@@ -117,7 +117,7 @@ export const AddUsersToGroup = ({
 }
 
 export const RemoveUsersFromGroup = ({
-	url = '',
+	baseurl = '',
 	groupId,
 	groupName,
 	loginName,
@@ -154,14 +154,14 @@ export const RemoveUsersFromGroup = ({
 	}
 
 	return new Promise((resolve, reject) => {
-		GetFormDigestValue(url).then((digestValue) => {
+		GetFormDigestValue(baseurl).then((digestValue) => {
 			let fetches = []
 
 			if (loginName) {
 				for (let i = 0; i < loginName.length; i++) {
 					fetches.push(
 						RestCall({
-							url: url,
+							url: baseurl,
 							endPoint: `${endPoint}/removeByLoginName('${loginName[i]}')`,
 							method: 'post',
 							headers: {
@@ -177,7 +177,7 @@ export const RemoveUsersFromGroup = ({
 				for (let i = 0; i < userId.length; i++) {
 					fetches.push(
 						RestCall({
-							url: url,
+							url: baseurl,
 							endPoint: `${endPoint}/removeByID(${userId[i]})`,
 							method: 'post',
 							headers: {
@@ -206,7 +206,7 @@ export const RemoveUsersFromGroup = ({
 	})
 }
 
-export const CreateGroup = ({ url = '', groupName, groupDescription = '' }) => {
+export const CreateGroup = ({ baseurl = '', groupName, groupDescription = '' }) => {
 	let endPoint
 	const method = 'post'
 	const body = {
@@ -222,14 +222,14 @@ export const CreateGroup = ({ url = '', groupName, groupDescription = '' }) => {
 	}
 
 	return new Promise((resolve, reject) => {
-		GetFormDigestValue(url).then((response) => {
+		GetFormDigestValue(baseurl).then((response) => {
 			const headers = {
 				accept: 'application/json; odata=verbose',
 				'content-type': 'application/json; odata=verbose',
 				'x-requestdigest': response,
 			}
 			RestCall({
-				url: url,
+				url: baseurl,
 				endPoint: endPoint,
 				method: method,
 				body: body,
@@ -245,13 +245,13 @@ export const CreateGroup = ({ url = '', groupName, groupDescription = '' }) => {
 	})
 }
 
-export const GetAssociatedGroups = (url = '') => {
+export const GetAssociatedGroups = (baseurl = '') => {
 	return new Promise((resolve, reject) => {
 		Promise.all([
-			RestCall({ url: url, endPoint: `/_api/Web/AssociatedOwnerGroup` }),
-			RestCall({ url: url, endPoint: `/_api/Web/AssociatedMemberGroup` }),
+			RestCall({ url: baseurl, endPoint: `/_api/Web/AssociatedOwnerGroup` }),
+			RestCall({ url: baseurl, endPoint: `/_api/Web/AssociatedMemberGroup` }),
 			RestCall({
-				url: url,
+				url: baseurl,
 				endPoint: `/_api/Web/AssociatedVisitorGroup`,
 			}),
 		])
@@ -269,14 +269,14 @@ export const GetAssociatedGroups = (url = '') => {
 }
 
 export const ChangeGroupOwner = ({
-	url = '',
+	baseurl = '',
 	groupId,
 	groupName,
 	ownerGroupId,
 	ownerGroupName,
 }) => {
 	let clientContext = new SP.ClientContext(
-		'https://citz.sp.gov.bc.ca/sites/dev'
+		baseurl
 	)
 	let group
 	let ownerGroup

@@ -1,6 +1,6 @@
 import { RestCall } from '../utilities/Common'
 
-export const GetSite = ({ url = ''}) => {
+export const GetSite = (url = '') => {
 	const endPointParameters = `?$expand=FirstUniqueAncestorSecurableObject`
 	let endPoint = `/_api/web${endPointParameters}`
 
