@@ -1,12 +1,19 @@
 export const RestCall = ({
-	url,
+	url = '',
 	endPoint,
 	method = 'get',
 	body = '',
 	headers,
 }) => {
+	console.log(
+		`_spPageContextInfo.webAbsoluteUrl`,
+		_spPageContextInfo.webAbsoluteUrl
+	)
+
+	if (url === '') url = _spPageContextInfo.webAbsoluteUrl
+
 	let options = { method: method }
-console.log('typeof body', typeof body, body)
+	console.log('typeof body', typeof body, body)
 	if (typeof body !== 'string') {
 		options.body = JSON.stringify(body)
 	} else {
@@ -31,13 +38,11 @@ console.log('typeof body', typeof body, body)
 				console.warn(`method: '${method}'`)
 				console.warn(`body:`, options.body)
 				console.warn(`headers:`, options.headers)
-				console.warn(
-					`results: ${response}`
-				)
+				console.warn(`results: ${response}`)
 				console.groupEnd()
 				resolve(response.json())
 			} else {
-				console.groupCollapsed('--RestCall Details')
+				console.groupCollapsed('--RestCall Details - not OK')
 				console.warn(`url: '${url}'`)
 				console.warn(`endPoint: '${endPoint}'`)
 				console.warn(`method: '${method}'`)
