@@ -1,7 +1,7 @@
 import { RestCall } from '../utilities/Common'
 
 export const GetSite = (baseurl = '') => {
-	const endPointParameters = `?$expand=FirstUniqueAncestorSecurableObject`
+	const endPointParameters = `?$expand=FirstUniqueAncestorSecurableObject,ParentWeb`
 	let endPoint = `/_api/web${endPointParameters}`
 
 	return new Promise((resolve, reject) => {
@@ -16,7 +16,6 @@ export const GetSite = (baseurl = '') => {
 }
 
 export const GetCollection = (baseurl = '') => {
-	//const endPointParameters = `?$expand=FirstUniqueAncestorSecurableObject`
 	let endPoint = `/_api/web`
 
 	if (baseurl === '') baseurl = _spPageContextInfo.siteAbsoluteUrl
