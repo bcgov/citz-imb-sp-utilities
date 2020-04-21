@@ -1,4 +1,4 @@
-import { GetFormDigestValue,GetContextWebInformation } from './ContextInfo'
+import { GetFormDigestValue, GetContextWebInformation } from './ContextInfo'
 import { RestCall } from '../utilities/Common'
 
 export const GetGroup = ({ url = '', groupId, groupName }) => {
@@ -273,70 +273,124 @@ export const ChangeGroupOwner = ({
 	groupId,
 	groupName,
 	ownerGroupId,
+	ownerGroupName,
 }) => {
-	let siteId = "43a95d9c-69fd-48bd-a03e-01512dbed271"
-	let endPoint
-	let method = 'post'
-	let body = `<Request AddExpandoFieldTypeSuffix="true" SchemaVersion="15.0.0.0" LibraryVersion="15.0.0.0" ApplicationName=".NET Library" xmlns="http://schemas.microsoft.com/sharepoint/clientquery/2009">
-	<Actions>
-	  <SetProperty Id="1" ObjectPathId="2" Name="Owner">
-		<Parameter ObjectPathId="3" />
-	  </SetProperty>
-	  <Method Name="Update" Id="4" ObjectPathId="2" />
-	</Actions>
-	<ObjectPaths>
-	  <Identity Id="2" Name="740c6a0b-85e2-48a0-a494-e0f1759d4aa7:site:${siteId}:g:${groupId}" />
-	  <Identity Id="3" Name="740c6a0b-85e2-48a0-a494-e0f1759d4aa7:site:${siteId}:g:${ownerGroupId}" />
-	</ObjectPaths>
-  </Request>`
+	let clientContext = new SP.ClientContext(
+		'https://citz.sp.gov.bc.ca/sites/dev'
+	)
+	let group
+	let ownerGroup
 
-	// {
-	// 	__metadata: {
-	// 		type: 'SP.Group',
-	// 	},
-	// 	Owner: {
-	// 		Id: ownerGroupId,
-	// 		PrincipalType: 1,
-	// 	},
-	// }
+	if (!groupId) {
+		if (!groupName) {
+			return Promise.reject(
+				'ChangeGroupOwner requires groupId or groupName'
+			)
+		} else {
+			group = clientContext
+				.get_web()
+				.get_siteGroups()
+				.getByName(groupName)
+		}
+	} else {
+		group = clientContext.get_web().get_siteGroups().getById(groupId)
+	}
 
 	if (!ownerGroupId) {
-		return Promise.reject('ChangeGroupOwner requires newOwnerGroupId')
-	} else {
-		if (!groupId) {
-			if (!groupName) {
-				return Promise.reject(
-					'ChangeGroupOwner requires groupId or groupName'
-				)
-			} else {
-				endPoint = `/_api/web/SiteGroups/getByName('${groupName}')`
-			}
+		if (!ownerGroupName) {
+			return Promise.reject(
+				'ChangeGroupOwner requires ownerGroupId or ownerGroupName'
+			)
 		} else {
-			// endPoint = `/_api/web/SiteGroups(${groupId})/owner`
-			endPoint = `/_vti_bin/client.svc/ProcessQuery`
+			ownerGroup = clientContext
+				.get_web()
+				.get_siteGroups()
+				.getByName(ownerGroupName)
 		}
+	} else {
+		ownerGroup = clientContext
+			.get_web()
+			.get_siteGroups()
+			.getById(ownerGroupId)
 	}
 
 	return new Promise((resolve, reject) => {
-		GetContextWebInformation(url).then((response) => {
-			const headers = {
-				accept: 'application/json; odata=verbose',
-				'content-type': 'text/xml',
-				'x-requestdigest': response.FormDigestValue,
+		clientContext.load(group)
+		clientContext.executeQueryAsync(
+			() => {
+				console.log(`group succeeded`, group)
+				resolve()
+			},
+			() => {
+				console.log(`group failed`, group)
 			}
-			RestCall({
-				url: url,
-				endPoint: endPoint,
-				method: method,
-				body: body,
-				headers: headers,
-			})
-				.then((response) => {
-					resolve(response)
-				})
-				.catch((response) => {
-					reject(response)
-				})
-		})
+		)
 	})
+
+	//--------------------------------------------------------
+	// 	let siteId = "43a95d9c-69fd-48bd-a03e-01512dbed271"
+	// 	let endPoint
+	// 	let method = 'post'
+	// 	let body = `<Request AddExpandoFieldTypeSuffix="true" SchemaVersion="15.0.0.0" LibraryVersion="15.0.0.0" ApplicationName=".NET Library" xmlns="http://schemas.microsoft.com/sharepoint/clientquery/2009">
+	// 	<Actions>
+	// 	  <SetProperty Id="1" ObjectPathId="2" Name="Owner">
+	// 		<Parameter ObjectPathId="3" />
+	// 	  </SetProperty>
+	// 	  <Method Name="Update" Id="4" ObjectPathId="2" />
+	// 	</Actions>
+	// 	<ObjectPaths>
+	// 	  <Identity Id="2" Name="740c6a0b-85e2-48a0-a494-e0f1759d4aa7:site:${siteId}:g:${groupId}" />
+	// 	  <Identity Id="3" Name="740c6a0b-85e2-48a0-a494-e0f1759d4aa7:site:${siteId}:g:${ownerGroupId}" />
+	// 	</ObjectPaths>
+	//   </Request>`
+
+	// 	// {
+	// 	// 	__metadata: {
+	// 	// 		type: 'SP.Group',
+	// 	// 	},
+	// 	// 	Owner: {
+	// 	// 		Id: ownerGroupId,
+	// 	// 		PrincipalType: 1,
+	// 	// 	},
+	// 	// }
+
+	// 	if (!ownerGroupId) {
+	// 		return Promise.reject('ChangeGroupOwner requires newOwnerGroupId')
+	// 	} else {
+	// 		if (!groupId) {
+	// 			if (!groupName) {
+	// 				return Promise.reject(
+	// 					'ChangeGroupOwner requires groupId or groupName'
+	// 				)
+	// 			} else {
+	// 				endPoint = `/_api/web/SiteGroups/getByName('${groupName}')`
+	// 			}
+	// 		} else {
+	// 			// endPoint = `/_api/web/SiteGroups(${groupId})/owner`
+	// 			endPoint = `/_vti_bin/client.svc/ProcessQuery`
+	// 		}
+	// 	}
+
+	// 	return new Promise((resolve, reject) => {
+	// 		GetContextWebInformation(url).then((response) => {
+	// 			const headers = {
+	// 				accept: 'application/json; odata=verbose',
+	// 				'content-type': 'text/xml',
+	// 				'x-requestdigest': response.FormDigestValue,
+	// 			}
+	// 			RestCall({
+	// 				url: url,
+	// 				endPoint: endPoint,
+	// 				method: method,
+	// 				body: body,
+	// 				headers: headers,
+	// 			})
+	// 				.then((response) => {
+	// 					resolve(response)
+	// 				})
+	// 				.catch((response) => {
+	// 					reject(response)
+	// 				})
+	// 		})
+	// 	})
 }
