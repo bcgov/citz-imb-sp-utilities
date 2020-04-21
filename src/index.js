@@ -39,7 +39,7 @@ import {
 	RemovePermissionsFromSite,
 	AddPermissionsToSite,
 } from './components/SitePermissions'
-import { GetSite } from './components/Sites'
+import { GetSite,GetCollection } from './components/Sites'
 
 export {
 	/* ==============
@@ -96,6 +96,7 @@ export {
 	/* ==============
 	Sites
 	*/
+	GetCollection,
 	GetSite,
 	/* ==============
 	Users

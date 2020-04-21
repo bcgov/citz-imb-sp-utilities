@@ -5,10 +5,6 @@ export const RestCall = ({
 	body = '',
 	headers,
 }) => {
-	console.log(
-		`_spPageContextInfo.webAbsoluteUrl`,
-		_spPageContextInfo.webAbsoluteUrl
-	)
 
 	if (url === '') url = _spPageContextInfo.webAbsoluteUrl
 

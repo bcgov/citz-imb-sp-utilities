@@ -36,7 +36,7 @@ utility methods/functions for use with SharePoint 2016. Depends on [React](https
 
 Parameters in **bold** are required.  Where an _Id_ and a _Name_ parameter are specified, usually only one is required, with _Id_ being used if both are supplied.
 
-- **baseurl:** a string the form of _https://\<mydomain\>/sites/\<mysite\>_.  Default is the value of *_spPageContextInfo.webAbsoluteUrl*.
+- **baseurl:** a string the form of _https://\<mydomain\>/sites/\<mysite\>_.  Default is the value of *_spPageContextInfo.webAbsoluteUrl* or *_spPageContextInfo.siteAbsoluteUrl*, as appropriate.
 - **bcc:** an array of userAccounts in form of _i:0ǵ.t|bcgovidp|-
 - **body:** a string.  May contain html tags.
 - **cc:** an array of userAccounts in form of _i:0ǵ.t|bcgovidp|a32d6f859c66450ca4995b0b2bf0a###_.
@@ -107,6 +107,7 @@ a32d6f859c66450ca4995b0b2bf0a###_.
   - ResetSitePermissionsInheritance(_baseurl_)
 
 ### Sites
+- GetCollection(_baseurl_)
 - GetSite(_baseurl_)
 
 ### Users
