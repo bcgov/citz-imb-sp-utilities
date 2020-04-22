@@ -59,6 +59,7 @@ a32d6f859c66450ca4995b0b2bf0a###_.
 - **to:** an array of userAccounts in form of _i:0ǵ.t|bcgovidp|
 a32d6f859c66450ca4995b0b2bf0a###_.
 - **userId:** an integer.
+- **viewGUID:** a string in the form of a _{529b7384-98bd-40c6-81e6-54a797###ec5}_.
 
 ## Methods
 
@@ -90,7 +91,7 @@ a32d6f859c66450ca4995b0b2bf0a###_.
 - GetListDefaultView({_baseurl_, **_listName_**, **_listGUID_**})
 - GetListFields({_baseurl_, **_listName_**, **_listGUID_**})
 - GetListItems({_baseurl_, **_listName_**, **_listGUID_**, _filter_, _expand_})
-- GetListViews({_baseurl_, **_listName_**, **_listGUID_**})
+- GetListViews({_baseurl_, **_listName_**, **_listGUID_**, _viewGUID_})
 - RemoveItemsFromList({_baseurl_, **_listName_**, **_listGUID_**, **_itemIds_**})
 
 ### Permissions
