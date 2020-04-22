@@ -15,20 +15,6 @@ export const GetSite = (baseurl = '') => {
 	})
 }
 
-export const GetSiteParent = (baseurl = '') => {
-	let endPoint = `/_api/web/ParentWeb`
-
-	return new Promise((resolve, reject) => {
-		RestCall({ url: baseurl, endPoint: endPoint })
-			.then((response) => {
-				resolve(response.d)
-			})
-			.catch((response) => {
-				reject(response)
-			})
-	})
-}
-
 export const GetCollection = (baseurl = '') => {
 	let endPoint = `/_api/web`
 

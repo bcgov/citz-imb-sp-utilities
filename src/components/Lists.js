@@ -3,7 +3,7 @@ import { GetFormDigestValue } from './ContextInfo'
 
 export const GetList = ({ baseurl = '', listName, listGUID }) => {
 	let endPoint
-	const endPointParameters = `?$expand=FirstUniqueAncestorSecurableObject`
+	const endPointParameters = `?$expand=FirstUniqueAncestorSecurableObject,RootFolder`
 
 	if (!listGUID) {
 		if (!listName) {
