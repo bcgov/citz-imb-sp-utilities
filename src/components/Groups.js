@@ -316,17 +316,13 @@ export const ChangeGroupOwner = ({
 
 	return new Promise((resolve, reject) => {
 		//clientContext.load(group)
-		console.log(`ownerGroup`, ownerGroup)
-		console.log(`group`, group)
 		group.set_owner(ownerGroup)
 		group.update()
 		clientContext.executeQueryAsync(
 			() => {
-				console.log(`group succeeded`, group, ownerGroup)
 				resolve()
 			},
 			() => {
-				console.log(`group failed`, group)
 				reject()
 			}
 		)

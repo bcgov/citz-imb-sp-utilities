@@ -16,9 +16,6 @@ export const GetUser = ({ baseurl = '', userId }) => {
 					return results.json()
 				} else {
 					const msg = `error: ${results.status} ${results.statusText}`
-					console.groupCollapsed('GetUser results', msg)
-					console.log(results)
-					console.groupEnd()
 					reject(new error(msg))
 				}
 			})
@@ -32,7 +29,6 @@ export const GetUser = ({ baseurl = '', userId }) => {
 }
 
 export const GetUserGroups = ({ baseurl = '', userId }) => {
-	console.log('GetUserGroups', userId)
 	let endPoint
 
 	if (!userId) {
@@ -46,14 +42,10 @@ export const GetUserGroups = ({ baseurl = '', userId }) => {
 	return new Promise((resolve, reject) => {
 		fetch(`${baseurl}${endPoint}`)
 			.then((results) => {
-				console.log(results)
 				if (results.ok) {
 					return results.json()
 				} else {
 					const msg = `error: ${results.status} ${results.statusText}`
-					console.groupCollapsed('GetUserGroups results', msg)
-					console.log(results)
-					console.groupEnd()
 					reject(new error(msg))
 				}
 			})
