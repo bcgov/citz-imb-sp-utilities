@@ -43,6 +43,7 @@ Parameters in **bold** are required.  Where an _Id_ and a _Name_ parameter are s
 a32d6f859c66450ca4995b0b2bf0a###_.
 - **clear:** a boolean value.
 - **copy:** a boolean value.
+- **expand:** a string of comma-separated properties to expand
 - **groupDescription:** a string.
 - **groupId:** an integer.
 - **groupName:** a string.
@@ -87,7 +88,7 @@ a32d6f859c66450ca4995b0b2bf0a###_.
 - AddItemsToList({_baseurl_, **_listName_**, **_listGUID_**, **_items_**})
 - CreateList({_baseurl_, **_listName_**, _allowContentTypes_, _baseTemplate_, _contentTypesEnabled_, _description_})
 - DeleteList({_baseurl_, **_listName_**, **_listGUID_**})
-- GetList({_baseurl_, **_listName_**, **_listGUID_**})
+- GetList({_baseurl_, **_listName_**, **_listGUID_**, _expand_})
 - GetListDefaultView({_baseurl_, **_listName_**, **_listGUID_**})
 - GetListFields({_baseurl_, **_listName_**, **_listGUID_**})
 - GetListItems({_baseurl_, **_listName_**, **_listGUID_**, _filter_, _expand_})

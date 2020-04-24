@@ -1,9 +1,11 @@
 import { RestCall } from '../utilities/Common'
 import { GetFormDigestValue } from './ContextInfo'
 
-export const GetList = ({ baseurl = '', listName, listGUID }) => {
+export const GetList = ({ baseurl = '', listName, listGUID, expand = '' }) => {
 	let endPoint
-	const endPointParameters = `?$expand=FirstUniqueAncestorSecurableObject,RootFolder`
+	let endPointParameters = `?$expand=FirstUniqueAncestorSecurableObject,RootFolder`
+
+	if(expand) endPointParameters += `,${expand}`
 
 	if (!listGUID) {
 		if (!listName) {
@@ -278,7 +280,12 @@ export const RemoveItemsFromList = ({
 	})
 }
 
-export const GetListViews = ({ baseurl = '', listName, listGUID, viewGUID }) => {
+export const GetListViews = ({
+	baseurl = '',
+	listName,
+	listGUID,
+	viewGUID,
+}) => {
 	let endPoint
 	let parameters = '?$expand=ViewFields'
 	if (!listGUID) {
@@ -293,7 +300,7 @@ export const GetListViews = ({ baseurl = '', listName, listGUID, viewGUID }) => 
 		endPoint = `/_api/web/Lists('${listGUID}')/Views`
 	}
 
-	if(viewGUID){
+	if (viewGUID) {
 		endPoint = `${endPoint}('${viewGUID}')`
 	}
 

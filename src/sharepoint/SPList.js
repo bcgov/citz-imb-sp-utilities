@@ -1,11 +1,7 @@
 import React, { useState, useEffect, forwardRef } from 'react'
-import {
-	GetList,
-	GetListFields,
-	GetListDefaultView,
-	GetListItems,
-} from '../components/Lists'
+import { GetList } from '../components/Lists'
 import MaterialTable from 'material-table'
+import Moment from 'react-moment'
 
 import Add from '@material-ui/icons/Add'
 import AddBox from '@material-ui/icons/AddBox'
@@ -28,7 +24,17 @@ import LibraryBooksIcon from '@material-ui/icons/LibraryBooks'
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
 import PeopleIcon from '@material-ui/icons/People'
 
-export function SPList({ baseurl, listName, listGUID, options }) {
+export function SPList({
+	baseurl,
+	listName,
+	listGUID,
+	options,
+	addItem = true,
+	deleteItem = true,
+	editItem = true,
+	changeItemPermissions = true,
+	customActions,
+}) {
 	const icons = {
 		People: forwardRef((props, ref) => <PeopleIcon {...props} ref={ref} />),
 		Question: forwardRef((props, ref) => (
@@ -76,135 +82,187 @@ export function SPList({ baseurl, listName, listGUID, options }) {
 		)),
 	}
 
+	const calendarStrings = {
+		lastDay: '[Yesterday at] LT',
+		sameDay: '[Today at] LT',
+		nextDay: '[Tomorrow at] LT',
+		lastWeek: '[last] dddd [at] LT',
+		nextWeek: 'dddd [at] LT',
+		sameElse: 'L',
+	}
+
 	const [listItems, setListItems] = useState([])
-	const [listColumns, setListColumns] = useState({})
+	const [listFields, setListFields] = useState()
 	const [viewColumns, setViewColumns] = useState([])
 	const [list, setList] = useState({})
+	const [actions, setActions] = useState([])
 
-	const refreshData = () => {
-		if (list.BaseTemplate === 101) {
-			GetListItems({
-				baseurl: baseurl,
-				listGUID: listGUID,
-				listName: listName,
-				expand: 'File',
-			}).then((response) => {
-				response.map((item) => {
-					item.LinkFilenameNoMenu = item.File.Name
-					item.LinkFilename = item.File.Name
-					item.FileLeafRef = item.File.Name
-					item.Url = item.OData__dlc_DocIdUrl.Url
-					return item
-				})
-				setListItems(response)
-			})
-		} else {
-			GetListItems({
-				baseurl: baseurl,
-				listGUID: listGUID,
-				listName: listName,
-			}).then((response) => {
-				response.map((item) => {
+    const getUserJSX = (rowdata) =>{
+        //console.log(`rowdata`,rowdata)
+    }
+
+	useEffect(() => {
+		GetList({
+			baseurl: baseurl,
+			listName: listName,
+			listGUID: listGUID,
+			expand: 'DefaultView,DefaultView/ViewFields,Fields,Items',
+		}).then((response) => {
+			setList(response)
+
+			let fields = {}
+			for (let i = 0; i < response.Fields.results.length; i++) {
+				fields[response.Fields.results[i].InternalName] =
+					response.Fields.results[i]
+			}
+			setListFields(fields)
+console.log(`response.Items.results`,response.Items.results)
+			setListItems(
+				response.Items.results.map((item) => {
 					item.LinkTitleNoMenu = item.Title
 					item.LinkTitle = item.Title
 					item.Url = item.__metadata.uri
 					return item
 				})
-				setListItems(response)
+			)
+		})
+
+		if (addItem) {
+			setActions((prevActions) => {
+				prevActions.push({
+					icon: icons.Add,
+					tooltip: 'Add Item',
+					isFreeAction: true,
+					onClick: (event, rowdata) => {
+						//todo: setAddDialog(true)
+					},
+				})
+
+				return prevActions
 			})
 		}
-	}
 
-	useEffect(() => {
-		Promise.all([
-			GetList({ baseurl, listName, listGUID }),
-			GetListFields({ baseurl, listName, listGUID }),
-		]).then(([listResponse, listFieldsResponse]) => {
-			setList(listResponse)
+		if (deleteItem) {
+			setActions((prevActions) => {
+				prevActions.push({
+					icon: icons.Delete,
+					tooltip: 'Delete Item',
+					onClick: (event, rowdata) => {
+						//TODO: delete item actions
+					},
+				})
 
-			let columns = {}
-			for (let i = 0; i < listFieldsResponse.length; i++) {
-				columns[listFieldsResponse[i].InternalName] =
-					listFieldsResponse[i].Title
-			}
-			setListColumns(columns)
-		})
+				return prevActions
+			})
+		}
+
+		if (editItem) {
+			setActions((prevActions) => {
+				prevActions.push({
+					icon: icons.Edit,
+					tooltip: 'Edit Item',
+					onClick: (event, rowdata) => {
+						//TODO: edit item actions
+					},
+				})
+
+				return prevActions
+			})
+		}
+
+		if (changeItemPermissions) {
+			setActions((prevActions) => {
+				prevActions.push({
+					icon: icons.People,
+					tooltip: 'Change Item Permissions',
+					onClick: (event, rowdata) => {
+						//TODO: change item permissions actions
+					},
+				})
+
+				return prevActions
+			})
+		}
+
+		if (customActions) {
+			customActions.map((action, index) => {
+				action.icon = icons[action.icon]
+
+				return setActions((prevActions) => {
+					prevActions.push(action)
+					return prevActions
+				})
+			})
+		}
 
 		return () => {}
 	}, [])
 
 	useEffect(() => {
-		GetListDefaultView({ baseurl, listName, listGUID }).then(
-			(listViewResponse) => {
-				setViewColumns(
-					listViewResponse.ViewFields.Items.results.map((field) => {
-						let fieldObject = {
-							title: listColumns[field],
-							field: field,
-						}
+		if (list.DefaultView && listFields) {
+			setViewColumns(
+				list.DefaultView.ViewFields.Items.results.map((field) => {
+					console.log(`listFields[${field}]`, listFields[field])
+					let fieldObject = {
+						title: listFields[field].Title,
+						field: field,
+					}
 
-						if (field === 'LinkFilenameNoMenu') {
+					switch (listFields[field].TypeAsString) {
+						case 'DateTime':
 							fieldObject.render = (rowdata) => {
+                                console.log(`rowdata`,rowdata[field])
+                                const validDateTime = moment(rowdata[field]).isValid()
 								return (
-									<a href={rowdata['Url']}>
-										{rowdata[field]}
-									</a>
-								)
-							}
-						}
-						if (field === 'LinkFilename') {
-							fieldObject.render = (rowdata) => {
-								return (
-									<a href={rowdata['Url']}>
-										{rowdata[field]} - edit
-									</a>
-								)
-								//TODO: make edit dropdown
-							}
-						}
-						if (field === 'LinkTitleNoMenu') {
-							fieldObject.render = (rowdata) => {
-								return (
-									<a href={rowdata['Url']}>
-										{rowdata[field]}
-									</a>
-								)
-							}
-						}
-						if (field === 'LinkTitle') {
-							fieldObject.render = (rowdata) => {
-								return (
-									<a href={rowdata['Url']}>
-										{rowdata[field]} - edit
-									</a>
-								)
-								//TODO: make edit dropdown
-							}
-						}
+                                    {validDateTime ?
+                                        (<Moment calendar={calendarStrings} format="YYYY-MMM-DD hh:mm">
+                                    {rowdata[field]}
+                                </Moment>)
+                                 : ''}
 
-						return fieldObject
-					})
-				)
-			}
-		)
-		refreshData()
+
+								)
+							}
+							break
+						case 'UserMulti':
+                            fieldObject.render = (rowdata) => {
+								return getUserJSX(rowdata)
+							}
+							break
+					}
+
+					if (field === 'LinkTitleNoMenu') {
+						fieldObject.render = (rowdata) => {
+							return <a href={rowdata['Url']}>{rowdata[field]}</a>
+						}
+					}
+					if (field === 'LinkTitle') {
+						fieldObject.render = (rowdata) => {
+							return (
+								<a href={rowdata['Url']}>
+									{rowdata[field]} - edit
+								</a>
+							)
+							//TODO: make edit dropdown
+						}
+					}
+
+					return fieldObject
+				})
+			)
+		}
 
 		return () => {}
-	}, [listColumns])
-
-    //TODO: addItem
-    //TODO: removeItem
-    //TODO: editItem
-    //TODO: changeItemPermissions
-    //TODO: customActions
+	}, [list, listFields])
 
 	return (
 		<MaterialTable
+			actions={actions}
 			icons={icons}
 			data={listItems}
 			title={list.Title}
-            columns={viewColumns}
-            options={options}
+			columns={viewColumns}
+			options={options}
 		/>
 	)
 }
