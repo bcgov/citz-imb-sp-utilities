@@ -39,7 +39,8 @@ import {
 	RemovePermissionsFromSite,
 	AddPermissionsToSite,
 } from './components/SitePermissions'
-import { GetSite,GetCollection } from './components/Sites'
+import { GetSite, GetCollection } from './components/Sites'
+import { SPList } from './sharepoint/SPList'
 
 export {
 	/* ==============
@@ -103,4 +104,8 @@ export {
 	*/
 	GetUser,
 	GetUserGroups,
+	/* ==============
+	SharePoint
+	*/
+	SPList,
 }

@@ -36,5 +36,11 @@
 	"peerDependencies": {
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1"
+	},
+	"dependencies": {
+		"@material-ui/core": "^4.9.11",
+		"@material-ui/icons": "^4.9.1",
+		"material-table": "^1.57.2",
+		"react-dom": "^16.13.1"
 	}
 }
