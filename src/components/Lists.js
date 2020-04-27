@@ -5,7 +5,7 @@ export const GetList = ({ baseurl = '', listName, listGUID, expand = '' }) => {
 	let endPoint
 	let endPointParameters = `?$expand=FirstUniqueAncestorSecurableObject,RootFolder`
 
-	if(expand) endPointParameters += `,${expand}`
+	if (expand) endPointParameters += `,${expand}`
 
 	if (!listGUID) {
 		if (!listName) {
@@ -114,9 +114,10 @@ export const GetListItems = ({
 	listGUID,
 	filter,
 	expand,
+	select,
 }) => {
 	let endPoint
-	let parameters = '?'
+	let parameters = []
 
 	if (!listGUID) {
 		if (!listName) {
@@ -130,16 +131,20 @@ export const GetListItems = ({
 		endPoint = `/_api/web/Lists('${listGUID}')/items`
 	}
 
-	if (filter) {
-		parameters += `$filter=${filter}`
+	if (select) {
+		parameters.push(`$select=${select}`)
 	}
 
 	if (expand) {
-		parameters += `$expand=${expand}`
+		parameters.push(`$expand=${expand}`)
 	}
 
-	if (parameters !== '?') {
-		endPoint += parameters
+	if (filter) {
+		parameters.push(`$filter=${filter}`)
+	}
+
+	if (parameters.length) {
+		endPoint += `?${parameters.join('&')}`
 	}
 
 	return new Promise((resolve, reject) => {

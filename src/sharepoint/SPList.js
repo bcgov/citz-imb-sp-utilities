@@ -1,7 +1,9 @@
 import React, { useState, useEffect, forwardRef } from 'react'
-import { GetList } from '../components/Lists'
+import { GetList, GetListItems } from '../components/Lists'
 import MaterialTable from 'material-table'
 import Moment from 'react-moment'
+import moment from 'moment'
+import { List, ListItem } from '@material-ui/core'
 
 import Add from '@material-ui/icons/Add'
 import AddBox from '@material-ui/icons/AddBox'
@@ -29,10 +31,10 @@ export function SPList({
 	listName,
 	listGUID,
 	options,
-	addItem = true,
-	deleteItem = true,
-	editItem = true,
-	changeItemPermissions = true,
+	addItem = false,
+	deleteItem = false,
+	editItem = false,
+	changeItemPermissions = false,
 	customActions,
 }) {
 	const icons = {
@@ -82,49 +84,20 @@ export function SPList({
 		)),
 	}
 
-	const calendarStrings = {
-		lastDay: '[Yesterday at] LT',
-		sameDay: '[Today at] LT',
-		nextDay: '[Tomorrow at] LT',
-		lastWeek: '[last] dddd [at] LT',
-		nextWeek: 'dddd [at] LT',
-		sameElse: 'L',
-	}
-
-	const [listItems, setListItems] = useState([])
-	const [listFields, setListFields] = useState()
-	const [viewColumns, setViewColumns] = useState([])
-	const [list, setList] = useState({})
+	const [list, setList] = useState()
 	const [actions, setActions] = useState([])
-
-    const getUserJSX = (rowdata) =>{
-        //console.log(`rowdata`,rowdata)
-    }
+	const [title, setTitle] = useState('')
+	const [viewColumns, setViewColumns] = useState()
+	const [listItems, setListItems] = useState()
 
 	useEffect(() => {
 		GetList({
 			baseurl: baseurl,
 			listName: listName,
 			listGUID: listGUID,
-			expand: 'DefaultView,DefaultView/ViewFields,Fields,Items',
+			expand: 'DefaultView,DefaultView/ViewFields,Fields',
 		}).then((response) => {
 			setList(response)
-
-			let fields = {}
-			for (let i = 0; i < response.Fields.results.length; i++) {
-				fields[response.Fields.results[i].InternalName] =
-					response.Fields.results[i]
-			}
-			setListFields(fields)
-console.log(`response.Items.results`,response.Items.results)
-			setListItems(
-				response.Items.results.map((item) => {
-					item.LinkTitleNoMenu = item.Title
-					item.LinkTitle = item.Title
-					item.Url = item.__metadata.uri
-					return item
-				})
-			)
 		})
 
 		if (addItem) {
@@ -134,6 +107,7 @@ console.log(`response.Items.results`,response.Items.results)
 					tooltip: 'Add Item',
 					isFreeAction: true,
 					onClick: (event, rowdata) => {
+						console.log('addItem')
 						//todo: setAddDialog(true)
 					},
 				})
@@ -148,6 +122,7 @@ console.log(`response.Items.results`,response.Items.results)
 					icon: icons.Delete,
 					tooltip: 'Delete Item',
 					onClick: (event, rowdata) => {
+						console.log('deleteItem')
 						//TODO: delete item actions
 					},
 				})
@@ -162,6 +137,7 @@ console.log(`response.Items.results`,response.Items.results)
 					icon: icons.Edit,
 					tooltip: 'Edit Item',
 					onClick: (event, rowdata) => {
+						console.log('editItem')
 						//TODO: edit item actions
 					},
 				})
@@ -176,6 +152,7 @@ console.log(`response.Items.results`,response.Items.results)
 					icon: icons.People,
 					tooltip: 'Change Item Permissions',
 					onClick: (event, rowdata) => {
+						console.log('changeItemPermissions')
 						//TODO: change item permissions actions
 					},
 				})
@@ -199,36 +176,81 @@ console.log(`response.Items.results`,response.Items.results)
 	}, [])
 
 	useEffect(() => {
-		if (list.DefaultView && listFields) {
+		if (list) {
+			setTitle(list.Title)
+
+			let fields = {}
+			for (let i = 0; i < list.Fields.results.length; i++) {
+				fields[list.Fields.results[i].InternalName] =
+					list.Fields.results[i]
+			}
+
 			setViewColumns(
 				list.DefaultView.ViewFields.Items.results.map((field) => {
-					console.log(`listFields[${field}]`, listFields[field])
 					let fieldObject = {
-						title: listFields[field].Title,
+						title: fields[field].Title,
 						field: field,
+						select: fields[field].StaticName,
 					}
 
-					switch (listFields[field].TypeAsString) {
+					switch (fields[field].TypeAsString) {
 						case 'DateTime':
 							fieldObject.render = (rowdata) => {
-                                console.log(`rowdata`,rowdata[field])
-                                const validDateTime = moment(rowdata[field]).isValid()
-								return (
-                                    {validDateTime ?
-                                        (<Moment calendar={calendarStrings} format="YYYY-MMM-DD hh:mm">
-                                    {rowdata[field]}
-                                </Moment>)
-                                 : ''}
-
-
-								)
+								if (moment(rowdata[field]).isValid()) {
+									return (
+										<Moment
+											// calendar={calendarStrings}
+											format='YYYY-MMM-DD hh:mm'
+											date={rowdata[field]}
+										/>
+									)
+								}
 							}
 							break
 						case 'UserMulti':
-                            fieldObject.render = (rowdata) => {
-								return getUserJSX(rowdata)
+							fieldObject.expand =
+								fields[field].StaticName + '/Id'
+							fieldObject.select =
+								fields[field].StaticName + '/Title'
+							fieldObject.render = (rowdata) => {
+								if (rowdata.Users.results)
+									return (
+										<List
+											dense={true}
+											disablePadding={true}>
+											{rowdata.Users.results.map(
+												(user, index) => (
+													<ListItem
+														key={index}
+														dense={true}
+														disableGutters={true}>
+														{user.Title}
+													</ListItem>
+												)
+											)}
+										</List>
+									)
 							}
 							break
+						case 'User':
+							fieldObject.expand =
+								fields[field].StaticName + '/Id'
+							fieldObject.select =
+								fields[field].StaticName + '/Title'
+							fieldObject.render = (rowdata) => {
+								return (
+									<List dense={true} disablePadding={true}>
+										<ListItem
+											dense={true}
+											disableGutters={true}>
+											{rowdata.SingleUser.Title}
+										</ListItem>
+									</List>
+								)
+							}
+							break
+						default:
+						//console.log('Unhandled field type', fields[field])
 					}
 
 					if (field === 'LinkTitleNoMenu') {
@@ -251,16 +273,44 @@ console.log(`response.Items.results`,response.Items.results)
 				})
 			)
 		}
-
 		return () => {}
-	}, [list, listFields])
+	}, [list])
+
+	useEffect(() => {
+		if (viewColumns) {
+			let itemsSelect = viewColumns.map((column) => column.select)
+			let itemsExpand = []
+			for (let i = 0; i < viewColumns.length; i++) {
+				if (viewColumns[i].expand)
+					itemsExpand.push(viewColumns[i].expand)
+			}
+
+			GetListItems({
+				baseurl: baseurl,
+				listName: listName,
+				listGUID: listGUID,
+				select: itemsSelect.join(','),
+				expand: itemsExpand.join(','),
+			}).then((response) => {
+				setListItems(
+					response.map((item) => {
+						item.LinkTitleNoMenu = item.Title
+						item.LinkTitle = item.Title
+						item.Url = item.__metadata.uri
+						return item
+					})
+				)
+			})
+		}
+		return () => {}
+	}, [viewColumns])
 
 	return (
 		<MaterialTable
 			actions={actions}
 			icons={icons}
 			data={listItems}
-			title={list.Title}
+			title={title}
 			columns={viewColumns}
 			options={options}
 		/>
