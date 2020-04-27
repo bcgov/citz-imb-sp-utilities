@@ -1,9 +1,16 @@
-import React, { useState, useEffect, forwardRef } from 'react'
+import React, {
+	useState,
+	useEffect,
+	forwardRef,
+	Fragment,
+	useReducer,
+} from 'react'
 import { GetList, GetListItems } from '../components/Lists'
 import MaterialTable from 'material-table'
 import Moment from 'react-moment'
 import moment from 'moment'
 import { List, ListItem } from '@material-ui/core'
+import { SPFormDialog } from './SPFormDialog'
 
 import Add from '@material-ui/icons/Add'
 import AddBox from '@material-ui/icons/AddBox'
@@ -26,12 +33,38 @@ import LibraryBooksIcon from '@material-ui/icons/LibraryBooks'
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
 import PeopleIcon from '@material-ui/icons/People'
 
+const formInitialState = {
+	open: false,
+	title: '',
+	handleClose: () => {},
+	handleSave: () => {},
+}
+
+const formReducer = (state, action) => {
+	console.log('formReducer', state, action)
+	switch (action.type) {
+		case 'ADD_ITEM':
+			return {
+				open: true,
+				title: 'Add Item',
+				handleClose: () => {
+
+				},
+				handleSave: () => {
+
+				},
+			}
+		default:
+			return formInitialState
+	}
+}
+
 export function SPList({
 	baseurl,
 	listName,
 	listGUID,
 	options,
-	addItem = false,
+	addItem = true,
 	deleteItem = false,
 	editItem = false,
 	changeItemPermissions = false,
@@ -90,6 +123,8 @@ export function SPList({
 	const [viewColumns, setViewColumns] = useState()
 	const [listItems, setListItems] = useState()
 
+	const [formState, formDispatch] = useReducer(formReducer, formInitialState)
+
 	useEffect(() => {
 		GetList({
 			baseurl: baseurl,
@@ -109,6 +144,33 @@ export function SPList({
 					onClick: (event, rowdata) => {
 						console.log('addItem')
 						//todo: setAddDialog(true)
+						formDispatch({
+							type: 'ADD_ITEM',
+							handleClose: formDispatch,
+							handleSave: formDispatch,
+						})
+						/*
+						AddItemsToList({ listName: list.Title, items: items })
+							.then((response) => {
+								console.groupCollapsed(
+									'AddItemsToList Response'
+								)
+								console.log(response)
+								console.groupEnd()
+								setItemIds(() => {
+									return response.map((item) => {
+										return item.Id
+									})
+								})
+								refreshListItems()
+							})
+							.catch((response) => {
+								console.warn(
+									'AddItemsToList rejected',
+									response
+								)
+							})
+							*/
 					},
 				})
 
@@ -306,13 +368,21 @@ export function SPList({
 	}, [viewColumns])
 
 	return (
-		<MaterialTable
-			actions={actions}
-			icons={icons}
-			data={listItems}
-			title={title}
-			columns={viewColumns}
-			options={options}
-		/>
+		<Fragment>
+			<MaterialTable
+				actions={actions}
+				icons={icons}
+				data={listItems}
+				title={title}
+				columns={viewColumns}
+				options={options}
+			/>
+			<SPFormDialog
+				open={formState.open}
+				title={formState.title}
+				handleClose={formState.handleClose}
+				handleSave={formState.handleSave}
+			/>
+		</Fragment>
 	)
 }
