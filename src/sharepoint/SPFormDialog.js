@@ -5,7 +5,7 @@ import {
 	DialogContent,
 	DialogActions,
 	TextField,
-	Button,
+	// Button,
 } from '@material-ui/core'
 
 export const SPFormDialog = ({ open, title, handleClose, handleSave }) => {
@@ -23,12 +23,12 @@ export const SPFormDialog = ({ open, title, handleClose, handleSave }) => {
 				/>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={handleClose({action:''})} color='primary'>
+				{/* <Button onClick={handleClose} color='primary'>
 					Cancel
-				</Button>
-				<Button onClick={handleSave({action:''})} color='primary'>
+				</Button> */}
+				{/* <Button onClick={handleSave} color='primary'>
 					Submit
-				</Button>
+				</Button> */}
 			</DialogActions>
 		</Dialog>
 	)
