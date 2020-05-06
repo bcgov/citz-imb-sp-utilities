@@ -26,7 +26,7 @@ import LibraryBooksIcon from '@material-ui/icons/LibraryBooks'
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
 import PeopleIcon from '@material-ui/icons/People'
 
-export function SPList({
+export const SPList = ({
 	baseurl,
 	listName,
 	listGUID,
@@ -36,7 +36,7 @@ export function SPList({
 	editItem = false,
 	changeItemPermissions = false,
 	customActions,
-}) {
+}) => {
 	const icons = {
 		People: forwardRef((props, ref) => <PeopleIcon {...props} ref={ref} />),
 		Question: forwardRef((props, ref) => (

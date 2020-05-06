@@ -7,7 +7,6 @@ const isProd = environment === 'production'
 const autoprefixer = require('autoprefixer')
 
 const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 	.BundleAnalyzerPlugin
 
@@ -16,6 +15,10 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
  *********************************/
 const entry = {
 	main: ['./src/index.js'],
+}
+
+if (isDev) {
+	entry.test = ['./test/app.js']
 }
 
 /*********************************
@@ -78,14 +81,6 @@ if (isProd) {
  * Plugins
  *********************************/
 const plugins = [
-	new ExtractTextPlugin({
-		filename:
-			environment === 'production'
-				? '../css/[name].bundle.min.css'
-				: '../css/[name].bundle.css',
-		disable: false,
-		allChunks: false,
-	}),
 	new webpack.LoaderOptionsPlugin({
 		options: {
 			postcss: [autoprefixer()],
@@ -101,12 +96,15 @@ const plugins = [
 if (isProd) {
 	plugins.push(new BundleAnalyzerPlugin())
 }
+if (isDev) {
+	plugins.push(new webpack.HotModuleReplacementPlugin())
+}
 
 /*********************************
  * Resolve
  *********************************/
 const resolve = {
-	extensions: ['.ts', '.js'],
+	extensions: ['.js'],
 }
 
 /*********************************

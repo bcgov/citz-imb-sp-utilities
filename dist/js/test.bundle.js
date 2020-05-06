@@ -823,7 +823,7 @@
 /******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 	// Promise = chunk loading, 0 = chunk loaded
 /******/ 	var installedChunks = {
-/******/ 		"main": 0
+/******/ 		"test": 0
 /******/ 	};
 /******/
 /******/ 	var deferredModules = [];
@@ -920,7 +920,7 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push([0,"common","react"]);
+/******/ 	deferredModules.push([1,"common","react"]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
@@ -1104,14 +1104,26 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
-/***/ 0:
-/*!****************************!*\
-  !*** multi ./src/index.js ***!
-  \****************************/
+/***/ "./test/app.js":
+/*!*********************!*\
+  !*** ./test/app.js ***!
+  \*********************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _src_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/index */ \"./src/index.js\");\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\n\n\n\nvar className = 'main-app';\n\nif (typeof module.hot !== 'undefined') {\n  module.hot.accept();\n  var oldApp = document.getElementsByClassName(className)[0];\n\n  if (typeof oldApp !== 'undefined' && oldApp !== null) {\n    oldApp.remove();\n  }\n}\n\nvar MainModule = function MainModule() {\n  _classCallCheck(this, MainModule);\n\n  var app = document.createElement('div');\n  app.classList.add(className);\n  document.body.appendChild(app);\n  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_src_index__WEBPACK_IMPORTED_MODULE_2__[\"SPList\"], null), app);\n};\n\nnew MainModule();\n\n//# sourceURL=webpack:///./test/app.js?");
+
+/***/ }),
+
+/***/ 1:
+/*!***************************!*\
+  !*** multi ./test/app.js ***!
+  \***************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("module.exports = __webpack_require__(/*! ./src/index.js */\"./src/index.js\");\n\n\n//# sourceURL=webpack:///multi_./src/index.js?");
+eval("module.exports = __webpack_require__(/*! ./test/app.js */\"./test/app.js\");\n\n\n//# sourceURL=webpack:///multi_./test/app.js?");
 
 /***/ })
 

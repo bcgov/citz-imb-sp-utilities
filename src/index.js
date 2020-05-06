@@ -40,7 +40,7 @@ import {
 	AddPermissionsToSite,
 } from './components/SitePermissions'
 import { GetSite, GetCollection } from './components/Sites'
-import { SPList } from './sharepoint/SPList'
+import  {SPList}  from './sharepoint/SPList'
 
 export {
 	/* ==============
