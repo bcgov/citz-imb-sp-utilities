@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { SPList } from '../src/index'
+import AppContent from './AppContent'
 
 const className = 'main-app'
 
@@ -19,7 +19,7 @@ class MainModule {
 		app.classList.add(className)
 		document.body.appendChild(app)
 
-		ReactDOM.render(<SPList />, app)
+		ReactDOM.render(<AppContent />, app)
 	}
 }
 

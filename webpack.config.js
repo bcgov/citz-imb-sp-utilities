@@ -22,20 +22,24 @@ if (isDev) {
 }
 
 /*********************************
+ * Externals
+ *********************************/
+const externals = {
+	//react: 'react'
+}
+
+/*********************************
  * Module
  *********************************/
 const _module = {
 	rules: [
 		{
-			test: /\.js?$/,
+			test: /\.js$/,
 			exclude: /node_modules/,
-			loader: 'babel-loader',
-			query: {
-				presets: ['@babel/preset-env'],
-			},
+			loader: 'babel-loader'
 		},
 		{
-			test: /\.css$/i,
+			test: /\.css$/,
 			use: ['style-loader', 'css-loader'],
 		},
 	],
@@ -112,6 +116,7 @@ const resolve = {
  *********************************/
 module.exports = {
 	entry: entry,
+	externals: externals,
 	output: output,
 	resolve: resolve,
 	mode: environment,
