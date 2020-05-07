@@ -1,6 +1,6 @@
 import { RestCall } from '../common/RestCall'
 
-export const ResetSitePermissionsInheritance = (baseurl = '') => {
+export const ResetSitePermissionsInheritance = ({baseurl = ''}) => {
 	let endPoint = `/_api/web/resetroleinheritance`
 	let method = 'post'
 
@@ -8,14 +8,13 @@ export const ResetSitePermissionsInheritance = (baseurl = '') => {
 		RestCall({
 			url: baseurl,
 			endPoint: endPoint,
-			method: method,
-			headers: headers,
+			method: method
 		})
 			.then((response) => {
 				resolve(response.d)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`ResetSitePermissionsInheritance::${response}`)
 			})
 	})
 }

@@ -42,7 +42,7 @@ export const RemovePermissionsFromList = ({
 				resolve(response.d)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`RemovePermissionsFromList::${response}`)
 			})
 	})
 }

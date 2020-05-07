@@ -84,7 +84,7 @@ export const RemoveUsersFromGroup = ({
 					)
 				})
 				.catch((response) => {
-					reject(response)
+					reject(`RemoveUsersFromGroup::${response}`)
 				})
 		})
 	})

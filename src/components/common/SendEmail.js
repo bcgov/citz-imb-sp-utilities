@@ -8,7 +8,6 @@ export const SendEmail = ({
 	subject,
 	body,
 }) => {
-    console.log("sendemail")
     if (!to) {
 		return new Promise((resolve, reject) => {
 			reject('SendEmail requires to')
@@ -24,7 +23,7 @@ export const SendEmail = ({
 			reject('SendEmail requires body')
 		})
     }
-    
+
 	const restbody = {
 		properties: {
 			__metadata: {
@@ -57,7 +56,7 @@ export const SendEmail = ({
 				resolve(response.d)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`SendEmail::${response}`)
 			})
 	})
 }

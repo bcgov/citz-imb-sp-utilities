@@ -30,7 +30,7 @@ export const RemovePermissionsFromSite = ({
 				resolve(response.d)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`RemovePermissionsFromSite::${response}`)
 			})
 	})
 }

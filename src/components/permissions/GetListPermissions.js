@@ -21,6 +21,6 @@ export const GetListPermissions = ({ baseurl = '', listName, listGUID }) => {
 			resolve(response.d.results)
 		})
 	}).catch((response) => {
-		reject(response)
+		reject(`GetListPermissions::${response}`)
 	})
 }

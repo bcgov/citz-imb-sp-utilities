@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import '../css/PeoplePicker.css'
+import './PeoplePicker.css'
 
 export const PeoplePicker = ({ schema, elementName, getUserInfo }) => {
 	const ppLibraries = [

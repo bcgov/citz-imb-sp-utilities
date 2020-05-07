@@ -109,9 +109,7 @@ a32d6f859c66450ca4995b0b2bf0a###_.
   - ResetSitePermissionsInheritance(_baseurl_)
 
 ### Sites
-- GetCollection(_baseurl_)
-- GetSite(_baseurl_)
-- GetSiteParent(_baseurl_)
+- GetSite({_baseurl_})
 
 ### Users
 - GetUser({_baseurl_, **_userId_** })

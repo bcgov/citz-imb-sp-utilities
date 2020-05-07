@@ -48,7 +48,7 @@ export const CreateList = ({
 					resolve(response.d)
 				})
 				.catch((response) => {
-					reject(response)
+					reject(`CreateList::${response}`)
 				})
 		})
 	})

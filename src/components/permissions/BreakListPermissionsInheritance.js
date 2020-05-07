@@ -33,7 +33,7 @@ export const BreakListPermissionsInheritance = ({
 				resolve(response.d)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`BreakListPermissionsInheritance::${response}`)
 			})
 	})
 }

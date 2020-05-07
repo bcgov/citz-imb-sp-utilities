@@ -18,7 +18,7 @@ export const GetAssociatedGroups = (baseurl = '') => {
 				})
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`GetAssociatedGroups::${response}`)
 			})
 	})
 }

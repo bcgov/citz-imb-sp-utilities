@@ -21,7 +21,7 @@ export const GetListFields = ({ baseurl = '', listName, listGUID }) => {
 				resolve(response.d.results)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`GetListFields::${response}`)
 			})
 	})
 }

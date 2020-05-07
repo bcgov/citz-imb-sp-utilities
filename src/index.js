@@ -43,16 +43,18 @@ export { RemovePermissionsFromSite } from './components/permissions/RemovePermis
 export { ResetSitePermissionsInheritance } from './components/permissions/ResetSitePermissionsInheritance'
 
 /**
+ * Sites
+ */
+//export { GetSite } from './components/sites/GetSite'
+
+/**
  * Users
  */
-// export { GetCurrentUser } from './components/users/GetCurrentUser'
+export { GetCurrentUser } from './components/users/GetCurrentUser'
+export { GetUser } from './components/users/GetUser'
+export { GetUserGroups } from './components/users/GetUserGroups'
 
-// =========================================
-
-// export { PeoplePicker } from './components/PeoplePicker'
-// export { GetUser, GetUserGroups } from './components/Users'
-
-// export { SendEmail } from './components/Email'
-
-// export { GetSite, GetCollection } from './components/Sites'
-//import  {SPList}  from './sharepoint/SPList'
+/**
+ * SharePoint
+ */
+export { PeoplePicker } from './components/sharepoint/PeoplePicker'

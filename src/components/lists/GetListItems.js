@@ -45,7 +45,7 @@ export const GetListItems = ({
 				resolve(response.d.results)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`GetListItems::${response}`)
 			})
 	})
 }

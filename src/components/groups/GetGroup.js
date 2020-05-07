@@ -19,7 +19,7 @@ export const GetGroup = ({ baseurl = '', groupId, groupName }) => {
 				resolve(response.d)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`GetGroup::${response}`)
 			})
 	})
 }

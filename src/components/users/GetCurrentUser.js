@@ -1,13 +1,15 @@
 import { RestCall } from '../common/RestCall'
 
 export const GetCurrentUser = (baseurl = '') => {
+	let endPoint = '/_api/web/CurrentUser'
+	
 	return new Promise((resolve, reject) => {
-		RestCall({ url: baseurl, endPoint: '/_api/web/CurrentUser' })
+		RestCall({ url: baseurl, endPoint: endPoint })
 			.then((response) => {
 				resolve(response.d)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`GetCurrentUser::${response}`)
 			})
 	})
 }

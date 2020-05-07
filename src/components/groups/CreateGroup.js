@@ -1,6 +1,10 @@
 import { RestCall } from '../common/RestCall'
 
-export const CreateGroup = ({ baseurl = '', groupName, groupDescription = '' }) => {
+export const CreateGroup = ({
+	baseurl = '',
+	groupName,
+	groupDescription = '',
+}) => {
 	let endPoint
 	const method = 'post'
 	const body = {
@@ -16,25 +20,18 @@ export const CreateGroup = ({ baseurl = '', groupName, groupDescription = '' }) 
 	}
 
 	return new Promise((resolve, reject) => {
-		GetFormDigestValue(baseurl).then((response) => {
-			const headers = {
-				accept: 'application/json; odata=verbose',
-				'content-type': 'application/json; odata=verbose',
-				'x-requestdigest': response,
-			}
-			RestCall({
-				url: baseurl,
-				endPoint: endPoint,
-				method: method,
-				body: body,
-				headers: headers,
-			})
-				.then((response) => {
-					resolve(response.d)
-				})
-				.catch((response) => {
-					reject(response)
-				})
+		RestCall({
+			url: baseurl,
+			endPoint: endPoint,
+			method: method,
+			body: body,
+			headers: headers,
 		})
+			.then((response) => {
+				resolve(response.d)
+			})
+			.catch((response) => {
+				reject(`CreateGroup::${response}`)
+			})
 	})
 }

@@ -10,7 +10,7 @@ export const GetSitePermissions = (baseurl = '') => {
 				resolve(response.d.results)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`GetSitePermissions::${response}`)
 			})
 	})
 }

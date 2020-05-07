@@ -56,7 +56,7 @@ export const RemoveItemsFromList = ({
 				)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`RemoveItemsFromList::${response}`)
 			})
 	})
 }

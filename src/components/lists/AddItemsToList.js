@@ -61,7 +61,7 @@ export const AddItemsToList = ({ baseurl = '', listName, listGUID, items }) => {
 					)
 				})
 				.catch((response) => {
-					reject(response)
+					reject(`AddItemsToList::${response}`)
 				})
 		})
 	})

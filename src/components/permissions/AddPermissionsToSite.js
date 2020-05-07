@@ -24,7 +24,7 @@ export const AddPermissionsToSite = ({ baseurl = '', principalId, roleDefId }) =
 				resolve(response.d)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`AddPermissionsToSite::${response}`)
 			})
 	})
 }

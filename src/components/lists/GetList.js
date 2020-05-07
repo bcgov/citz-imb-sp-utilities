@@ -22,7 +22,7 @@ export const GetList = ({ baseurl = '', listName, listGUID, expand = '' }) => {
 				resolve(response.d)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`GetList::${response}`)
 			})
 	})
 }

@@ -21,7 +21,7 @@ export const DeleteList = ({ baseurl = '', listName, listGUID }) => {
 				resolve(response.d)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`DeleteList::${response}`)
 			})
 	})
 }

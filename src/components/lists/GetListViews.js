@@ -32,7 +32,7 @@ export const GetListViews = ({
 				resolve(response.d)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`GetListViews::${response}`)
 			})
 	})
 }

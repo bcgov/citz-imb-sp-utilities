@@ -60,7 +60,7 @@ export const AddUsersToGroup = ({
 				)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`AddUsersToGroup::${response}`)
 			})
 	})
 }

@@ -19,7 +19,7 @@ export const BreakSitePermissionsInheritance = ({
 				resolve(response.d)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`BreakSitePermissionsInheritance::${response}`)
 			})
 	})
 }

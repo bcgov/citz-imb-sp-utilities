@@ -21,7 +21,7 @@ export const GetListDefaultView = ({ baseurl = '', listName, listGUID }) => {
 				resolve(response.d)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`GetListDefaultView::${response}`)
 			})
 	})
 }

@@ -42,7 +42,7 @@ export const AddPermissionsToList = ({
 				resolve(response.d)
 			})
 			.catch((response) => {
-				reject(response)
+				reject(`AddPermissionsToList::${response}`)
 			})
 	})
 }

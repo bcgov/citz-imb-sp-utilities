@@ -58,7 +58,7 @@ export const ChangeGroupOwner = ({
 				resolve()
 			},
 			() => {
-				reject()
+				reject(`ChangeGroupOwner::${response}`)
 			}
 		)
 	})
