@@ -64,13 +64,13 @@ app.listen(LOCAL_HOST_PORT, () => console.log(`listening on ${LOCAL_HOST_PORT}`)
 
 open(`http://localhost:${LOCAL_HOST_PORT}`);
 
-app.use(webpackDevMiddleware(compiler,
-    {
-        publicPath: config.output.publicPath,
-        stats: { colors: true }
-    }));
+// app.use(webpackDevMiddleware(compiler,
+//     {
+//         publicPath: config.output.publicPath,
+//         stats: { colors: true }
+//     }));
 
-app.use(webpackHotMiddleware(compiler,
-    {
-        log: console.log
-    }));
+// app.use(webpackHotMiddleware(compiler,
+//     {
+//         log: console.log
+//     }));

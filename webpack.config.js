@@ -1,3 +1,4 @@
+'use strict'
 /*********************************
  * Environment and imports
  *********************************/
@@ -18,14 +19,14 @@ const entry = {
 }
 
 if (isDev) {
-	entry.test = ['./test/app.js']
+	//entry.test = ['./test/app.js']
 }
 
 /*********************************
  * Externals
  *********************************/
 const externals = {
-	//react: 'react'
+	react: 'react'
 }
 
 /*********************************
@@ -71,14 +72,17 @@ const optimization = {
 const output = {
 	filename: '[name].bundle.js',
 	path: __dirname + '/dist/js/',
-	pathinfo: true,
+	libraryTarget: 'commonjs',
+	//libraryExport: 'default',
+	//library: 'myLibrary',
+	//pathinfo: true,
 }
 
 if (isProd) {
 	output.filename = '[name].bundle.min.js'
 	output.pathinfo = false
 } else if (isDev) {
-	output.publicPath = '/js/'
+	output.publicPath = '../build/'
 }
 
 /*********************************
@@ -101,7 +105,7 @@ if (isProd) {
 	plugins.push(new BundleAnalyzerPlugin())
 }
 if (isDev) {
-	plugins.push(new webpack.HotModuleReplacementPlugin())
+	//plugins.push(new webpack.HotModuleReplacementPlugin())
 }
 
 /*********************************
@@ -118,9 +122,9 @@ module.exports = {
 	entry: entry,
 	externals: externals,
 	output: output,
-	resolve: resolve,
+	//resolve: resolve,
 	mode: environment,
 	module: _module,
-	optimization: optimization,
-	plugins: plugins,
+	//optimization: optimization,
+	//plugins: plugins,
 }

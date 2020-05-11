@@ -45,7 +45,10 @@ export { ResetSitePermissionsInheritance } from './components/permissions/ResetS
 /**
  * Sites
  */
-//export { GetSite } from './components/sites/GetSite'
+export { GetSite } from './components/sites/GetSite'
+export const test = () => {
+    return 'test'
+}
 
 /**
  * Users
@@ -57,4 +60,4 @@ export { GetUserGroups } from './components/users/GetUserGroups'
 /**
  * SharePoint
  */
-export { PeoplePicker } from './components/sharepoint/PeoplePicker'
+// export { PeoplePicker } from './components/sharepoint/PeoplePicker'

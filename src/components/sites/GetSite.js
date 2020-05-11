@@ -15,3 +15,5 @@ export const GetSite = ({baseurl = ''}) => {
 			})
 	})
 }
+
+export default GetSite
