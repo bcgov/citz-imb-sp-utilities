@@ -1,5 +1,3 @@
-import { RestCall } from '../common/RestCall'
-
 export const ChangeGroupOwner = ({
 	baseurl = '',
 	groupId,
@@ -7,12 +5,19 @@ export const ChangeGroupOwner = ({
 	ownerGroupId,
 	ownerGroupName,
 }) => {
-	if (typeof SP === 'undefined'){
+	console.log(`ChangeGroupOwner`, groupId, ownerGroupId, typeof SP)
+	if (typeof SP === 'undefined') {
 		return Promise.reject('ChangeGroupOwner:: SP is undefined')
 	}
-	let clientContext = new SP.ClientContext(
-		baseurl
-	)
+
+	let clientContext
+
+	if(baseurl === ''){
+		clientContext = new SP.ClientContext()
+	} else {
+		clientContext = new SP.ClientContext(baseurl)
+	}
+
 	let group
 	let ownerGroup
 

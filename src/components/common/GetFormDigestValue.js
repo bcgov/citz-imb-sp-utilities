@@ -1,8 +1,8 @@
 import { GetContextWebInformation } from './GetContextWebInformation'
 
-export const GetFormDigestValue = (baseurl = '') => {
+export const GetFormDigestValue = () => {
 	return new Promise((resolve, reject) => {
-		GetContextWebInformation(baseurl)
+		GetContextWebInformation('')
 			.then((response) => {
 				resolve(response.FormDigestValue)
 			})

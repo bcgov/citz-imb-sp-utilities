@@ -46,9 +46,7 @@ export { ResetSitePermissionsInheritance } from './components/permissions/ResetS
  * Sites
  */
 export { GetSite } from './components/sites/GetSite'
-export const test = () => {
-    return 'test'
-}
+export { GetRoleDefinitions } from './components/sites/GetRoleDefinitions'
 
 /**
  * Users

@@ -110,6 +110,7 @@ a32d6f859c66450ca4995b0b2bf0a###_.
 
 ### Sites
 - GetSite({_baseurl_})
+- GetRoleDefinitions({_baseurl_})
 
 ### Users
 - GetUser({_baseurl_, **_userId_** })

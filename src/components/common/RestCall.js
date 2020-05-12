@@ -1,5 +1,17 @@
 import { GetFormDigestValue } from './GetFormDigestValue'
 
+const doFetch = (url, endPoint, options) => {
+	return new Promise((resolve, reject) => {
+		fetch(`${url}${endPoint}`, options).then((response) => {
+			if (response.ok) {
+				resolve(response.json())
+			} else {
+				reject(`${response.status} ${response.statusText}`)
+			}
+		})
+	})
+}
+
 export const RestCall = ({
 	url = '',
 	endPoint,
@@ -7,18 +19,6 @@ export const RestCall = ({
 	body = '',
 	headers,
 }) => {
-	const doFetch = (url, endPoint, options) => {
-		return new Promise((resolve, reject) => {
-			fetch(`${url}${endPoint}`, options).then((response) => {
-				if (response.ok) {
-					resolve(response.json())
-				} else {
-					reject(`${response.status} ${response.statusText}`)
-				}
-			})
-		})
-	}
-
 	if (url === '') {
 		if (typeof _spPageContextInfo === 'undefined') {
 			return Promise.reject(

@@ -30,26 +30,17 @@ export const CreateList = ({
 	}
 
 	return new Promise((resolve, reject) => {
-		GetFormDigestValue(baseurl).then((formDigestValue) => {
-			let headers = {
-				'x-requestdigest': formDigestValue,
-				accept: 'application/json; odata=verbose',
-				'content-type': 'application/json; odata=verbose',
-			}
-
-			RestCall({
-				url: baseurl,
-				endPoint: endPoint,
-				method: method,
-				body: body,
-				headers: headers,
-			})
-				.then((response) => {
-					resolve(response.d)
-				})
-				.catch((response) => {
-					reject(`CreateList::${response}`)
-				})
+		RestCall({
+			url: baseurl,
+			endPoint: endPoint,
+			method: method,
+			body: body,
 		})
+			.then((response) => {
+				resolve(response.d)
+			})
+			.catch((response) => {
+				reject(`CreateList::${response}`)
+			})
 	})
 }

@@ -25,7 +25,7 @@ export const CreateGroup = ({
 			endPoint: endPoint,
 			method: method,
 			body: body,
-			headers: headers,
+			//headers: headers,
 		})
 			.then((response) => {
 				resolve(response.d)

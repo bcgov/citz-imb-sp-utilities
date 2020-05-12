@@ -1,7 +1,6 @@
 import { RestCall } from '../common/RestCall'
 
 export const GetSite = ({baseurl = ''}) => {
-	console.log('GetSite')
 	const endPointParameters = `?$expand=FirstUniqueAncestorSecurableObject,ParentWeb`
 	let endPoint = `/_api/web${endPointParameters}`
 

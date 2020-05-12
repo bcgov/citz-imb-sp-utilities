@@ -1,10 +1,39 @@
 import { RestCall } from '../common/RestCall'
 
 export const GetContextWebInformation = (baseurl = '') => {
+	if (baseurl === '') {
+		if (typeof _spPageContextInfo === 'undefined') {
+			return Promise.reject(
+				'GetContextWebInformation:: _spPageContextInfo is not defined'
+			)
+		} else {
+			baseurl = _spPageContextInfo.siteAbsoluteUrl
+		}
+	}
 	return new Promise((resolve, reject) => {
-		RestCall({ url: baseurl, endPoint: '/_api/contextinfo', method: 'post' })
+		fetch(`${baseurl}/_api/contextinfo`, {
+			method: 'post',
+			headers: {
+
+				Accept: 'application/json;odata=verbose',
+				'content-type': 'application/json;odata=verbose',
+			},
+		})
 			.then((response) => {
-				resolve(response.d.GetContextWebInformation)
+				if (response.ok) {
+					response
+						.json()
+						.then((data) => {
+							resolve(data.d.GetContextWebInformation)
+						})
+						.catch((err) => {
+							console.log(err)
+						})
+				} else {
+					reject(
+						`GetContextWebInformation::${response.status} ${response.statusText}`
+					)
+				}
 			})
 			.catch((response) => {
 				reject(`GetContextWebInformation::${response}`)
