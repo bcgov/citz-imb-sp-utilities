@@ -68,5 +68,5 @@ export const PeoplePicker = ({ schema, elementName, getUserInfo }) => {
 		}
 	}, [])
 
-	return <div id={elementName}></div>
+	return (<div id={elementName}></div>)
 }

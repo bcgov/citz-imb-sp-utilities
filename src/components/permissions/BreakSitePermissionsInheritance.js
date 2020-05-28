@@ -13,7 +13,6 @@ export const BreakSitePermissionsInheritance = ({
 			url: baseurl,
 			endPoint: endPoint,
 			method: method,
-			headers: headers,
 		})
 			.then((response) => {
 				resolve(response.d)

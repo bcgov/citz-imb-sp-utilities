@@ -38,54 +38,40 @@ export const RemoveUsersFromGroup = ({
 	}
 
 	return new Promise((resolve, reject) => {
-		GetFormDigestValue(baseurl).then((digestValue) => {
-			let fetches = []
+		let fetches = []
 
-			if (loginName) {
-				for (let i = 0; i < loginName.length; i++) {
-					fetches.push(
-						RestCall({
-							url: baseurl,
-							endPoint: `${endPoint}/removeByLoginName('${loginName[i]}')`,
-							method: 'post',
-							headers: {
-								'x-requestdigest': digestValue,
-								accept: 'application/json; odata=verbose',
-								'content-type':
-									'application/json; odata=verbose',
-							},
-						})
-					)
-				}
-			} else {
-				for (let i = 0; i < userId.length; i++) {
-					fetches.push(
-						RestCall({
-							url: baseurl,
-							endPoint: `${endPoint}/removeByID(${userId[i]})`,
-							method: 'post',
-							headers: {
-								'x-requestdigest': digestValue,
-								accept: 'application/json; odata=verbose',
-								'content-type':
-									'application/json; odata=verbose',
-							},
-						})
-					)
-				}
+		if (loginName) {
+			for (let i = 0; i < loginName.length; i++) {
+				fetches.push(
+					RestCall({
+						url: baseurl,
+						endPoint: `${endPoint}/removeByLoginName('${loginName[i]}')`,
+						method: 'post',
+					})
+				)
 			}
+		} else {
+			for (let i = 0; i < userId.length; i++) {
+				fetches.push(
+					RestCall({
+						url: baseurl,
+						endPoint: `${endPoint}/removeByID(${userId[i]})`,
+						method: 'post',
+					})
+				)
+			}
+		}
 
-			Promise.all(fetches)
-				.then((data) => {
-					resolve(
-						data.map((user) => {
-							return user.d
-						})
-					)
-				})
-				.catch((response) => {
-					reject(`RemoveUsersFromGroup::${response}`)
-				})
-		})
+		Promise.all(fetches)
+			.then((data) => {
+				resolve(
+					data.map((user) => {
+						return user.d
+					})
+				)
+			})
+			.catch((response) => {
+				reject(`RemoveUsersFromGroup::${response}`)
+			})
 	})
 }

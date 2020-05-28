@@ -43,6 +43,7 @@
 		"autoprefixer": "^9.7.6",
 		"babel-loader": "^8.1.0",
 		"css-loader": "^3.5.3",
+		"html-webpack-plugin": "^4.3.0",
 		"material-table": "^1.57.2",
 		"moment": "^2.25.3",
 		"open": "^7.0.3",

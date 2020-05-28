@@ -29,13 +29,10 @@ export const AddItemsToList = ({ baseurl = '', listName, listGUID, items }) => {
 	return new Promise((resolve, reject) => {
 		let fetches = []
 
-		Promise.all([
-			GetList({ url: baseurl, listName, listGUID }),
-			GetFormDigestValue(),
-		]).then((response) => {
+		GetList({ url: baseurl, listName, listGUID }).then((response) => {
 			for (let i = 0; i < items.length; i++) {
 				items[i].__metadata = {
-					type: response[0].ListItemEntityTypeFullName,
+					type: response.ListItemEntityTypeFullName,
 				}
 				fetches.push(
 					RestCall({
@@ -43,11 +40,6 @@ export const AddItemsToList = ({ baseurl = '', listName, listGUID, items }) => {
 						endPoint: endPoint,
 						method: 'post',
 						body: items[i],
-						headers: {
-							'x-requestdigest': response[1],
-							accept: 'application/json; odata=verbose',
-							'content-type': 'application/json; odata=verbose',
-						},
 					})
 				)
 			}

@@ -120,7 +120,7 @@ const resolve = {
  *********************************/
 module.exports = {
 	entry: entry,
-	externals: externals,
+	//externals: externals,
 	output: output,
 	//resolve: resolve,
 	mode: environment,

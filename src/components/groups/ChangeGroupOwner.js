@@ -5,14 +5,13 @@ export const ChangeGroupOwner = ({
 	ownerGroupId,
 	ownerGroupName,
 }) => {
-	console.log(`ChangeGroupOwner`, groupId, ownerGroupId, typeof SP)
 	if (typeof SP === 'undefined') {
 		return Promise.reject('ChangeGroupOwner:: SP is undefined')
 	}
 
 	let clientContext
 
-	if(baseurl === ''){
+	if (baseurl === '') {
 		clientContext = new SP.ClientContext()
 	} else {
 		clientContext = new SP.ClientContext(baseurl)

@@ -11,6 +11,7 @@ export { SendEmail } from './components/common/SendEmail'
 export { AddUsersToGroup } from './components/groups/AddUsersToGroup'
 export { ChangeGroupOwner } from './components/groups/ChangeGroupOwner'
 export { CreateGroup } from './components/groups/CreateGroup'
+export { DeleteGroup } from './components/groups/DeleteGroup'
 export { GetAssociatedGroups } from './components/groups/GetAssociatedGroups'
 export { GetGroup } from './components/groups/GetGroup'
 export { GetGroupMembers } from './components/groups/GetGroupMembers'
@@ -58,4 +59,4 @@ export { GetUserGroups } from './components/users/GetUserGroups'
 /**
  * SharePoint
  */
-// export { PeoplePicker } from './components/sharepoint/PeoplePicker'
+//export { PeoplePicker } from './components/sharepoint/PeoplePicker'

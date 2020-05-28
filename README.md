@@ -79,6 +79,7 @@ a32d6f859c66450ca4995b0b2bf0a###_.
 - AddUsersToGroup({_baseurl_, **_groupId_**, **_groupName_**, **_loginName_**})
 - ChangeGroupOwner({_baseurl_, **_groupId_**, **_groupName_**, **_ownerGroupId_**, **_ownerGroupName_**})
 - CreateGroup({_baseurl_, **_groupName_**, _groupDescription_})
+- DeleteGroup({_baseurl_, **_groupId_**, **_groupName_**})
 - GetAssociatedGroups(_baseurl_)
 - GetGroup({_baseurl_, **_groupId_**, **_groupName_**})
 - GetGroupMembers({_baseurl_, **_groupId_**, **_groupName_**})
