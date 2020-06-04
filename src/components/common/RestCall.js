@@ -4,7 +4,11 @@ const doFetch = (url, endPoint, options) => {
 	return new Promise((resolve, reject) => {
 		fetch(`${url}${endPoint}`, options).then((response) => {
 			if (response.ok) {
-				resolve(response.json())
+				if(response.status === 204){
+					resolve()
+				} else {
+					resolve(response.json())
+				}
 			} else {
 				reject(`${response.status} ${response.statusText}`)
 			}
@@ -47,25 +51,46 @@ export const RestCall = ({
 	}
 
 	return new Promise((resolve, reject) => {
-		if (options.method.toLowerCase() === 'post') {
-			GetFormDigestValue(url).then((response) => {
-				options.headers['X-RequestDigest'] = response
+		switch (options.method.toLowerCase()) {
+			case 'post':
+				GetFormDigestValue(url).then((response) => {
+					options.headers['X-RequestDigest'] = response
+					doFetch(url, endPoint, options)
+						.then((response) => {
+							resolve(response)
+						})
+						.catch((response) => {
+							console.warn(`options`, options)
+							reject(response)
+						})
+				})
+				break
+			case 'merge':
+				GetFormDigestValue(url).then((response) => {
+					options.headers['X-RequestDigest'] = response
+					options.headers['X-HTTP-Method'] = "MERGE"
+					options.headers['If-Match'] = "*"
+					options.method = 'post'
+
+					doFetch(url, endPoint, options)
+						.then((response) => {
+							resolve(response)
+						})
+						.catch((response) => {
+							console.warn(`options`, options)
+							reject(response)
+						})
+				})
+				break
+			default:
 				doFetch(url, endPoint, options)
 					.then((response) => {
 						resolve(response)
 					})
 					.catch((response) => {
+						console.warn(`options`, options)
 						reject(response)
 					})
-			})
-		} else {
-			doFetch(url, endPoint, options)
-				.then((response) => {
-					resolve(response)
-				})
-				.catch((response) => {
-					reject(response)
-				})
 		}
 	})
 }

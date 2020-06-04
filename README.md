@@ -95,6 +95,7 @@ a32d6f859c66450ca4995b0b2bf0a###_.
 - GetListItems({_baseurl_, **_listName_**, **_listGUID_**, _filter_, _expand_})
 - GetListViews({_baseurl_, **_listName_**, **_listGUID_**, _viewGUID_})
 - RemoveItemsFromList({_baseurl_, **_listName_**, **_listGUID_**, **_itemIds_**})
+- UpdateListItem({_baseurl_, **_listName_**, **_listGUID_**, **_items_**})
 
 ### Permissions
 - List

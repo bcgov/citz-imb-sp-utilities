@@ -29,6 +29,7 @@ export { GetListFields } from './components/lists/GetListFields'
 export { GetListItems } from './components/lists/GetListItems'
 export { GetListViews } from './components/lists/GetListViews'
 export { RemoveItemsFromList } from './components/lists/RemoveItemsFromList'
+export { UpdateListItem } from './components/lists/UpdateListItem'
 
 /**
  * Permissions
