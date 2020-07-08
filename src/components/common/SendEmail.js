@@ -12,7 +12,9 @@ export const SendEmail = ({
 		return new Promise((resolve, reject) => {
 			reject('SendEmail requires to')
 		})
-    }
+    } else if(!Array.isArray(to)){
+		to = [to]
+	}
     if (!subject) {
 		return new Promise((resolve, reject) => {
 			reject('SendEmail requires subject')
@@ -50,7 +52,7 @@ export const SendEmail = ({
 			endPoint: endPoint,
 			method: 'post',
 			body: restbody,
-			headers: headers,
+			//headers: headers,
 		})
 			.then((response) => {
 				resolve(response.d)

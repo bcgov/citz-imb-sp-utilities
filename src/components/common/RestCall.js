@@ -6,6 +6,9 @@ const doFetch = (url, endPoint, options) => {
 			if (response.ok) {
 				if(response.status === 204){
 					resolve()
+				} else if(response.status === 304){
+					console.warning(`${response.status} ${response.statusText} ${endPoint}`)
+					resolve(response.json())
 				} else {
 					resolve(response.json())
 				}
@@ -22,6 +25,7 @@ export const RestCall = ({
 	method = 'get',
 	body = '',
 	headers,
+	cache
 }) => {
 	if (url === '') {
 		if (typeof _spPageContextInfo === 'undefined') {
@@ -33,7 +37,7 @@ export const RestCall = ({
 		}
 	}
 
-	let options = { method: method }
+	let options = { method: method}
 
 	if (typeof body !== 'string') {
 		options.body = JSON.stringify(body)
@@ -47,6 +51,13 @@ export const RestCall = ({
 		options.headers = {
 			Accept: 'application/json;odata=verbose',
 			'content-type': 'application/json;odata=verbose',
+		}
+	}
+	if(cache){
+		options.cache = cache
+	} else {
+		if(method==='get'){
+			options.cache = 'reload'
 		}
 	}
 

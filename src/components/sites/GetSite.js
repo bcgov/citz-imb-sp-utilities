@@ -1,8 +1,16 @@
 import { RestCall } from '../common/RestCall'
 
-export const GetSite = ({baseurl = ''}) => {
-	const endPointParameters = `?$expand=FirstUniqueAncestorSecurableObject,ParentWeb`
-	let endPoint = `/_api/web${endPointParameters}`
+export const GetSite = ({baseurl = '', expand = ''}) => {
+	let endPoint = `/_api/web`
+	let parameters = []
+
+	if (expand) {
+		parameters.push(`$expand=${expand}`)
+	}
+
+	if (parameters.length) {
+		endPoint += `?${parameters.join('&')}`
+	}
 
 	return new Promise((resolve, reject) => {
 		RestCall({ url: baseurl, endPoint: endPoint })

@@ -58,6 +58,11 @@ export { GetUser } from './components/users/GetUser'
 export { GetUserGroups } from './components/users/GetUserGroups'
 
 /**
+ * Search
+ */
+export { Search } from './components/search/Search'
+
+/**
  * SharePoint
  */
 //export { PeoplePicker } from './components/sharepoint/PeoplePicker'

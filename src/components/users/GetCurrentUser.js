@@ -1,8 +1,12 @@
 import { RestCall } from '../common/RestCall'
 
-export const GetCurrentUser = (baseurl = '') => {
+export const GetCurrentUser = ({baseurl = '', expand}) => {
 	let endPoint = '/_api/web/CurrentUser'
-	
+
+	if(expand){
+		endPoint = `${endPoint}?$expand=${expand}`
+	}
+
 	return new Promise((resolve, reject) => {
 		RestCall({ url: baseurl, endPoint: endPoint })
 			.then((response) => {
