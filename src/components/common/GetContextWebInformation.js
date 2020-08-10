@@ -14,7 +14,6 @@ export const GetContextWebInformation = (baseurl = '') => {
 		fetch(`${baseurl}/_api/contextinfo`, {
 			method: 'post',
 			headers: {
-
 				Accept: 'application/json;odata=verbose',
 				'content-type': 'application/json;odata=verbose',
 			},

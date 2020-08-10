@@ -24,10 +24,8 @@ export { AddItemsToList } from './components/lists/AddItemsToList'
 export { CreateList } from './components/lists/CreateList'
 export { DeleteList } from './components/lists/DeleteList'
 export { GetList } from './components/lists/GetList'
-export { GetListDefaultView } from './components/lists/GetListDefaultView'
 export { GetListFields } from './components/lists/GetListFields'
 export { GetListItems } from './components/lists/GetListItems'
-export { GetListViews } from './components/lists/GetListViews'
 export { RemoveItemsFromList } from './components/lists/RemoveItemsFromList'
 export { UpdateListItem } from './components/lists/UpdateListItem'
 
@@ -66,3 +64,13 @@ export { Search } from './components/search/Search'
  * SharePoint
  */
 //export { PeoplePicker } from './components/sharepoint/PeoplePicker'
+
+/**
+ * Views
+ */
+export { AddListViewField } from './components/views/AddListViewField'
+export { GetListDefaultView } from './components/views/GetListDefaultView'
+export { GetListViews } from './components/views/GetListViews'
+export { RemoveListViewAllFields } from './components/views/RemoveListViewAllFields'
+export { RemoveListViewField } from './components/views/RemoveListViewField'
+export { SetListViewFieldIndex } from './components/views/SetListViewFieldIndex'

@@ -57,7 +57,10 @@ export const RestCall = ({
 		options.cache = cache
 	} else {
 		if(method==='get'){
-			options.cache = 'reload'
+			//options.cache = 'reload'
+			//options.headers['If-Match'] = "*"
+			options.headers['Cache-Control'] = 'no-cache'
+			options.headers['Pragma'] = 'no-cache'
 		}
 	}
 

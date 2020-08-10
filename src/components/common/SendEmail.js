@@ -3,6 +3,7 @@ import { RestCall } from '../common/RestCall'
 export const SendEmail = ({
 	baseurl = '',
 	to,
+	from,
 	cc = [],
 	bcc = [],
 	subject,
@@ -44,6 +45,11 @@ export const SendEmail = ({
 			},
 		},
 	}
+	
+	if(from){
+		restbody.properties.From = from
+	}
+
 	const endPoint = '/_api/SP.Utilities.Utility.SendEmail'
 
 	return new Promise((resolve, reject) => {
