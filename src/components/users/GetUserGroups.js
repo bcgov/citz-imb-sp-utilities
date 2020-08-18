@@ -1,4 +1,4 @@
-import { RestCall } from 'components/common/RestCall'
+import { RestCall } from '../common/RestCall'
 
 export const GetUserGroups = ({ baseurl = '', userId }) => {
 	let endPoint

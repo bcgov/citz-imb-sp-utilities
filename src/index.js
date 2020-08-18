@@ -1,78 +1,76 @@
 /**
  * Common
  */
-export { GetContextWebInformation } from 'common/GetContextWebInformation'
-export { GetFormDigestValue } from 'common/GetFormDigestValue'
-export { SendEmail } from 'common/SendEmail'
+export { GetContextWebInformation } from './components/common/GetContextWebInformation'
+export { GetFormDigestValue } from './components/common/GetFormDigestValue'
+export { SendEmail } from './components/common/SendEmail'
 
 /**
  * Groups
  */
-export { AddUsersToGroup } from 'groups/AddUsersToGroup'
-export { ChangeGroupOwner } from 'groups/ChangeGroupOwner'
-export { CreateGroup } from 'groups/CreateGroup'
-export { DeleteGroup } from 'groups/DeleteGroup'
-export { GetAssociatedGroups } from 'groups/GetAssociatedGroups'
-export { GetGroup } from 'groups/GetGroup'
-export { GetGroupMembers } from 'groups/GetGroupMembers'
-export { RemoveUsersFromGroup } from 'groups/RemoveUsersFromGroup'
+export { AddUsersToGroup } from './components/groups/AddUsersToGroup'
+export { ChangeGroupOwner } from './components/groups/ChangeGroupOwner'
+export { CreateGroup } from './components/groups/CreateGroup'
+export { DeleteGroup } from './components/groups/DeleteGroup'
+export { GetAssociatedGroups } from './components/groups/GetAssociatedGroups'
+export { GetGroup } from './components/groups/GetGroup'
+export { GetGroupMembers } from './components/groups/GetGroupMembers'
+export { RemoveUsersFromGroup } from './components/groups/RemoveUsersFromGroup'
 
 /**
  * Lists
  */
-export { AddItemsToList } from 'lists/AddItemsToList'
-export { CreateList } from 'lists/CreateList'
-export { DeleteList } from 'lists/DeleteList'
-export { GetList } from 'lists/GetList'
-export { GetListFields } from 'lists/GetListFields'
-export { GetListItems } from 'lists/GetListItems'
-export { RemoveItemsFromList } from 'lists/RemoveItemsFromList'
-export { UpdateListItem } from 'lists/UpdateListItem'
+export { AddItemsToList } from './components/lists/AddItemsToList'
+export { CreateList } from './components/lists/CreateList'
+export { DeleteList } from './components/lists/DeleteList'
+export { GetList } from './components/lists/GetList'
+export { GetListFields } from './components/lists/GetListFields'
+export { GetListItems } from './components/lists/GetListItems'
+export { RemoveItemsFromList } from './components/lists/RemoveItemsFromList'
+export { UpdateListItem } from './components/lists/UpdateListItem'
 
 /**
  * Permissions
  */
-export { AddPermissionsToList } from 'permissions/AddPermissionsToList'
-export { AddPermissionsToSite } from 'permissions/AddPermissionsToSite'
-export { BreakListPermissionsInheritance } from 'permissions/BreakListPermissionsInheritance'
-export { BreakSitePermissionsInheritance } from 'permissions/BreakSitePermissionsInheritance'
-export { GetListPermissions } from 'permissions/GetListPermissions'
-export { GetSitePermissions } from 'permissions/GetSitePermissions'
-export { RemovePermissionsFromList } from 'permissions/RemovePermissionsFromList'
-export { RemovePermissionsFromSite } from 'permissions/RemovePermissionsFromSite'
-export { ResetSitePermissionsInheritance } from 'permissions/ResetSitePermissionsInheritance'
+export { AddPermissionsToList } from './components/permissions/AddPermissionsToList'
+export { AddPermissionsToSite } from './components/permissions/AddPermissionsToSite'
+export { BreakListPermissionsInheritance } from './components/permissions/BreakListPermissionsInheritance'
+export { BreakSitePermissionsInheritance } from './components/permissions/BreakSitePermissionsInheritance'
+export { GetListPermissions } from './components/permissions/GetListPermissions'
+export { GetSitePermissions } from './components/permissions/GetSitePermissions'
+export { RemovePermissionsFromList } from './components/permissions/RemovePermissionsFromList'
+export { RemovePermissionsFromSite } from './components/permissions/RemovePermissionsFromSite'
+export { ResetSitePermissionsInheritance } from './components/permissions/ResetSitePermissionsInheritance'
 
 /**
  * Sites
  */
-export { GetSite } from 'sites/GetSite'
-export { GetRoleDefinitions } from 'sites/GetRoleDefinitions'
+export { GetSite } from './components/sites/GetSite'
+export { GetRoleDefinitions } from './components/sites/GetRoleDefinitions'
 
 /**
  * Users
  */
-export { EnsureUser } from 'users/EnsureUser'
-export { GetCurrentUser } from 'users/GetCurrentUser'
-export { GetUser } from 'users/GetUser'
-export { GetUserGroups } from 'users/GetUserGroups'
+export { GetCurrentUser } from './components/users/GetCurrentUser'
+export { GetUser } from './components/users/GetUser'
+export { GetUserGroups } from './components/users/GetUserGroups'
 
 /**
  * Search
  */
-export { Search } from 'search/Search'
+export { Search } from './components/search/Search'
 
 /**
  * SharePoint
  */
-//export { PeoplePicker } from 'sharepoint/PeoplePicker'
-export { SPList } from 'sharepoint/SPList'
+//export { PeoplePicker } from './components/sharepoint/PeoplePicker'
 
 /**
  * Views
  */
-export { AddListViewField } from 'views/AddListViewField'
-export { GetListDefaultView } from 'views/GetListDefaultView'
-export { GetListViews } from 'views/GetListViews'
-export { RemoveListViewAllFields } from 'views/RemoveListViewAllFields'
-export { RemoveListViewField } from 'views/RemoveListViewField'
-export { SetListViewFieldIndex } from 'views/SetListViewFieldIndex'
+export { AddListViewField } from './components/views/AddListViewField'
+export { GetListDefaultView } from './components/views/GetListDefaultView'
+export { GetListViews } from './components/views/GetListViews'
+export { RemoveListViewAllFields } from './components/views/RemoveListViewAllFields'
+export { RemoveListViewField } from './components/views/RemoveListViewField'
+export { SetListViewFieldIndex } from './components/views/SetListViewFieldIndex'

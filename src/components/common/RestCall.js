@@ -1,4 +1,4 @@
-import { GetFormDigestValue } from 'index'
+import { GetFormDigestValue } from './GetFormDigestValue'
 
 const doFetch = (url, endPoint, options) => {
 	return new Promise((resolve, reject) => {

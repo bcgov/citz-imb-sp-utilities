@@ -1,3 +1,5 @@
+import { RestCall } from '../common/RestCall'
+
 export const GetContextWebInformation = (baseurl = '') => {
 	if (baseurl === '') {
 		if (typeof _spPageContextInfo === 'undefined') {
