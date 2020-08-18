@@ -37,9 +37,10 @@ utility methods/functions for use with SharePoint 2016. Depends on [React](https
 Parameters in **bold** are required.  Where an _Id_ and a _Name_ parameter are specified, usually only one is required, with _Id_ being used if both are supplied.
 
 - **baseurl:** a string the form of _https://\<mydomain\>/sites/\<mysite\>_.  Default is the value of *_spPageContextInfo.webAbsoluteUrl* or *_spPageContextInfo.siteAbsoluteUrl*, as appropriate.
-- **bcc:** an array of email addresses.
+- **bcc:** an array of userAccounts in form of _i:0ǵ.t|bcgovidp|-
 - **body:** a string.  May contain html tags.
-- **cc:** an array of email addresses.
+- **cc:** an array of userAccounts in form of _i:0ǵ.t|bcgovidp|a32d6f859c66450ca4995b0b2bf0a###_.
+a32d6f859c66450ca4995b0b2bf0a###_.
 - **clear:** a boolean value.
 - **copy:** a boolean value.
 - **expand:** a string of comma-separated properties to expand
@@ -56,7 +57,8 @@ Parameters in **bold** are required.  Where an _Id_ and a _Name_ parameter are s
 - **principalId:** an integer.
 - **roleDefId:** an integer
 - **subject:** a string.
-- **to:** an array of email addresses.  May also be a string of a single email address.
+- **to:** an array of userAccounts in form of _i:0ǵ.t|bcgovidp|
+a32d6f859c66450ca4995b0b2bf0a###_.
 - **userId:** an integer.
 - **viewGUID:** a string in the form of a _{529b7384-98bd-40c6-81e6-54a797###ec5}_.
 
