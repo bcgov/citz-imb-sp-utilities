@@ -1,14 +1,14 @@
 import { RestCall } from 'components/common/RestCall'
 
-export const GetUser = ({ baseurl = '', userId }) => {
-	let endPoint
+export const EnsureUser = ({ baseurl = '', logonName }) => {
+    let endPoint
 
-	if (!userId) {
+	if (!logonName) {
 		return new Promise((resolve, reject) => {
-			reject('GetUser requires userId')
+			reject('EnsureUser requires logonName')
 		})
 	} else {
-		endPoint = `/_api/web/GetUserById(${userId})`
+		endPoint = `/_api/web/ensureUser('${logonName}')`
 	}
 
 	return new Promise((resolve, reject) => {
@@ -17,7 +17,7 @@ export const GetUser = ({ baseurl = '', userId }) => {
             resolve(response.d)
         })
         .catch((response) => {
-            reject(`GetUser::${response}`)
+            reject(`EnsureUser::${response}`)
         })
 	})
 }

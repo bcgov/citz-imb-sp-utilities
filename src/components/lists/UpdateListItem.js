@@ -1,5 +1,5 @@
-import { RestCall } from '../common/RestCall'
-import { GetList } from './GetList'
+import { RestCall } from 'components/common/RestCall'
+import { GetList } from 'index'
 
 export const UpdateListItem = ({ baseurl = '', listName, listGUID, items }) => {
 	let endPoint

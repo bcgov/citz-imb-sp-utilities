@@ -1,4 +1,4 @@
-import { RestCall } from '../common/RestCall'
+import { RestCall } from 'components/common/RestCall'
 
 export const SendEmail = ({
 	baseurl = '',
@@ -45,7 +45,7 @@ export const SendEmail = ({
 			},
 		},
 	}
-	
+
 	if(from){
 		restbody.properties.From = from
 	}
