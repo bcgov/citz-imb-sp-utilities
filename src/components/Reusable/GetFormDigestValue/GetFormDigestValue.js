@@ -1,4 +1,4 @@
-import { GetContextWebInformation } from './GetContextWebInformation'
+import { GetContextWebInformation } from 'Components'
 
 export const GetFormDigestValue = () => {
 	return new Promise((resolve, reject) => {

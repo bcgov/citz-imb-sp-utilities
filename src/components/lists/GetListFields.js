@@ -1,4 +1,4 @@
-import { RestCall } from '../common/RestCall'
+import { RestCall } from 'Components'
 
 export const GetListFields = ({ baseurl = '', listName, listGUID }) => {
 	let endPoint

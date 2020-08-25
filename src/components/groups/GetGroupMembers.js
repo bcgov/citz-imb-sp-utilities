@@ -1,4 +1,4 @@
-import { RestCall } from '../common/RestCall'
+import { RestCall } from 'Components'
 
 export const GetGroupMembers = ({ baseurl = '', groupId, groupName }) => {
 	let endPoint
@@ -6,7 +6,7 @@ export const GetGroupMembers = ({ baseurl = '', groupId, groupName }) => {
 	if (!groupId) {
 		if (!groupName) {
 			return Promise.reject(
-				'GetGroupMembers requires GroupId or GroupName'
+				'GetGroupMembers requires groupId or groupName'
 			)
 		} else {
 			endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users`

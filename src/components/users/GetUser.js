@@ -1,4 +1,4 @@
-import { RestCall } from '../common/RestCall'
+import { RestCall } from 'Components'
 
 export const GetUser = ({ baseurl = '', userId }) => {
 	let endPoint

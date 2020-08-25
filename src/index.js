@@ -1,9 +1,9 @@
 /**
- * Common
+ * Reusable
  */
-export { GetContextWebInformation } from './components/common/GetContextWebInformation'
-export { GetFormDigestValue } from './components/common/GetFormDigestValue'
-export { SendEmail } from './components/common/SendEmail'
+export { GetContextWebInformation } from './components/Reusable/GetContextWebInformation'
+export { GetFormDigestValue } from './components/Reusable/GetFormDigestValue/GetFormDigestValue'
+export { SendEmail } from './components/Reusable/SendEmail'
 
 /**
  * Groups

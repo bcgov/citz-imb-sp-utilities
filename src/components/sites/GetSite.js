@@ -1,4 +1,4 @@
-import { RestCall } from '../common/RestCall'
+import { RestCall } from 'Components'
 
 export const GetSite = ({baseurl = '', expand = ''}) => {
 	let endPoint = `/_api/web`

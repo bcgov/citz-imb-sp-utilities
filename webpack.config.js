@@ -6,6 +6,7 @@ const environment = process.env.NODE_ENV || 'development'
 const isDev = environment === 'development'
 const isProd = environment === 'production'
 const autoprefixer = require('autoprefixer')
+const path = require('path')
 
 const webpack = require('webpack')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
@@ -113,6 +114,11 @@ if (isDev) {
  *********************************/
 const resolve = {
 	extensions: ['.js'],
+	alias:{
+		Components: path.resolve(__dirname, './src/Components.js'),
+		index: path.resolve(__dirname, './src/index.js'),
+		components: path.resolve(__dirname, './src/components/')
+	}
 }
 
 /*********************************
@@ -122,7 +128,7 @@ module.exports = {
 	entry: entry,
 	//externals: externals,
 	output: output,
-	//resolve: resolve,
+	resolve: resolve,
 	mode: environment,
 	module: _module,
 	//optimization: optimization,
