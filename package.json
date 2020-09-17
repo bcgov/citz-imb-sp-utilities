@@ -1,6 +1,6 @@
 {
   "name": "citz-imb-sp-utilities",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "SharePoint React library for Ministry of Citizens' Services",
   "main": "dist/js/main.js",
   "dependencies": {
