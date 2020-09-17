@@ -33,6 +33,7 @@ export const RestCall = ({
 				'RestCall:: _spPageContextInfo is not defined'
 			)
 		} else {
+			// eslint-disable-next-line
 			url = _spPageContextInfo.webAbsoluteUrl
 		}
 	}

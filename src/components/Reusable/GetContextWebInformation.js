@@ -7,6 +7,7 @@ export const GetContextWebInformation = (baseurl = '') => {
 				'GetContextWebInformation:: _spPageContextInfo is not defined'
 			)
 		} else {
+			// eslint-disable-next-line
 			baseurl = _spPageContextInfo.siteAbsoluteUrl
 		}
 	}

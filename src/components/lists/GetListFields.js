@@ -1,6 +1,7 @@
 import { RestCall } from 'Components'
 
-export const GetListFields = ({ baseurl = '', listName, listGUID }) => {
+export const GetListFields = (props) => {
+	const { baseurl = '', listName, listGUID } = props
 	let endPoint
 
 	if (!listGUID) {
