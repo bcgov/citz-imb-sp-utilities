@@ -44,6 +44,7 @@ a32d6f859c66450ca4995b0b2bf0a###_.
 - **clear:** a boolean value.
 - **copy:** a boolean value.
 - **expand:** a string of comma-separated properties to expand
+- **filter:** a string of comma-separated properties to filter
 - **groupDescription:** a string.
 - **groupId:** an integer.
 - **groupName:** a string.
@@ -56,6 +57,7 @@ a32d6f859c66450ca4995b0b2bf0a###_.
 - **ownerGroupName:** a string.
 - **principalId:** an integer.
 - **roleDefId:** an integer
+- **select:** a string of comma-separated properties to select
 - **subject:** a string.
 - **to:** an array of userAccounts in form of _i:0ǵ.t|bcgovidp|
 a32d6f859c66450ca4995b0b2bf0a###_.
@@ -89,10 +91,10 @@ a32d6f859c66450ca4995b0b2bf0a###_.
 - AddItemsToList({_baseurl_, **_listName_**, **_listGUID_**, **_items_**})
 - CreateList({_baseurl_, **_listName_**, _allowContentTypes_, _baseTemplate_, _contentTypesEnabled_, _description_})
 - DeleteList({_baseurl_, **_listName_**, **_listGUID_**})
-- GetList({_baseurl_, **_listName_**, **_listGUID_**, _expand_})
+- GetList({_baseurl_, **_listName_**, **_listGUID_**, _filter_, _expand_, _select_})
 - GetListDefaultView({_baseurl_, **_listName_**, **_listGUID_**})
-- GetListFields({_baseurl_, **_listName_**, **_listGUID_**})
-- GetListItems({_baseurl_, **_listName_**, **_listGUID_**, _filter_, _expand_})
+- GetListFields({_baseurl_, **_listName_**, **_listGUID_**, _filter_, _expand_, _select_})
+- GetListItems({_baseurl_, **_listName_**, **_listGUID_**, _filter_, _expand_, _select_})
 - GetListViews({_baseurl_, **_listName_**, **_listGUID_**, _viewGUID_})
 - RemoveItemsFromList({_baseurl_, **_listName_**, **_listGUID_**, **_itemIds_**})
 - UpdateListItem({_baseurl_, **_listName_**, **_listGUID_**, **_items_**})
