@@ -1,5 +1,3 @@
-import { RestCall } from 'Components'
-
 export const GetContextWebInformation = (baseurl = '') => {
 	if (baseurl === '') {
 		if (typeof _spPageContextInfo === 'undefined') {
@@ -7,6 +5,7 @@ export const GetContextWebInformation = (baseurl = '') => {
 				'GetContextWebInformation:: _spPageContextInfo is not defined'
 			)
 		} else {
+			// eslint-disable-next-line
 			baseurl = _spPageContextInfo.siteAbsoluteUrl
 		}
 	}

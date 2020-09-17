@@ -20,14 +20,16 @@ export { RemoveUsersFromGroup } from './components/groups/RemoveUsersFromGroup'
 /**
  * Lists
  */
-export { AddItemsToList } from './components/lists/AddItemsToList'
-export { CreateList } from './components/lists/CreateList'
-export { DeleteList } from './components/lists/DeleteList'
-export { GetList } from './components/lists/GetList'
-export { GetListFields } from './components/lists/GetListFields'
-export { GetListItems } from './components/lists/GetListItems'
-export { RemoveItemsFromList } from './components/lists/RemoveItemsFromList'
-export { UpdateListItem } from './components/lists/UpdateListItem'
+export { GetList } from 'components/List/GetList/GetList'
+export { GetListFields } from 'components/List/GetListFields/GetListFields'
+export { GetListItems } from 'components/List/GetListItems/GetListItems'
+
+export { CreateList } from 'components/List/CreateList'
+export { DeleteList } from 'components/List/DeleteList'
+
+export { AddItemsToList } from 'components/List/AddItemsToList'
+export { RemoveItemsFromList } from 'components/List/RemoveItemsFromList'
+export { UpdateListItem } from 'components/List/UpdateListItem'
 
 /**
  * Permissions

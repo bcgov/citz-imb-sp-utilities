@@ -12,8 +12,10 @@ export const ChangeGroupOwner = ({
 	let clientContext
 
 	if (baseurl === '') {
+		// eslint-disable-next-line
 		clientContext = new SP.ClientContext()
 	} else {
+		// eslint-disable-next-line
 		clientContext = new SP.ClientContext(baseurl)
 	}
 
@@ -61,7 +63,7 @@ export const ChangeGroupOwner = ({
 			() => {
 				resolve()
 			},
-			() => {
+			(response) => {
 				reject(`ChangeGroupOwner::${response}`)
 			}
 		)

@@ -22,7 +22,7 @@ export const AddUsersToGroup = ({
 				'AddUsersToGroup requires GroupId or GroupName'
 			)
 		} else {
-			endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users(${LoginName})`
+			endPoint = `/_api/web/SiteGroups/getByName('${groupName}')/Users(${loginName})`
 		}
 	} else {
 		endPoint = `/_api/web/SiteGroups(${groupId})/Users`
