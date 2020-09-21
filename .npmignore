@@ -1,4 +1,14 @@
+build
+config
+node_modules
+public
+scripts
 src
 test
 .babelrc
+.env.local
+
 webpack.config.js
+api-server.js
+COMPLIANCE.yaml
+gulpfile.js
