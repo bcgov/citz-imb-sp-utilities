@@ -1,3 +1,6 @@
+[![img](https://img.shields.io/badge/Lifecycle-Experimental-339999)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
+The project is in the very early stages of development. The codebase will be changing frequently.
+
 # SharePoint Utilities
 
 utility methods/functions for use with SharePoint 2016. Depends on [React](https://www.npmjs.com/package/react).
