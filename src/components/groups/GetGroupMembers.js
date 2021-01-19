@@ -1,4 +1,4 @@
-import { RestCall } from 'Components'
+import { RestCall } from '../../Components'
 
 export const GetGroupMembers = ({ baseurl = '', groupId, groupName }) => {
 	let endPoint

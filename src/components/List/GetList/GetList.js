@@ -1,4 +1,4 @@
-import { RestCall, isGuid } from 'Components'
+import { RestCall, isGuid } from '../../../Components'
 
 export const GetList = (props) => {
 	let baseurl = ''
@@ -30,6 +30,7 @@ export const GetList = (props) => {
 	if (expand) endPointParameters += `,${expand}`
 	if (filter) endPointParameters += `&$filter=${filter}`
 	if (select) endPointParameters += `&$select=${select}`
+
 
 	if (!listGUID) {
 		if (!listName) {

@@ -1,4 +1,4 @@
-import { RestCall } from 'Components'
+import { RestCall } from '../../Components'
 
 export const ResetSitePermissionsInheritance = ({baseurl = ''}) => {
 	let endPoint = `/_api/web/resetroleinheritance`

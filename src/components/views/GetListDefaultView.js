@@ -1,4 +1,4 @@
-import { RestCall } from 'Components'
+import { RestCall } from '../../Components'
 
 export const GetListDefaultView = ({ baseurl = '', listName, listGUID }) => {
 	let endPoint

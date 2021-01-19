@@ -1,4 +1,4 @@
-import { RestCall, isGuid } from 'Components'
+import { RestCall, isGuid } from '../../../Components'
 
 export const GetListFields = (props) => {
 	let baseurl = ''
