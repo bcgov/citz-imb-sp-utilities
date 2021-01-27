@@ -1,5 +1,7 @@
-[![img](https://img.shields.io/badge/Lifecycle-Experimental-339999)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
-The project is in the very early stages of development. The codebase will be changing frequently.
+[![img](https://img.shields.io/badge/Lifecycle-Retired-d45500)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
+The project is no longer being used and/or supported.
+
+see https://github.com/bcgov/citz-imb-sp-restapi
 
 # SharePoint Utilities
 
