@@ -1,4 +1,4 @@
-import { RestCall } from 'Components'
+import { RestCall } from '../../Components'
 
 export const GetCurrentUser = ({baseurl = '', expand}) => {
 	let endPoint = '/_api/web/CurrentUser'

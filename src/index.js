@@ -4,7 +4,7 @@
 export { GetContextWebInformation } from './components/Reusable/GetContextWebInformation'
 export { GetFormDigestValue } from './components/Reusable/GetFormDigestValue/GetFormDigestValue'
 export { SendEmail } from './components/Reusable/SendEmail'
-
+export { RestCall } from './components/Reusable/RestCall/RestCall'
 /**
  * Groups
  */
@@ -20,17 +20,19 @@ export { RemoveUsersFromGroup } from './components/groups/RemoveUsersFromGroup'
 /**
  * Lists
  */
-export { GetList } from 'components/List/GetList/GetList'
-export { GetListFields } from 'components/List/GetListFields/GetListFields'
-export { GetListItems } from 'components/List/GetListItems/GetListItems'
+export { GetList } from './components/List/GetList/GetList'
+export { GetListFields } from './components/List/GetListFields/GetListFields'
+export { GetListItems } from './components/List/GetListItems/GetListItems'
 
-export { CreateList } from 'components/List/CreateList'
-export { DeleteList } from 'components/List/DeleteList'
+export { CreateList } from './components/List/CreateList'
+export { DeleteList } from './components/List/DeleteList'
 
-export { AddItemsToList } from 'components/List/AddItemsToList'
-export { RemoveItemsFromList } from 'components/List/RemoveItemsFromList'
-export { UpdateListItem } from 'components/List/UpdateListItem'
+export { AddItemsToList } from './components/List/AddItemsToList'
+export { RemoveItemsFromList } from './components/List/RemoveItemsFromList'
+export { UpdateListItem } from './components/List/UpdateListItem'
 
+export { AddFieldToList } from './components/List/AddFieldToList'
+export {UpdateField} from './components/List/UpdateField'
 /**
  * Permissions
  */
@@ -56,6 +58,7 @@ export { GetRoleDefinitions } from './components/sites/GetRoleDefinitions'
 export { GetCurrentUser } from './components/users/GetCurrentUser'
 export { GetUser } from './components/users/GetUser'
 export { GetUserGroups } from './components/users/GetUserGroups'
+export { GetUserByEmail } from './components/users/GetUserByEmail'
 
 /**
  * Search
@@ -76,3 +79,4 @@ export { GetListViews } from './components/views/GetListViews'
 export { RemoveListViewAllFields } from './components/views/RemoveListViewAllFields'
 export { RemoveListViewField } from './components/views/RemoveListViewField'
 export { SetListViewFieldIndex } from './components/views/SetListViewFieldIndex'
+export { CreateView } from './components/views/CreateView'

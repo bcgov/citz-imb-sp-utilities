@@ -1,4 +1,4 @@
-import { GetFormDigestValue } from 'Components'
+import { GetFormDigestValue } from '../GetFormDigestValue/GetFormDigestValue'
 
 const doFetch = (url, endPoint, options) => {
 	return new Promise((resolve, reject) => {
@@ -84,6 +84,23 @@ export const RestCall = ({
 				GetFormDigestValue(url).then((response) => {
 					options.headers['X-RequestDigest'] = response
 					options.headers['X-HTTP-Method'] = "MERGE"
+					options.headers['If-Match'] = "*"
+					options.method = 'post'
+
+					doFetch(url, endPoint, options)
+						.then((response) => {
+							resolve(response)
+						})
+						.catch((response) => {
+							console.warn(`options`, options)
+							reject(response)
+						})
+				})
+				break
+				case 'patch':
+				GetFormDigestValue(url).then((response) => {
+					options.headers['X-RequestDigest'] = response
+					options.headers['X-HTTP-Method'] = "PATCH"
 					options.headers['If-Match'] = "*"
 					options.method = 'post'
 

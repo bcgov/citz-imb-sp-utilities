@@ -1,4 +1,4 @@
-import { RestCall, isGuid } from 'Components'
+import { RestCall, isGuid } from '../../../Components'
 
 export const GetListItems = (props) => {
 	let baseurl = ''
@@ -7,6 +7,8 @@ export const GetListItems = (props) => {
 	let expand = ''
 	let filter = ''
 	let select = ''
+	let sort = ''
+	let sortDir = 'Asc'
 	let endPoint
 
 	if (!props) {
@@ -23,6 +25,8 @@ export const GetListItems = (props) => {
 			expand = '',
 			filter = '',
 			select = '',
+			sort = '',
+			sortDir = 'Asc'
 		} = props)
 	}
 
@@ -42,6 +46,8 @@ export const GetListItems = (props) => {
 	if (expand) endPointParameters.push(`$expand=${expand}`)
 	if (filter) endPointParameters.push(`$filter=${filter}`)
 	if (select) endPointParameters.push(`$select=${select}`)
+	if (sort) endPointParameters.push(`$sortfield=${sort}&sortdir=${sortDir}`)
+	endPointParameters.push('$top=5000')
 
 	if (endPointParameters.length) {
 		endPoint += `?${endPointParameters.join('&')}`
